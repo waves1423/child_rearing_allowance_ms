@@ -13,7 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
+<<<<<<< HEAD
         Schema::create('admins', function (Blueprint $table) {
+=======
+        Schema::create('users', function (Blueprint $table) {
+>>>>>>> ddc5d66c1285fec17342c02136fef36d225ff8a3
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
