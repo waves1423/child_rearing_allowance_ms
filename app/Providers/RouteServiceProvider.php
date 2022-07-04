@@ -17,7 +17,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const USER_HOME = '/dashboard';
+    public const HOME = '/dashboard';
     public const ADMIN_HOME = '/admin/dashboard';
 
     /**
@@ -34,7 +34,7 @@ class RouteServiceProvider extends ServiceProvider
                 ->prefix('api')
                 ->group(base_path('routes/api.php'));
 
-            Route::prefix('/admin')
+            Route::prefix('admin')
             ->as('admin.')
             ->middleware('web')
             ->group(base_path('routes/admin.php'));
