@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Users\RecipientController;
+use App\Http\Controllers\Users\CalculationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,6 +18,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('user.welcome');
 });
+
+/*
+add: controllers
+*/
+Route::resource('recipients', RecipientController::class)
+->middleware('auth:users')->except(['show']);
+Route::resource('recipients', CalculationController::class)
+->middleware('auth:users')->except(['show']);
 
 Route::get('/dashboard', function () {
     return view('user.dashboard');

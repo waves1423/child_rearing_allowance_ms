@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\Auth\RegisteredUserController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Admin\RecipientController;
+use App\Http\Controllers\Admin\CalculationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,6 +30,14 @@ Route::get('/', function () {
 
 Route::resource('users', UsersController::class)
 ->middleware('auth:admin');
+
+/*
+add: controllers
+*/
+Route::resource('recipients', RecipientController::class)
+->middleware('auth:admins')->except(['show']);
+Route::resource('recipients', CalculationController::class)
+->middleware('auth:admins')->except(['show']);
 
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
