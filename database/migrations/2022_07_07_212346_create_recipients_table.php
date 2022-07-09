@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('additonal_document')->nullable();
             $table->boolean('is_public_pentioner');
             $table->text('note')->nullable();
-            $table->timestamps('updated_at');
+            $table->timestamps();
         });
     }
 
