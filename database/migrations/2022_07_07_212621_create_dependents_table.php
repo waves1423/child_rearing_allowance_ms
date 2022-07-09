@@ -15,6 +15,18 @@ return new class extends Migration
     {
         Schema::create('dependents', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('calculation_id')
+            ->constrained()
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
+            $table->tinyInteger('elder')
+            ->nullable();
+            $table->tinyInteger('special')
+            ->nullable();
+            $table->tinyInteger('16-18_year_old')
+            ->nullable();
+            $table->tinyInteger('other_child')
+            ->nullable();
             $table->timestamps();
         });
     }

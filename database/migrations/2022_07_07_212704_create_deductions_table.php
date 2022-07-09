@@ -15,6 +15,18 @@ return new class extends Migration
     {
         Schema::create('deductions', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('calculation_id')
+            ->constrained()
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
+            $table->tinyInteger('disabled');
+            $table->tinyInteger('specially_disabled');
+            $table->tinyInteger('singleparent_or_workingstudent');
+            $table->tinyInteger('special_spouse');
+            $table->unsignedInteger('medical_expense');
+            $table->unsignedInteger('small_enterprise');
+            $table->unsignedInteger('other');
+            $table->unsignedInteger('common');
             $table->timestamps();
         });
     }

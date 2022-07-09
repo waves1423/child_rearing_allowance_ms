@@ -15,6 +15,12 @@ return new class extends Migration
     {
         Schema::create('spouses', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('recipient_id')
+            ->constrained()
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
+            $table->string('name');
+            $table->string('family_relationship');
             $table->timestamps();
         });
     }

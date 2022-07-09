@@ -11,11 +11,22 @@ return new class extends Migration
      *
      * @return void
      */
+    
     public function up()
     {
         Schema::create('recipients', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('number');
+            $table->string('name');
+            $table->string('sex');
+            $table->date('birth_date');
+            $table->string('adress');
+            $table->string('allowance_type');
+            $table->boolean('is_submitted')->nullable();
+            $table->string('additonal_document')->nullable();
+            $table->boolean('is_public_pentioner');
+            $table->text('note')->nullable();
+            $table->timestamps('updated_at');
         });
     }
 
