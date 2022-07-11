@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Recipient;
 use Illuminate\Http\Request;
 
 class RecipientController extends Controller
@@ -17,7 +18,9 @@ class RecipientController extends Controller
      */
     public function index()
     {
-        //
+        $recipientInfo = Recipient::all();
+        return view('admin.recipients.index',
+        compact('recipientInfo'));
     }
 
     /**
