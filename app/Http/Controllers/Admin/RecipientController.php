@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Recipient;
 use Illuminate\Http\Request;
 
@@ -45,17 +46,6 @@ class RecipientController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -63,7 +53,9 @@ class RecipientController extends Controller
      */
     public function edit($id)
     {
-        //
+        $recipientInfo = Recipient::findOrFail($id);
+        return view('admin.recipients.edit',
+        compact('recipientInfo'));
     }
 
     /**
