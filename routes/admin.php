@@ -29,15 +29,28 @@ Route::get('/', function () {
 });
 
 Route::resource('users', UsersController::class)
-->middleware('auth:admin');
+->middleware('auth:admin')->except(['show']);
+
+Route::controller(RecipientController::class)
+->prefix('recipients')
+->middleware('auth:admin')
+->group(function(){
+    Route::get('/', 'index');
+    Route::get('edit/{recipientInfo}', 'edit');
+});
+
+// Route::prefix('admin')
+// ->middleware('auth:admin')
+// ->group(function(){
+//     Route::get('recipients', [RecipientController::class, 'index'])
+//         ->name('recipients.index');
+// });
 
 /*
 add: controllers
 */
-Route::resource('recipients', RecipientController::class)
-->middleware('auth:admins')->except(['show']);
-Route::resource('recipients', CalculationController::class)
-->middleware('auth:admins')->except(['show']);
+// Route::resource('recipients', RecipientController::class)
+// ->middleware('auth:admin')->except(['show']);
 
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
