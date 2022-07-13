@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Recipient;
+use App\Models\Spouse;
 use Illuminate\Http\Request;
 
-class RecipientController extends Controller
+class SpouseController extends Controller
 {
     public function __construct()
     {
@@ -19,10 +19,10 @@ class RecipientController extends Controller
      */
     public function index()
     {
-        $recipientInfo = Recipient::all();
-        
-        return view('admin.recipients.index',
-        compact('recipientInfo'));
+        $spouseInfo = Spouse::all();
+
+        return view('admin.spouses.index',
+        compact('spouseInfo'));
     }
 
     /**
@@ -54,9 +54,9 @@ class RecipientController extends Controller
      */
     public function edit($id)
     {
-        $recipientInfo = Recipient::findOrFail($id);
-        return view('admin.recipients.edit',
-        compact('recipientInfo'));
+        $spouseInfo = Spouse::findOrFail($id);
+        return view('admin.spouses.edit',
+        compact('spouseInfo'));
     }
 
     /**

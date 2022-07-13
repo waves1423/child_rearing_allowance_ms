@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Recipient;
+use App\Models\Obligor;
 use Illuminate\Http\Request;
 
-class RecipientController extends Controller
+class ObligorController extends Controller
 {
     public function __construct()
     {
@@ -19,10 +19,10 @@ class RecipientController extends Controller
      */
     public function index()
     {
-        $recipientInfo = Recipient::all();
-        
-        return view('admin.recipients.index',
-        compact('recipientInfo'));
+        $obligorInfo = Obligor::all();
+
+        return view('admin.obligors.index',
+        compact('obligorInfo'));
     }
 
     /**
@@ -54,9 +54,9 @@ class RecipientController extends Controller
      */
     public function edit($id)
     {
-        $recipientInfo = Recipient::findOrFail($id);
-        return view('admin.recipients.edit',
-        compact('recipientInfo'));
+        $obligorInfo = Obligor::findOrFail($id);
+        return view('admin.obligprs.edit',
+        compact('obligorInfo'));
     }
 
     /**
