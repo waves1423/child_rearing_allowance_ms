@@ -17,8 +17,18 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.index')">
+                    <x-nav-link :href="route('admin.recipients.index')" :active="request()->routeIs('admin.recipients.index')">
                         受給者一覧
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('admin.spouses.index')" :active="request()->routeIs('admin.spouses.index')">
+                        配偶者一覧
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('admin.obligors.index')" :active="request()->routeIs('admin.obligors.index')">
+                        扶養義務者一覧
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">

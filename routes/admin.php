@@ -10,6 +10,8 @@ use App\Http\Controllers\Admin\Auth\RegisteredUserController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\RecipientController;
+use App\Http\Controllers\Admin\SpouseController;
+use App\Http\Controllers\Admin\ObligorController;
 use App\Http\Controllers\Admin\CalculationController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,28 +31,20 @@ Route::get('/', function () {
 });
 
 Route::resource('users', UsersController::class)
-->middleware('auth:admin')->except(['show']);
-
-Route::controller(RecipientController::class)
-->prefix('recipients')
 ->middleware('auth:admin')
-->group(function(){
-    Route::get('/', 'index');
-    Route::get('edit/{recipientInfo}', 'edit');
-});
+->except(['show']);
 
-// Route::prefix('admin')
-// ->middleware('auth:admin')
-// ->group(function(){
-//     Route::get('recipients', [RecipientController::class, 'index'])
-//         ->name('recipients.index');
-// });
+Route::resource('recipients', RecipientController::class)
+->middleware('auth:admin')
+->except(['show']);
 
-/*
-add: controllers
-*/
-// Route::resource('recipients', RecipientController::class)
-// ->middleware('auth:admin')->except(['show']);
+Route::resource('spouses', SpouseController::class)
+->middleware('auth:admin')
+->except(['show']);
+
+Route::resource('obligors', ObligorController::class)
+->middleware('auth:admin')
+->except(['show']);
 
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
