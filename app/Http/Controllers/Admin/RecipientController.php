@@ -32,7 +32,7 @@ class RecipientController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.recipients.create');
     }
 
     /**
@@ -43,7 +43,12 @@ class RecipientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Recipient::create($request->all());
+
+        return redirect()
+        ->route('admin.recipients.index')
+        ->with(['message' => '受給者を登録しました。',
+        'status' => 'info']); 
     }
 
     /**
@@ -68,7 +73,7 @@ class RecipientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
     }
 
     /**
@@ -79,6 +84,11 @@ class RecipientController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Recipient::findOrFail($id)->delete();
+
+        return redirect()
+        ->route('admin.recipients.index')
+        ->with(['message' => '受給者を削除しました。',
+            'status' => 'alert']);
     }
 }
