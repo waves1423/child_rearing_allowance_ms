@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\Auth\NewPasswordController;
 use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\Auth\RegisteredUserController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
+use App\Http\Controllers\Admin\ListController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\RecipientController;
 use App\Http\Controllers\Admin\SpouseController;
@@ -25,9 +26,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('admin.welcome');
-});
+// Route::get('/list', function () {
+//     return view('admin.list');
+// })->middleware('auth:admin')
+// ->name('list');
+
+Route::resource('list', ListController::class)
+->middleware('auth:admin')
+->except(['show']);
 
 Route::resource('users', UsersController::class)
 ->middleware('auth:admin')
@@ -47,7 +53,8 @@ Route::resource('obligors', ObligorController::class)
 
 Route::get('/dashboard', function () {
     return view('admin.dashboard');
-})->middleware(['auth:admin'])->name('dashboard');
+})->middleware(['auth:admin'])
+->name('dashboard');
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
