@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('adress');
             $table->string('allowance_type');
             $table->boolean('is_submitted')->nullable();
-            $table->string('additonal_document')->nullable();
+            $table->string('additional_document')->nullable();
             $table->boolean('is_public_pentioner');
             $table->text('note')->nullable();
             $table->timestamps();
