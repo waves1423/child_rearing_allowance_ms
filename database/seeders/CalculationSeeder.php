@@ -17,31 +17,31 @@ class CalculationSeeder extends Seeder
     {
         DB::table('calculations')->insert([
             [
-                'recipient_id' => 1,
+                'id' => 1,
                 'deducted_income' => 100000
             ],
             [
-                'recipient_id' => 2,
+                'id' => 2,
                 'deducted_income' => 0
             ],
             [
-                'recipient_id' => 3,
+                'id' => 3,
                 'deducted_income' => 1230000
             ],
             [
-                'recipient_id' => 4,
+                'id' => 4,
                 'deducted_income' => 432000
             ],
             [
-                'recipient_id' => 5,
+                'id' => 5,
                 'deducted_income' => 3400000
             ],
             [
-                'recipient_id' => 6,
+                'id' => 6,
                 'deducted_income' => 0
             ],
             [
-                'obligor_id' => 1,
+                'id' => 7,
                 'deducted_income' => 600000
             ],
         ]);
