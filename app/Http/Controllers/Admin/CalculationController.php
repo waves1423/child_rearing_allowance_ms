@@ -1,11 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+use App\Models\Calculation;
 use Illuminate\Http\Request;
 
 class CalculationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +19,7 @@ class CalculationController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.calculations.index');
     }
 
     /**
@@ -56,7 +62,9 @@ class CalculationController extends Controller
      */
     public function edit($id)
     {
-        //
+        $calculation = Calculation::findOrFail($id);
+        return view('admin.calculations.edit',
+        compact('calculation'));
     }
 
     /**

@@ -12,7 +12,7 @@ use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\RecipientController;
 use App\Http\Controllers\Admin\SpouseController;
 use App\Http\Controllers\Admin\ObligorController;
-use App\Http\Controllers\CalculationController;
+use App\Http\Controllers\Admin\CalculationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,6 +38,10 @@ Route::resource('spouses', SpouseController::class)
 ->except(['show']);
 
 Route::resource('obligors', ObligorController::class)
+->middleware('auth:admin')
+->except(['show']);
+
+Route::resource('calculations', CalculationController::class)
 ->middleware('auth:admin')
 ->except(['show']);
 
