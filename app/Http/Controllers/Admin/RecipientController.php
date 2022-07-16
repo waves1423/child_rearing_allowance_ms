@@ -21,7 +21,7 @@ class RecipientController extends Controller
     {
         $recipients = Recipient::select('id', 'number', 'name', 'adress', 'is_submitted', 'additional_document', 'is_public_pentioner')
         ->get();
-        
+
         return view('admin.recipients.index',
         compact('recipients'));
     }
