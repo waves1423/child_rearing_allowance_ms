@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             AdminSeeder::class,
             RecipientSeeder::class,
+            SpouseSeeder::class,
+            ObligorSeeder::class,
             CalculationSeeder::class,
         ]);
     }

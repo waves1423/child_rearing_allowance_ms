@@ -40,6 +40,10 @@ class CalculationSeeder extends Seeder
                 'recipient_id' => 6,
                 'deducted_income' => 0
             ],
+            [
+                'obligor_id' => 1,
+                'deducted_income' => 600000
+            ],
         ]);
     }
 }
