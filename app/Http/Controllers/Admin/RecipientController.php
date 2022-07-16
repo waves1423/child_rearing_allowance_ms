@@ -19,10 +19,11 @@ class RecipientController extends Controller
      */
     public function index()
     {
-        $recipientInfo = Recipient::all();
+        $recipients = Recipient::select('id', 'number', 'name', 'adress', 'is_submitted', 'additional_document', 'is_public_pentioner')
+        ->get();
         
         return view('admin.recipients.index',
-        compact('recipientInfo'));
+        compact('recipients'));
     }
 
     /**
@@ -52,6 +53,19 @@ class RecipientController extends Controller
     }
 
     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $recipient = Recipient::findOrFail($id);
+        return view('admin.recipients.show',
+        compact('recipient'));
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -59,9 +73,9 @@ class RecipientController extends Controller
      */
     public function edit($id)
     {
-        $recipientInfo = Recipient::findOrFail($id);
+        $recipient = Recipient::findOrFail($id);
         return view('admin.recipients.edit',
-        compact('recipientInfo'));
+        compact('recipient'));
     }
 
     /**
