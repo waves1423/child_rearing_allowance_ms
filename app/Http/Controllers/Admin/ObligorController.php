@@ -19,10 +19,10 @@ class ObligorController extends Controller
      */
     public function index()
     {
-        $obligorInfo = Obligor::all();
+        $obligor = Obligor::all();
 
         return view('admin.obligors.index',
-        compact('obligorInfo'));
+        compact('obligor'));
     }
 
     /**
@@ -54,9 +54,9 @@ class ObligorController extends Controller
      */
     public function edit($id)
     {
-        $obligorInfo = Obligor::findOrFail($id);
-        return view('admin.obligprs.edit',
-        compact('obligorInfo'));
+        $obligor = Obligor::findOrFail($id);
+        return view('admin.obligors.edit',
+        compact('obligor'));
     }
 
     /**

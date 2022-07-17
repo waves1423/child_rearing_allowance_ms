@@ -5,14 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Spouse extends Model
+class Recipient_calculation extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'recipient_id',
-        'name',
-        'family_relationship',
+        'calculation_id',
     ];
 
     public function recipient()
@@ -20,8 +19,8 @@ class Spouse extends Model
         return $this->belongsTo(Recipient::class);
     }
 
-    public function spouse_calculation()
+    public function calculation()
     {
-        return $this->hasOne(Spouse_calculation::class);
+        return $this->belongsTo(Calculation::class);
     }
 }

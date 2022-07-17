@@ -17,7 +17,7 @@ class Recipient extends Model
         'adress',
         'allowance_type',
         'is_submitted',
-        'additonal_document',
+        'additional_document',
         'is_public_pentioner',
         'note',
     ];
@@ -35,5 +35,10 @@ class Recipient extends Model
     public function obligor()
     {
         return $this->hasOne(Obligor::class);
+    }
+
+    public function recipient_calculation()
+    {
+        return $this->hasOne(Recipient_calculation::class);
     }
 }

@@ -91,13 +91,13 @@
                                 <div class="relative">
                                   <label for="deducted_income" class="leading-7 text-sm text-gray-600">控除後所得</label>
                                   <div class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                    {{ $recipient->calculation->deducted_income }}</div>
+                                    {{ $recipient->recipient_calculation->calculation->deducted_income }}</div>
                                 </div>
                               </div>
 
                               <div class="p-2 w-full flex justify-around mt-4">
                                 <button type="button" onclick="location.href='{{ route('admin.recipients.edit', ['recipient' => $recipient->id]) }}'" class=" text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">基本情報編集</button>
-                                <button type="button" onclick="location.href='{{ route('admin.calculations.edit', ['calculation' => $recipient->calculation->recipient_id]) }}'" class=" bg-green-400 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">所得計算</button>
+                                <button type="button" onclick="location.href='{{ route('admin.calculations.edit', ['calculation' => $recipient->recipient_calculation->calculation->id]) }}'" class=" bg-green-400 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">所得計算</button>
                               </div>
 
                             </div>
@@ -119,36 +119,29 @@
                                 <div class="-m-2">
                                   <div class="p-2 mx-auto">
                                     <div class="relative">
-                                      <label for="number" class="leading-7 text-sm text-gray-600">三児扶</label>
-                                      <div class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                        {{ $recipient->number }}</div>
-                                    </div>
-                                  </div>
-                                  <div class="p-2 mx-auto">
-                                    <div class="relative">
                                       <label for="name" class="leading-7 text-sm text-gray-600">名前</label>
                                       <div class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                        {{ $recipient->name }}</div>
+                                        {{ $recipient->spouse->name }}</div>
                                     </div>
                                   </div>
                                   <div class="p-2 mx-auto">
                                     <div class="relative">
                                       <label for="family_relationship" class="leading-7 text-sm text-gray-600">続柄</label>
                                       <div class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                        {{ $recipient->sex }}</div>
+                                        {{ $recipient->spouse->family_relationship }}</div>
                                     </div>
                                   </div>
                                   <div class="p-2 mx-auto">
                                     <div class="relative">
                                       <label for="deducted_income" class="leading-7 text-sm text-gray-600">控除後所得</label>
                                       <div class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                        0</div>
+                                        {{ $recipient->spouse->spouse_calculation->calculation->deducted_income }}</div>
                                     </div>
                                   </div>    
     
                                   <div class="p-2 w-full flex justify-around mt-4">
-                                    <button type="button" onclick="location.href='{{ route('admin.recipients.edit', ['recipient' => $recipient->id]) }}'" class=" text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">基本情報編集</button>
-                                    <button type="button" onclick="location.href='{{ route('admin.calculations.edit', ['calculation' => $recipient->calculation->recipient_id]) }}'" class=" bg-green-400 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">所得計算</button>
+                                    <button type="button" onclick="location.href='{{ route('admin.spouses.edit', ['spouse' => $recipient->spouse->id]) }}'" class=" text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">基本情報編集</button>
+                                    <button type="button" onclick="location.href='{{ route('admin.calculations.edit', ['calculation' => $recipient->spouse->spouse_calculation->calculation->id]) }}'" class=" bg-green-400 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">所得計算</button>
                                   </div>
     
                                 </div>
@@ -169,36 +162,29 @@
                                 <div class="-m-2">
                                   <div class="p-2 mx-auto">
                                     <div class="relative">
-                                      <label for="number" class="leading-7 text-sm text-gray-600">三児扶</label>
-                                      <div class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                        {{ $recipient->number }}</div>
-                                    </div>
-                                  </div>
-                                  <div class="p-2 mx-auto">
-                                    <div class="relative">
                                       <label for="name" class="leading-7 text-sm text-gray-600">名前</label>
                                       <div class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                        {{ $recipient->name }}</div>
+                                        {{ $recipient->obligor->name }}</div>
                                     </div>
                                   </div>
                                   <div class="p-2 mx-auto">
                                     <div class="relative">
                                       <label for="family_relationship" class="leading-7 text-sm text-gray-600">続柄</label>
                                       <div class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                        {{ $recipient->sex }}</div>
+                                        {{ $recipient->obligor->family_relationship }}</div>
                                     </div>
                                   </div>
                                   <div class="p-2 mx-auto">
                                     <div class="relative">
                                       <label for="deducted_income" class="leading-7 text-sm text-gray-600">控除後所得</label>
                                       <div class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                        0</div>
+                                        {{ $recipient->obligor->obligor_calculation->calculation->deducted_income }}</div>
                                     </div>
                                   </div>    
     
                                   <div class="p-2 w-full flex justify-around mt-4">
-                                    <button type="button" onclick="location.href='{{ route('admin.recipients.edit', ['recipient' => $recipient->id]) }}'" class=" text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">基本情報編集</button>
-                                    <button type="button" onclick="location.href='{{ route('admin.calculations.edit', ['calculation' => $recipient->calculation->recipient_id]) }}'" class=" bg-green-400 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">所得計算</button>
+                                    <button type="button" onclick="location.href='{{ route('admin.obligors.edit', ['obligor' => $recipient->obligor->id]) }}'" class=" text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">基本情報編集</button>
+                                    <button type="button" onclick="location.href='{{ route('admin.calculations.edit', ['calculation' => $recipient->obligor->obligor_calculation->calculation->id]) }}'" class=" bg-green-400 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">所得計算</button>
                                   </div>
     
                                 </div>

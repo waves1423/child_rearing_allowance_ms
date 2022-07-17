@@ -10,25 +10,40 @@ class Calculation extends Model
     use HasFactory;
 
     protected $fillable = [
-        'recipient_id',
-        'spouse_id',
-        'obligor_id',
+        // 'recipient_id',
+        // 'spouse_id',
+        // 'obligor_id',
         'deducted_income',
     ];
 
-    public function recipient()
+    // public function recipient()
+    // {
+    //     return $this->belongsTo(Recipient::class);
+    // }
+
+    // public function spouse()
+    // {
+    //     return $this->belongsTo(Spouse::class);
+    // }
+
+    // public function obligor()
+    // {
+    //     return $this->belongsTo(Obligor::class);
+    // }
+
+    public function recipient_calculation()
     {
-        return $this->belongsTo(Recipient::class);
+        return $this->hasOne(Recipient_calculation::class);
     }
 
-    public function spouse()
+    public function spouse_calculation()
     {
-        return $this->belongsTo(Spouse::class);
+        return $this->hasOne(Spouse_calculation::class);
     }
 
-    public function obligor()
+    public function obligor_calculation()
     {
-        return $this->belongsTo(Obligor::class);
+        return $this->hasOne(Obligor_calculation::class);
     }
 
     public function dependent()

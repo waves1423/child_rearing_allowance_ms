@@ -19,9 +19,9 @@ class Obligor extends Model
     {
         return $this->belongsTo(Recipient::class);
     }
-
-    public function calculation()
+    
+    public function obligor_calculation()
     {
-        return $this->hasOne(Calculation::class);
+        return $this->hasOne(Obligor_calculation::class);
     }
 }

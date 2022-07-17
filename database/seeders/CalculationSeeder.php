@@ -44,6 +44,26 @@ class CalculationSeeder extends Seeder
                 'id' => 7,
                 'deducted_income' => 600000
             ],
+            [
+                'id' => 8,
+                'deducted_income' => 800000 
+            ],
+            [
+                'id' => 9,
+                'deducted_income' => 900000 
+            ],
+            [
+                'id' => 10,
+                'deducted_income' => 1000000 
+            ],
+            [
+                'id' => 11,
+                'deducted_income' => 1100000 
+            ],
+            [
+                'id' => 12,
+                'deducted_income' => 1200000 
+            ],
         ]);
     }
 }
