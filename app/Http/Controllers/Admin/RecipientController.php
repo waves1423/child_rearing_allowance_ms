@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Recipient;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class RecipientController extends Controller
 {
@@ -87,7 +90,31 @@ class RecipientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+        $recipient = Recipient::findOrFail($id);
+
+        try{
+            DB::transaction(function () use($request, $recipient) {
+                $recipient->number = $request->number;
+                $recipient->name = $request->name;
+                $recipient->sex = $request->sex;
+                $recipient->birth_date = $request->birth_date;
+                $recipient->adress = $request->adress;
+                $recipient->allowance_type = $request->allowance_type;
+                $recipient->is_submitted = $request->is_submitted;
+                $recipient->additional_document = $request->additional_document;
+                $recipient->is_public_pentioner = $request->is_public_pentioner;
+                $recipient->note = $request->note;
+                $recipient->save();
+            }, 2);
+        }catch(Throwable $e){
+            Log::error($e);
+            throw $e;
+        }
+
+        return redirect()
+        ->route('admin.recipients.show', ['recipient' => $recipient->id])
+        ->with(['message' => '受給者情報を更新しました。',
+        'status' => 'info']);
     }
 
     /**
