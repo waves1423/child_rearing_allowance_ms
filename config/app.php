@@ -210,7 +210,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
-        'RecipientConst' => App\Consts\RecipientConst::class,
+        'AllowanceType' => App\Enums\AllowanceType::class,
+        'Sex' => App\Enums\Sex::class,
     ])->toArray(),
 
 ];

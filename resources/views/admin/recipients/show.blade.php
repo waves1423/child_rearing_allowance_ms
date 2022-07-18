@@ -35,7 +35,12 @@
                                 <div class="relative">
                                   <label for="sex" class="leading-7 text-sm text-gray-600">性別</label>
                                   <div class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                    {{ $recipient->sex }}</div>
+                                    @if($recipient->sex === \Sex::Male->value)
+                                    {{ \Sex::Male->type() }}
+                                    @else
+                                    {{ \Sex::Female->type() }}
+                                    @endif
+                                  </div>
                                 </div>
                               </div>
                               <div class="p-2 mx-auto">
@@ -56,28 +61,49 @@
                                 <div class="relative">
                                   <label for="allowance_type" class="leading-7 text-sm text-gray-600">受給区分</label>
                                   <div class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                    {{ $recipient->allowance_type }}</div>
+                                    @if($recipient->allowance_type === \AllowanceType::Payment_full->value)
+                                    {{ \AllowanceType::Payment_full->type() }}
+                                    @elseif($recipient->allowance_type === \AllowanceType::Payment_partial->value)
+                                    {{ \AllowanceType::Payment_partial->type() }}
+                                    @else
+                                    {{ \AllowanceType::Payment_suspended->type() }}
+                                    @endif
+                                  </div>
                                 </div>
                               </div>
                               <div class="p-2 mx-auto">
                                 <div class="relative">
                                   <label for="is_submitted" class="leading-7 text-sm text-gray-600">現況届</label>
                                   <div class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                    {{ $recipient->is_submitted }}</div>
+                                    @if($recipient->is_submitted === 1)
+                                    提出済み
+                                    @else
+                                    未提出
+                                    @endif
+                                  </div>
                                 </div>
                               </div>
                               <div class="p-2 mx-auto">
                                 <div class="relative">
                                   <label for="additional_document" class="leading-7 text-sm text-gray-600">追加必要書類</label>
                                   <div class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                    {{ $recipient->additional_document }}</div>
+                                    @if($recipient->additional_document !== null)
+                                    {{ $recipient->additional_document }}
+                                    @else
+                                    -
+                                    @endif
+                                  </div>
                                 </div>
                               </div>
                               <div class="p-2 mx-auto">
                                 <div class="relative">
                                   <label for="is_public_pentioner" class="leading-7 text-sm text-gray-600">公的年金受給</label>
                                   <div class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                    {{ $recipient->is_public_pentioner }}</div>
+                                    @if($recipient->is_public_pentioner === 1)
+                                    受給中
+                                    @else
+                                    受給していない
+                                    @endif
                                 </div>
                               </div>
                               <div class="p-2 mx-auto">

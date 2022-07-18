@@ -12,7 +12,7 @@
 
                     <section class="text-gray-600 body-font">
                         <div class="container md:px-5 mx-auto">
-                            {{-- <x-flash-message status="session('status')" /> --}}
+                            <x-flash-message status="session('status')" />
                             <div class="flex justify-end mb-4">
                                 <button onclick="location.href='{{ route('admin.recipients.create') }}'" class=" text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-600 rounded text-lg">新規登録する</button>
                             </div>
@@ -31,29 +31,36 @@
                               </thead>
                               <tbody>
                                 @foreach ($recipients as $recipient)
-                                <tr class="hover:bg-gray-200" onclick="location.href='{{ route('admin.recipients.show', ['recipient' => $recipient->id]) }}'">
-                                  <td class="md:px-4 py-3">{{ $recipient->id }}</td>
-                                  <td class="md:px-4 py-3">{{ $recipient->number }}</td>
-                                  <td class="md:px-4 py-3">{{ $recipient->name }}</td>
-                                  <td class="md:px-4 py-3">{{ $recipient->adress }}</td>
-                                  <td class="md:px-4 py-3">{{ $recipient->is_submitted }}</td>
-                                  <td class="md:px-4 py-3">{{ $recipient->additional_document }}</td>
-                                  <td class="md:px-4 py-3">{{ $recipient->is_public_pentioner }}</td>
-                                  {{-- <td class="md:px-4 py-3">
-                                    <button onclick="location.href='{{ route('admin.owners.edit', ['owner' => $owner->id]) }}'" class=" text-white bg-indigo-400 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-500 rounded">編集</button>
+                                <tr class="hover:bg-gray-200 border" onclick="location.href='{{ route('admin.recipients.show', ['recipient' => $recipient->id]) }}'">
+                                  <td class="md:px-4 py-3 border">{{ $recipient->id }}</td>
+                                  <td class="md:px-4 py-3 border">{{ $recipient->number }}</td>
+                                  <td class="md:px-4 py-3 border">{{ $recipient->name }}</td>
+                                  <td class="md:px-4 py-3 border">{{ $recipient->adress }}</td>
+                                  <td class="md:px-4 py-3 border">
+                                    @if($recipient->is_submitted === 1)
+                                    提出済み
+                                    @else
+                                    -
+                                    @endif
                                   </td>
-                                  <form id="delete_{{$owner->id}}" method="POST" action="{{ route('admin.owners.destroy', ['owner' => $owner->id]) }}">
-                                    @csrf
-                                    @method('delete')
-                                    <td class="md:px-4 py-3">
-                                      <a href="#" data-id="{{ $owner->id }}" onclick="deletePost(this)" class=" text-white bg-red-400 border-0 py-2 px-4 focus:outline-none hover:bg-red-500 rounded">削除</a>
-                                    </td>
-                                  </form> --}}
+                                  <td class="md:px-4 py-3 border">
+                                    @if($recipient->additional_document !== null)
+                                    {{ $recipient->additional_document }}
+                                    @else
+                                    -
+                                    @endif
+                                  </td>
+                                  <td class="md:px-4 py-3 border">
+                                    @if($recipient->is_public_pentioner === 1)
+                                    公的年金受給中
+                                    @else
+                                    -
+                                    @endif
+                                  </td>
                                 </tr>
                                 @endforeach
                               </tbody>
                             </table>
-                            {{-- {{ $owners->links() }} --}}
                           </div>
                         </div>
                       </section>

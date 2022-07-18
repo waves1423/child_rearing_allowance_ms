@@ -18,10 +18,10 @@ return new class extends Migration
             $table->id();
             $table->string('number');
             $table->string('name');
-            $table->tinyInteger('sex');
+            $table->integer('sex');
             $table->date('birth_date');
             $table->string('adress');
-            $table->string('allowance_type');
+            $table->integer('allowance_type');
             $table->boolean('is_submitted')->nullable();
             $table->string('additional_document')->nullable();
             $table->boolean('is_public_pentioner');

@@ -20,7 +20,7 @@ return new class extends Migration
             ->onUpdate('cascade')
             ->onDelete('cascade');
             $table->unsignedInteger('income');
-            $table->string('type');
+            $table->integer('type');
             $table->unsignedInteger('deducted_income');
             $table->unsignedInteger('support_payment');
             $table->unsignedInteger('deducted_support_payment');

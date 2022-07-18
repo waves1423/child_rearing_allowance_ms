@@ -30,14 +30,13 @@
 
                             <div class="p-2 w-1/2 mx-auto">
                                 <label for="sex" class="leading-7 text-sm text-gray-600">性別</label>
-                                <div name="sex" class="relative">
-                                    <div>
-                                        <input type="radio" name="sex" value="{{ \RecipientConst::SEX_LIST['male'] }}" class="mr-2" @if($recipient->sex === 1){ checked } @endif>男
-                                    </div>
-                                    <div>
-                                        <input type="radio" name="sex" value="{{ \RecipientConst::SEX_LIST['female'] }}" class="mr-2" @if($recipient->sex === 2){ checked } @endif>女
-                                    </div>
-                                </div>
+                                <select id="sex" name="sex" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    @foreach ($sex_categories as $sex_category)
+                                        <option value="{{ $sex_category->value }}" @if($sex_category->value === $recipient->sex) selected @endif>
+                                            {{ $sex_category->type() }}
+                                        </option>
+                                    @endforeach
+                                </select>                                             
                             </div>
                             
                             <div class="p-2 w-1/2 mx-auto">
@@ -56,11 +55,12 @@
                                 <div class="relative">
                                 <label for="allowance_type" class="leading-7 text-sm text-gray-600">受給区分</label>
                                 <select id="allowance_type" name="allowance_type" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                    @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @foreach ($allowance_categories as $allowance_category)
+                                        <option value="{{ $allowance_category->value }}" @if($allowance_category->value === $recipient->allowance_type) selected @endif>
+                                            {{ $allowance_category->type() }}
+                                        </option>
                                     @endforeach
-                                </select>                                                       
-                                {{-- <input type="text" id="allowance_type" name="allowance_type" value="{{ $recipient->allowance_type }}" required class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"> --}}
+                                </select>                                                 
                                 </div>
                             </div>
                             <div class="p-2 w-1/2 mx-auto">
@@ -88,7 +88,7 @@
                                         <input type="radio" name="is_public_pentioner" value="1" class="mr-2" @if($recipient->is_public_pentioner === 1){ checked } @endif>受給中
                                     </div>
                                     <div>
-                                        <input type="radio" name="is_public_pentioner" value="0" class="mr-2" @if($recipient->is_public_pentioner === 0){ checked } @endif>受給なし
+                                        <input type="radio" name="is_public_pentioner" value="0" class="mr-2" @if($recipient->is_public_pentioner === 0){ checked } @endif>受給していない
                                     </div>
                                 </div>
                                 </div>

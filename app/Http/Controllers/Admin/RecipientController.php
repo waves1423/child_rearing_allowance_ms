@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Consts\RecipientConst;
+use App\Enums\Sex;
+use App\Enums\AllowanceType;
 use App\Http\Controllers\Controller;
 use App\Models\Recipient;
 use Illuminate\Http\Request;
@@ -65,6 +66,7 @@ class RecipientController extends Controller
     public function show($id)
     {
         $recipient = Recipient::findOrFail($id);
+
         return view('admin.recipients.show',
         compact('recipient'));
     }
@@ -78,11 +80,11 @@ class RecipientController extends Controller
     public function edit($id)
     {
         $recipient = Recipient::findOrFail($id);
-
-        $categories = RecipientConst::PAYMENT_LIST;
+        $sex_categories = Sex::cases();
+        $allowance_categories = AllowanceType::cases();
 
         return view('admin.recipients.edit',
-        compact('recipient', 'categories'));
+        compact('recipient', 'allowance_categories', 'sex_categories'));
     }
 
     /**
