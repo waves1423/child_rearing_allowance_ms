@@ -5,24 +5,15 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Spouse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class SpouseController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth:admin');
-    }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $spouseInfo = Spouse::all();
-
-        return view('admin.spouses.index',
-        compact('spouseInfo'));
     }
 
     /**
@@ -32,7 +23,7 @@ class SpouseController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.spouses.create');
     }
 
     /**
@@ -41,9 +32,15 @@ class SpouseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        //
+        Spouse::create($request->all());
+        $spouse = Spouse::findOrFail($id);
+
+        return redirect()
+        ->route('admin.recipients.show', ['recipient' => $spouse->recipient->id])
+        ->with(['message' => '配偶者を登録しました。',
+        'status' => 'info']); 
     }
 
     /**
@@ -54,9 +51,10 @@ class SpouseController extends Controller
      */
     public function edit($id)
     {
-        $spouseInfo = Spouse::findOrFail($id);
+        $spouse = Spouse::findOrFail($id);
+
         return view('admin.spouses.edit',
-        compact('spouseInfo'));
+        compact('spouse'));
     }
 
     /**
@@ -68,7 +66,23 @@ class SpouseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $spouse = Spouse::findOrFail($id);
+
+        try{
+            DB::transaction(function () use($request, $spouse) {
+                $spouse->name = $request->name;
+                $spouse->family_relationship = $request->family_relationship;
+                $spouse->save();
+            }, 2);
+        }catch(Throwable $e){
+            Log::error($e);
+            throw $e;
+        }
+
+        return redirect()
+        ->route('admin.recipients.show', ['recipient' => $spouse->recipient->id])
+        ->with(['message' => '配偶者情報を更新しました。',
+        'status' => 'info']);
     }
 
     /**
@@ -79,6 +93,12 @@ class SpouseController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $spouse = Spouse::findOrFail($id);
+        $spouse->delete();
+
+        return redirect()
+        ->route('admin.recipients.show', ['recipient' => $spouse->recipient->id])
+        ->with(['message' => '配偶者を削除しました。',
+        'status' => 'alert']);
     }
 }

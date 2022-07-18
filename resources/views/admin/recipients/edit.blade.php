@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            基本情報編集：{{ $recipient->name }}
+            受給者情報編集：{{ $recipient->name }}
         </h2>
     </x-slot>
 

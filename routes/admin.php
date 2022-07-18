@@ -35,11 +35,11 @@ Route::resource('recipients', RecipientController::class)
 
 Route::resource('spouses', SpouseController::class)
 ->middleware('auth:admin')
-->except(['show']);
+->except(['index', 'show']);
 
 Route::resource('obligors', ObligorController::class)
 ->middleware('auth:admin')
-->except(['show']);
+->except(['index', 'show']);
 
 Route::resource('calculations', CalculationController::class)
 ->middleware('auth:admin')
