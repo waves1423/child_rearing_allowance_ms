@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
             $table->string('number');
             $table->string('name');
-            $table->string('sex');
+            $table->tinyInteger('sex');
             $table->date('birth_date');
             $table->string('adress');
             $table->string('allowance_type');

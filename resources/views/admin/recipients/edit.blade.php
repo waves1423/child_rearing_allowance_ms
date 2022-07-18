@@ -18,7 +18,7 @@
                             <div class="p-2 w-1/2 mx-auto">
                                 <div class="relative">
                                 <label for="number" class="leading-7 text-sm text-gray-600">三児扶</label>
-                                <input type="text" id="number" name="number" value="{{ old('number', $recipient->number) }}" required class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                <input type="text" id="number" name="number" value="{{ $recipient->number }}" required class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                 </div>
                             </div>
                             <div class="p-2 w-1/2 mx-auto">
@@ -27,16 +27,23 @@
                                 <input type="text" id="name" name="name" value="{{ $recipient->name }}" required class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                 </div>
                             </div>
+
                             <div class="p-2 w-1/2 mx-auto">
-                                <div class="relative">
                                 <label for="sex" class="leading-7 text-sm text-gray-600">性別</label>
-                                <input type="text" id="sex" name="sex" value="{{ $recipient->sex }}" required class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                <div name="sex" class="relative">
+                                    <div>
+                                        <input type="radio" name="sex" value="{{ \RecipientConst::SEX_LIST['male'] }}" class="mr-2" @if($recipient->sex === 1){ checked } @endif>男
+                                    </div>
+                                    <div>
+                                        <input type="radio" name="sex" value="{{ \RecipientConst::SEX_LIST['female'] }}" class="mr-2" @if($recipient->sex === 2){ checked } @endif>女
+                                    </div>
                                 </div>
                             </div>
+                            
                             <div class="p-2 w-1/2 mx-auto">
                                 <div class="relative">
                                 <label for="birth_date" class="leading-7 text-sm text-gray-600">生年月日</label>
-                                <input type="text" id="birth_date" name="birth_date" value="{{ $recipient->birth_date }}" required class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                <input type="date" id="birth_date" name="birth_date" value="{{ $recipient->birth_date }}" required class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                 </div>
                             </div>
                             <div class="p-2 w-1/2 mx-auto">
@@ -48,13 +55,23 @@
                             <div class="p-2 w-1/2 mx-auto">
                                 <div class="relative">
                                 <label for="allowance_type" class="leading-7 text-sm text-gray-600">受給区分</label>
-                                <input type="text" id="allowance_type" name="allowance_type" value="{{ $recipient->allowance_type }}" required class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                <select id="allowance_type" name="allowance_type" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @endforeach
+                                </select>                                                       
+                                {{-- <input type="text" id="allowance_type" name="allowance_type" value="{{ $recipient->allowance_type }}" required class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"> --}}
                                 </div>
                             </div>
                             <div class="p-2 w-1/2 mx-auto">
-                                <div class="relative">
                                 <label for="is_submitted" class="leading-7 text-sm text-gray-600">現況届</label>
-                                <input type="text" id="is_submitted" name="is_submitted" value="{{ $recipient->is_submitted }}" required class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                <div name="is_submitted" class="relative">
+                                    <div>
+                                        <input type="radio" name="is_submitted" value="1" class="mr-2" @if($recipient->is_submitted === 1){ checked } @endif>提出済み
+                                    </div>
+                                    <div>
+                                        <input type="radio" name="is_submitted" value="0" class="mr-2" @if($recipient->is_submitted === 0){ checked } @endif>未提出
+                                    </div>
                                 </div>
                             </div>
                             <div class="p-2 w-1/2 mx-auto">
@@ -66,7 +83,14 @@
                             <div class="p-2 w-1/2 mx-auto">
                                 <div class="relative">
                                 <label for="is_public_pentioner" class="leading-7 text-sm text-gray-600">公的年金受給</label>
-                                <input type="text" id="is_public_pentioner" name="is_public_pentioner" value="{{ $recipient->is_public_pentioner }}" required class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                <div name="is_public_pentioner" class="relative">
+                                    <div>
+                                        <input type="radio" name="is_public_pentioner" value="1" class="mr-2" @if($recipient->is_public_pentioner === 1){ checked } @endif>受給中
+                                    </div>
+                                    <div>
+                                        <input type="radio" name="is_public_pentioner" value="0" class="mr-2" @if($recipient->is_public_pentioner === 0){ checked } @endif>受給なし
+                                    </div>
+                                </div>
                                 </div>
                             </div>
                             <div class="p-2 w-1/2 mx-auto">

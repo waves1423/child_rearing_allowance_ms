@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Consts\RecipientConst;
 use App\Http\Controllers\Controller;
 use App\Models\Recipient;
 use Illuminate\Http\Request;
@@ -77,8 +78,11 @@ class RecipientController extends Controller
     public function edit($id)
     {
         $recipient = Recipient::findOrFail($id);
+
+        $categories = RecipientConst::PAYMENT_LIST;
+
         return view('admin.recipients.edit',
-        compact('recipient'));
+        compact('recipient', 'categories'));
     }
 
     /**
