@@ -44,7 +44,7 @@
                                     @endif
                                   </td>
                                   <td class="md:px-4 py-3 border">
-                                    @if($recipient->additional_document !== null)
+                                    @if(isset($recipient->additional_document))
                                     {{ $recipient->additional_document }}
                                     @else
                                     -

@@ -87,7 +87,7 @@
                                 <div class="relative">
                                   <label for="additional_document" class="leading-7 text-sm text-gray-600">追加必要書類</label>
                                   <div class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                    @if($recipient->additional_document !== null)
+                                    @if(isset($recipient->additional_document))
                                     {{ $recipient->additional_document }}
                                     @else
                                     -
@@ -117,13 +117,22 @@
                                 <div class="relative">
                                   <label for="deducted_income" class="leading-7 text-sm text-gray-600">控除後所得</label>
                                   <div class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                                    {{ $recipient->recipient_calculation->calculation->deducted_income }}</div>
+                                    @if(isset($recipient->recipient_calculation->calculation->deducted_income))
+                                    {{ $recipient->recipient_calculation->calculation->deducted_income }}
+                                    @else
+                                    未算定
+                                    @endif
+                                  </div>
                                 </div>
                               </div>
 
                               <div class="p-2 w-full flex justify-around mt-4">
                                 <button type="button" onclick="location.href='{{ route('admin.recipients.edit', ['recipient' => $recipient->id]) }}'" class=" text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">基本情報編集</button>
+                                @if(isset($recipient->recipient_calculation->calculation->id))
                                 <button type="button" onclick="location.href='{{ route('admin.calculations.edit', ['calculation' => $recipient->recipient_calculation->calculation->id]) }}'" class=" bg-green-400 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">所得計算</button>
+                                @else
+                                <button type="button" onclick="location.href='{{ route('admin.calculations.create') }}'" class=" bg-green-400 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">所得計算</button>
+                                @endif
                               </div>
                             </div>
                           </div>

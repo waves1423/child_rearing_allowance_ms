@@ -4,7 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Calculation;
+use App\Models\Recipient;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class CalculationController extends Controller
 {
@@ -29,7 +33,7 @@ class CalculationController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.calculations.create');
     }
 
     /**

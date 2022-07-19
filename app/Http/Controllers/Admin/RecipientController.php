@@ -6,7 +6,7 @@ use App\Enums\Sex;
 use App\Enums\AllowanceType;
 use App\Http\Controllers\Controller;
 use App\Models\Recipient;
-use Illuminate\Http\Request;
+use App\Http\Requests\RecipientRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Throwable;
@@ -38,7 +38,11 @@ class RecipientController extends Controller
      */
     public function create()
     {
-        return view('admin.recipients.create');
+        $sex_categories = Sex::cases();
+        $allowance_categories = AllowanceType::cases();
+
+        return view('admin.recipients.create',
+        compact('sex_categories', 'allowance_categories'));
     }
 
     /**
@@ -47,13 +51,31 @@ class RecipientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RecipientRequest $request)
     {
-        Recipient::create($request->all());
+        try{
+            DB::transaction(function () use($request) {
+                Recipient::create([
+                    'number' => $request->number,
+                    'name' => $request->name,
+                    'sex' => $request->sex,
+                    'birth_date' => $request->birth_date,
+                    'adress' => $request->adress,
+                    'allowance_type' => $request->allowance_type,
+                    'is_submitted' => $request->is_submitted,
+                    'additional_document' => $request->additional_document,
+                    'is_public_pentioner' => $request->is_public_pentioner,
+                    'note' => $request->note  
+                ]);
+            }, 2);
+        }catch(Throwable $e){
+            Log::error($e);
+            throw $e;
+        }
 
         return redirect()
-        ->route('admin.recipients.index')
-        ->with(['message' => '受給者を登録しました。',
+        ->route('admin.recipients.show', ['recipient' => $request->id])
+        ->with(['message' => '受給者を新規登録しました。',
         'status' => 'info']); 
     }
 
@@ -94,7 +116,7 @@ class RecipientController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(RecipientRequest $request, $id)
     {
         $recipient = Recipient::findOrFail($id);
 

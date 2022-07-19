@@ -10,7 +10,6 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <x-auth-validation-errors class="mb-4" :errors="$errors" />
-                    <x-flash-message status="session('status')" />
                     <form method="POST" action="{{ route('admin.recipients.update', ['recipient' => $recipient->id]) }}">        
                         @csrf
                         @method('put')
@@ -18,16 +17,15 @@
                             <div class="p-2 w-1/2 mx-auto">
                                 <div class="relative">
                                 <label for="number" class="leading-7 text-sm text-gray-600">三児扶</label>
-                                <input type="text" id="number" name="number" value="{{ $recipient->number }}" required class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                <input type="text" id="number" name="number" value="{{ old('number', $recipient->number) }}" required class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                 </div>
                             </div>
                             <div class="p-2 w-1/2 mx-auto">
                                 <div class="relative">
                                 <label for="name" class="leading-7 text-sm text-gray-600">名前</label>
-                                <input type="text" id="name" name="name" value="{{ $recipient->name }}" required class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                <input type="text" id="name" name="name" value="{{ old('name', $recipient->name) }}" required class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                 </div>
                             </div>
-
                             <div class="p-2 w-1/2 mx-auto">
                                 <label for="sex" class="leading-7 text-sm text-gray-600">性別</label>
                                 <select id="sex" name="sex" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
@@ -38,17 +36,16 @@
                                     @endforeach
                                 </select>                                             
                             </div>
-                            
                             <div class="p-2 w-1/2 mx-auto">
                                 <div class="relative">
                                 <label for="birth_date" class="leading-7 text-sm text-gray-600">生年月日</label>
-                                <input type="date" id="birth_date" name="birth_date" value="{{ $recipient->birth_date }}" required class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                <input type="date" id="birth_date" name="birth_date" value="{{ old('birth_date', $recipient->birth_date) }}" required class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                 </div>
                             </div>
                             <div class="p-2 w-1/2 mx-auto">
                                 <div class="relative">
                                 <label for="adress" class="leading-7 text-sm text-gray-600">住所</label>
-                                <input type="text" id="adress" name="adress" value="{{ $recipient->adress }}" required class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                <input type="text" id="adress" name="adress" value="{{ old('adress', $recipient->adress) }}" required class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                 </div>
                             </div>
                             <div class="p-2 w-1/2 mx-auto">
@@ -77,7 +74,7 @@
                             <div class="p-2 w-1/2 mx-auto">
                                 <div class="relative">
                                 <label for="additional_document" class="leading-7 text-sm text-gray-600">追加必要書類</label>
-                                <input type="text" id="additional_document" name="additional_document" value="{{ $recipient->additional_document }}" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                <input type="text" id="additional_document" name="additional_document" value="{{ old('additional_document', $recipient->additional_document) }}" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                                 </div>
                             </div>
                             <div class="p-2 w-1/2 mx-auto">
@@ -96,7 +93,7 @@
                             <div class="p-2 w-1/2 mx-auto">
                                 <div class="relative">
                                 <label for="note" class="leading-7 text-sm text-gray-600">特記事項</label>
-                                <textarea id="note" name="note" rows="4" class="w-full bg-gray-100 bg-opacity-50 rounded border focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">{{ $recipient->note }}</textarea>
+                                <textarea id="note" name="note" rows="4" class="w-full bg-gray-100 bg-opacity-50 rounded border focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">{{ old('note', $recipient->note) }}</textarea>
                                 </div>
                             </div>
 
