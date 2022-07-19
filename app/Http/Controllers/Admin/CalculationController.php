@@ -33,7 +33,10 @@ class CalculationController extends Controller
      */
     public function create()
     {
-        return view('admin.calculations.create');
+        $session = session()->all();
+    
+        return view('admin.calculations.create',
+        compact('session'));
     }
 
     /**

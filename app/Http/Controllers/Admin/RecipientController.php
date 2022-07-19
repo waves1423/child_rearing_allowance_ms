@@ -74,7 +74,7 @@ class RecipientController extends Controller
         }
 
         return redirect()
-        ->route('admin.recipients.show', ['recipient' => $request->id])
+        ->route('admin.recipients.index')
         ->with(['message' => '受給者を新規登録しました。',
         'status' => 'info']); 
     }

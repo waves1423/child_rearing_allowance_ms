@@ -1,1 +1,1 @@
-@dd($recipient);
+@dd($session);
