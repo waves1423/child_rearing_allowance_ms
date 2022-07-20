@@ -18,50 +18,65 @@ class CalculationSeeder extends Seeder
         DB::table('calculations')->insert([
             [
                 'id' => 1,
+                'recipient_id' => 1,
+                'spouse_id' => null,
+                'obligor_id' => null,
                 'deducted_income' => 100000
             ],
             [
                 'id' => 2,
+                'recipient_id' => 2,
+                'spouse_id' => null,
+                'obligor_id' => null,
                 'deducted_income' => 0
             ],
             [
                 'id' => 3,
+                'recipient_id' => 3,
+                'spouse_id' => null,
+                'obligor_id' => null,
                 'deducted_income' => 1230000
             ],
             [
                 'id' => 4,
+                'recipient_id' => 4,
+                'spouse_id' => null,
+                'obligor_id' => null,
                 'deducted_income' => 432000
             ],
             [
                 'id' => 5,
+                'recipient_id' => 5,
+                'spouse_id' => null,
+                'obligor_id' => null,
                 'deducted_income' => 3400000
             ],
             [
                 'id' => 6,
+                'recipient_id' => 6,
+                'spouse_id' => null,
+                'obligor_id' => null,
                 'deducted_income' => 0
             ],
             [
                 'id' => 7,
-                'deducted_income' => 600000
-            ],
-            [
-                'id' => 8,
-                'deducted_income' => 800000 
-            ],
-            [
-                'id' => 9,
-                'deducted_income' => 900000 
-            ],
-            [
-                'id' => 10,
+                'recipient_id' => null,
+                'spouse_id' => 1,
+                'obligor_id' => null,
                 'deducted_income' => 1000000 
             ],
             [
-                'id' => 11,
+                'id' => 8,
+                'recipient_id' => null,
+                'spouse_id' => null,
+                'obligor_id' => 1,
                 'deducted_income' => 1100000 
             ],
             [
-                'id' => 12,
+                'id' => 9,
+                'recipient_id' => null,
+                'spouse_id' => null,
+                'obligor_id' => 2,
                 'deducted_income' => 1200000 
             ],
         ]);

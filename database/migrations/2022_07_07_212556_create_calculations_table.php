@@ -15,7 +15,23 @@ return new class extends Migration
     {
         Schema::create('calculations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('deducted_income');
+            $table->foreignId('recipient_id')
+            ->nullable()
+            ->constrained('recipients')
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
+            $table->foreignId('spouse_id')
+            ->nullable()
+            ->constrained('spouses')
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
+            $table->foreignId('obligor_id')
+            ->nullable()
+            ->constrained('obligors')
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
+            $table->unsignedInteger('deducted_income')
+            ->nullable();
             $table->timestamps();
         });
     }

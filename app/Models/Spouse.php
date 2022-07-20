@@ -20,8 +20,13 @@ class Spouse extends Model
         return $this->belongsTo(Recipient::class);
     }
 
-    public function spouse_calculation()
+    public function calculation()
     {
-        return $this->hasOne(Spouse_calculation::class);
+        return $this->hasOne(Calculation::class);
     }
+
+    // public function spouse_calculation()
+    // {
+    //     return $this->hasOne(Spouse_calculation::class);
+    // }
 }

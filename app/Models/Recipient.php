@@ -37,8 +37,8 @@ class Recipient extends Model
         return $this->hasOne(Obligor::class);
     }
 
-    public function recipient_calculation()
-    {
-        return $this->hasOne(Recipient_calculation::class);
-    }
+    // public function recipient_calculation()
+    // {
+    //     return $this->hasOne(Recipient_calculation::class);
+    // }
 }
