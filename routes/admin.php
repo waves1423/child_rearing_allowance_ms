@@ -41,7 +41,15 @@ Route::resource('obligors', ObligorController::class)
 ->middleware('auth:admin')
 ->except(['index', 'show']);
 
-Route::resource('calculations', CalculationController::class)
+Route::resource('recipients.calculations', CalculationController::class)
+->middleware('auth:admin')
+->except(['show']);
+
+Route::resource('spouses.calculations', CalculationController::class)
+->middleware('auth:admin')
+->except(['show']);
+
+Route::resource('obligors.calculations', CalculationController::class)
 ->middleware('auth:admin')
 ->except(['show']);
 

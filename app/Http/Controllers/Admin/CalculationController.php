@@ -32,11 +32,8 @@ class CalculationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        $session = session()->all();
-    
-        return view('admin.calculations.create',
-        compact('session'));
+    {    
+        return view('admin.calculations.create');
     }
 
     /**
