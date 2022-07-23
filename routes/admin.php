@@ -33,25 +33,25 @@ Route::resource('users', UsersController::class)
 Route::resource('recipients', RecipientController::class)
 ->middleware('auth:admin');
 
-Route::resource('spouses', SpouseController::class)
+Route::resource('recipients.spouses', SpouseController::class)
 ->middleware('auth:admin')
 ->except(['index', 'show']);
 
-Route::resource('obligors', ObligorController::class)
+Route::resource('recipients.obligors', ObligorController::class)
 ->middleware('auth:admin')
 ->except(['index', 'show']);
 
 Route::resource('recipients.calculations', CalculationController::class)
 ->middleware('auth:admin')
-->except(['show']);
+->except(['index', 'show']);
 
 Route::resource('spouses.calculations', CalculationController::class)
 ->middleware('auth:admin')
-->except(['show']);
+->except(['index', 'show']);
 
 Route::resource('obligors.calculations', CalculationController::class)
 ->middleware('auth:admin')
-->except(['show']);
+->except(['index', 'show']);
 
 // Route::get('/dashboard', function () {
 //     return view('admin.dashboard');

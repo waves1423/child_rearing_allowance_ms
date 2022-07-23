@@ -1,1 +1,1 @@
-@dd('admin.calculations.create');
+@dd($recipient->name);

@@ -31,9 +31,12 @@ class CalculationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {    
-        return view('admin.calculations.create');
+        $recipient = Recipient::findOrFail($id);
+
+        return view('admin.calculations.create',
+        compact('recipient'));
     }
 
     /**
