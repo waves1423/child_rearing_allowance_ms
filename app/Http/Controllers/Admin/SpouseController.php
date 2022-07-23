@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Recipient;
 use App\Models\Spouse;
-use Illuminate\Http\Request;
+use App\Http\Requests\SpouseRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Throwable;
@@ -21,9 +22,12 @@ class SpouseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        return view('admin.spouses.create');
+        $recipient = Recipient::findOrFail($id);
+
+        return view('admin.spouses.create',
+        compact('recipient'));
     }
 
     /**
@@ -32,14 +36,26 @@ class SpouseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $id)
+    public function store(SpouseRequest $request, $id)
     {
-        Spouse::create($request->all());
-        $spouse = Spouse::findOrFail($id);
+        $recipient = Recipient::findOrFail($id);
+
+        try{
+            DB::transaction(function () use($request, $recipient) {
+                Spouse::create([
+                    'recipient_id' => $recipient->id,
+                    'name' => $request->name,
+                    'family_relationship' => $request->family_relationship,
+                ]);
+            }, 2);
+        }catch(Throwable $e){
+            Log::error($e);
+            throw $e;
+        }
 
         return redirect()
-        ->route('admin.recipients.show', ['recipient' => $spouse->recipient->id])
-        ->with(['message' => '配偶者を登録しました。',
+        ->route('admin.recipients.show', ['recipient' => $recipient->id])
+        ->with(['message' => '配偶者を新規登録しました。',
         'status' => 'info']); 
     }
 
@@ -51,10 +67,11 @@ class SpouseController extends Controller
      */
     public function edit($id)
     {
-        $spouse = Spouse::findOrFail($id);
+        $recipient = Recipient::findOrFail($id);
+        $spouse = Spouse::findOrFail($recipient->spouse->id);
 
         return view('admin.spouses.edit',
-        compact('spouse'));
+        compact('recipient', 'spouse'));
     }
 
     /**
@@ -64,7 +81,7 @@ class SpouseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(SpouseRequest $request, $id)
     {
         $spouse = Spouse::findOrFail($id);
 

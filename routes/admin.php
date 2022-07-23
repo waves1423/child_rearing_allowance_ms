@@ -45,11 +45,11 @@ Route::resource('recipients.calculations', CalculationController::class)
 ->middleware('auth:admin')
 ->except(['index', 'show']);
 
-Route::resource('spouses.calculations', CalculationController::class)
+Route::resource('recipients.spouses.calculations', CalculationController::class)
 ->middleware('auth:admin')
 ->except(['index', 'show']);
 
-Route::resource('obligors.calculations', CalculationController::class)
+Route::resource('recipients.obligors.calculations', CalculationController::class)
 ->middleware('auth:admin')
 ->except(['index', 'show']);
 

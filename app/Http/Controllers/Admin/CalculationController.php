@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Calculation;
 use App\Models\Recipient;
+use App\Models\Calculation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -15,15 +15,6 @@ class CalculationController extends Controller
     public function __construct()
     {
         $this->middleware('auth:admin');
-    }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return view('admin.calculations.index');
     }
 
     /**
@@ -51,17 +42,6 @@ class CalculationController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -69,9 +49,11 @@ class CalculationController extends Controller
      */
     public function edit($id)
     {
-        $calculation = Calculation::findOrFail($id);
+        $recipient = Recipient::findOrFail($id);
+        $calculation = Calculation::findOrFail($recipient->calculation->id);
+
         return view('admin.calculations.edit',
-        compact('calculation'));
+        compact('recipient', 'calculation'));
     }
 
     /**

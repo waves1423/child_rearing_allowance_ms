@@ -1,1 +1,1 @@
-@dd($calculation);
+@dd($recipient->name, $recipient->calculation->id);

@@ -1,1 +1,0 @@
-@dd('calculation.index.blade')

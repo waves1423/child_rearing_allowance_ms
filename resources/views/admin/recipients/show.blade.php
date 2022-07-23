@@ -154,7 +154,7 @@
                               <div class="flex flex-col text-center w-full mb-4">
                                 <h1 class="sm:text-3xl text-2xl font-medium title-font text-gray-900">配偶者</h1>
                               </div>
-                              @if($recipient->spouse !== null)
+                              @if(isset($recipient->spouse))
                               <div class="lg:w-10/12 md:w-2/3 mx-auto">
                                 <div class="-m-2">
                                   <div class="p-2 mx-auto">
@@ -185,18 +185,18 @@
                                   </div>    
     
                                   <div class="p-2 w-full flex justify-around mt-4">
-                                    <button type="button" onclick="location.href='{{ route('admin.spouses.edit', ['spouse' => $recipient->spouse->id]) }}'" class=" text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">基本情報編集</button>
+                                    <button type="button" onclick="location.href='{{ route('admin.recipients.spouses.edit', ['recipient' => $recipient->id, 'spouse' => $recipient->spouse->id]) }}'" class=" text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">基本情報編集</button>
                                     @if(isset($recipient->spouse->calculation->id))
-                                    <button type="button" onclick="location.href='{{ route('admin.spouses.calculations.edit', ['spouse' => $recipient->spouse->id, 'calculation' => $recipient->spouse->calculation->id]) }}'" class=" bg-green-400 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">所得計算</button>
+                                    <button type="button" onclick="location.href='{{ route('admin.recipients.spouses.calculations.edit', ['recipient' => $recipient->id,'spouse' => $recipient->spouse->id, 'calculation' => $recipient->spouse->calculation->id]) }}'" class=" bg-green-400 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">所得計算</button>
                                     @else
-                                    <button type="button" onclick="location.href='{{ route('admin.spouses.calculations.create', ['spouse' => $recipient->spouse->id]) }}'" class=" bg-green-400 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">所得計算</button>
+                                    <button type="button" onclick="location.href='{{ route('admin.recipients.spouses.calculations.create', ['recipient' => $recipient->id, 'spouse' => $recipient->spouse->id]) }}'" class=" bg-green-400 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">所得計算</button>
                                     @endif
                                   </div>
                                 </div>
                               </div>
                               @else
                               <div class="flex justify-center">
-                                <button type="button" onclick="location.href='{{ route('admin.spouses.create') }}'" class=" text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-600 rounded text-lg">配偶者新規登録</button>
+                                <button type="button" onclick="location.href='{{ route('admin.recipients.spouses.create', ['recipient' => $recipient->id]) }}'" class=" text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-600 rounded text-lg">配偶者新規登録</button>
                               </div>
                               @endif
                             </div>
@@ -211,7 +211,7 @@
                               <div class="flex flex-col text-center w-full mb-4">
                                 <h1 class="sm:text-3xl text-2xl font-medium title-font text-gray-900">扶養義務者</h1>
                               </div>
-                              @if($recipient->obligor !== null)
+                              @if(isset($recipient->obligor))
                               <div class="lg:w-10/12 md:w-2/3 mx-auto">
                                 <div class="-m-2">
                                   <div class="p-2 mx-auto">
@@ -242,18 +242,18 @@
                                   </div>    
     
                                   <div class="p-2 w-full flex justify-around mt-4">
-                                    <button type="button" onclick="location.href='{{ route('admin.obligors.edit', ['obligor' => $recipient->obligor->id]) }}'" class=" text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">基本情報編集</button>
-                                    @if(isset($recipient->obligor->calculation->id))
-                                    <button type="button" onclick="location.href='{{ route('admin.obligors.calculations.edit', ['obligor' => $recipient->obligor->id, 'calculation' => $recipient->obligor->calculation->id]) }}'" class=" bg-green-400 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">所得計算</button>
+                                    <button type="button" onclick="location.href='{{ route('admin.recipients.obligors.edit', ['recipient' => $recipient->id, 'obligor' => $recipient->obligor->id]) }}'" class=" text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">基本情報編集</button>
+                                    @if(isset($recipient->obligor->calculation))
+                                    <button type="button" onclick="location.href='{{ route('admin.recipients.obligors.calculations.edit', ['recipient' => $recipient->id, 'obligor' => $recipient->obligor->id, 'calculation' => $recipient->obligor->calculation->id]) }}'" class=" bg-green-400 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">所得計算</button>
                                     @else
-                                    <button type="button" onclick="location.href='{{ route('admin.obligors.calculations.create', ['obligor' => $recipient->obligor->id]) }}'" class=" bg-green-400 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">所得計算</button>
+                                    <button type="button" onclick="location.href='{{ route('admin.recipients.obligors.calculations.create', ['recipient' => $recipient->id, 'obligor' => $recipient->obligor->id]) }}'" class=" bg-green-400 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">所得計算</button>
                                     @endif
                                   </div>
                                 </div>
                               </div>
                               @else
                               <div class="flex justify-center">
-                                <button type="button" onclick="location.href='{{ route('admin.obligors.create') }}'" class=" text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-600 rounded text-lg">扶養義務者新規登録</button>
+                                <button type="button" onclick="location.href='{{ route('admin.recipients.obligors.create', ['recipient' => $recipient->id]) }}'" class=" text-white bg-blue-500 border-0 py-2 px-8 focus:outline-none hover:bg-blue-600 rounded text-lg">扶養義務者新規登録</button>
                               </div>
                               @endif
                             </div>
