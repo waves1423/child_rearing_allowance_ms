@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Recipient;
 use App\Models\Obligor;
-use Illuminate\Http\Request;
+use App\Http\Requests\ObligorRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Throwable;
@@ -21,9 +22,12 @@ class ObligorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        return view('admin.obligors.create');
+        $recipient = Recipient::findOrFail($id);
+
+        return view('admin.obligors.create',
+        compact('recipient'));
     }
 
     /**
@@ -32,14 +36,24 @@ class ObligorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $id)
+    public function store(ObligorRequest $request, $id)
     {
-        Obligor::create($request->all());
-        $obligor = Obligor::findOrFail($id);
+        try{
+            DB::transaction(function () use($request, $id) {
+                Obligor::create([
+                    'recipient_id' => $id,
+                    'name' => $request->name,
+                    'family_relationship' => $request->family_relationship,
+                ]);
+            }, 2);
+        }catch(Throwable $e){
+            Log::error($e);
+            throw $e;
+        }
 
         return redirect()
-        ->route('admin.recipients.show', ['recipient' => $obligor->recipient->id])
-        ->with(['message' => '扶養義務者を登録しました。',
+        ->route('admin.recipients.show', ['recipient' => $id])
+        ->with(['message' => '扶養義務者を新規登録しました。',
         'status' => 'info']); 
     }
 
@@ -51,10 +65,11 @@ class ObligorController extends Controller
      */
     public function edit($id)
     {
-        $obligor = Obligor::findOrFail($id);
+        $recipient = Recipient::findOrFail($id);
+        $obligor = Obligor::findOrFail($recipient->obligor->id);
 
         return view('admin.obligors.edit',
-        compact('obligor'));
+        compact('recipient', 'obligor'));
     }
 
     /**
@@ -64,9 +79,10 @@ class ObligorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ObligorRequest $request, $id)
     {
-        $obligor = Obligor::findOrFail($id);
+        $recipient = Recipient::findOrFail($id);
+        $obligor = Obligor::findOrFail($recipient->obligor->id);
 
         try{
             DB::transaction(function () use($request, $obligor) {
@@ -80,7 +96,7 @@ class ObligorController extends Controller
         }
 
         return redirect()
-        ->route('admin.recipients.show', ['recipient' => $obligor->recipient->id])
+        ->route('admin.recipients.show', ['recipient' => $id])
         ->with(['message' => '扶養義務者情報を更新しました。',
         'status' => 'info']);
     }

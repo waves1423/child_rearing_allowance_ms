@@ -24,9 +24,4 @@ class Obligor extends Model
     {
         return $this->hasOne(Calculation::class);
     }
-
-    // public function obligor_calculation()
-    // {
-    //     return $this->hasOne(Obligor_calculation::class);
-    // }
 }

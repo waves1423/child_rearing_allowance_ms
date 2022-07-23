@@ -38,12 +38,10 @@ class SpouseController extends Controller
      */
     public function store(SpouseRequest $request, $id)
     {
-        $recipient = Recipient::findOrFail($id);
-
         try{
-            DB::transaction(function () use($request, $recipient) {
+            DB::transaction(function () use($request, $id) {
                 Spouse::create([
-                    'recipient_id' => $recipient->id,
+                    'recipient_id' => $id,
                     'name' => $request->name,
                     'family_relationship' => $request->family_relationship,
                 ]);
@@ -54,7 +52,7 @@ class SpouseController extends Controller
         }
 
         return redirect()
-        ->route('admin.recipients.show', ['recipient' => $recipient->id])
+        ->route('admin.recipients.show', ['recipient' => $id])
         ->with(['message' => '配偶者を新規登録しました。',
         'status' => 'info']); 
     }
@@ -83,7 +81,8 @@ class SpouseController extends Controller
      */
     public function update(SpouseRequest $request, $id)
     {
-        $spouse = Spouse::findOrFail($id);
+        $recipient = Recipient::findOrFail($id);
+        $spouse = Spouse::findOrFail($recipient->spouse->id);
 
         try{
             DB::transaction(function () use($request, $spouse) {
@@ -97,7 +96,7 @@ class SpouseController extends Controller
         }
 
         return redirect()
-        ->route('admin.recipients.show', ['recipient' => $spouse->recipient->id])
+        ->route('admin.recipients.show', ['recipient' => $id])
         ->with(['message' => '配偶者情報を更新しました。',
         'status' => 'info']);
     }

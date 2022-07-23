@@ -24,9 +24,4 @@ class Spouse extends Model
     {
         return $this->hasOne(Calculation::class);
     }
-
-    // public function spouse_calculation()
-    // {
-    //     return $this->hasOne(Spouse_calculation::class);
-    // }
 }
