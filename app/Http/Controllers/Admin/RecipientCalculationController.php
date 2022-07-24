@@ -49,6 +49,7 @@ class RecipientCalculationController extends Controller
                 ]);
                 Dependent::create([
                     'calculation_id' => $calculation->id,
+                    'total' => $request->total,
                     'elder' => $request->elder,
                     'special' => $request->special,
                     'year_old_16to18' => $request->year_old_16to18,
@@ -118,6 +119,7 @@ class RecipientCalculationController extends Controller
                 $calculation->deducted_income = $request->deducted_income;
                 $calculation->save();
 
+                $dependent->total = $request->total;
                 $dependent->elder = $request->elder;
                 $dependent->special = $request->special;
                 $dependent->year_old_16to18 = $request->year_old_16to18;
