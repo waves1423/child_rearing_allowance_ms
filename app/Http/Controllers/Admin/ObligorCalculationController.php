@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Recipient;
-use App\Models\Obligor;
-use App\Http\Requests\ObligorRequest;
+use App\Models\Calculation;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
-class ObligorController extends Controller
+class ObligorCalculationController extends Controller
 {
     public function __construct()
     {
@@ -23,10 +23,10 @@ class ObligorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create($id)
-    {
+    {    
         $recipient = Recipient::findOrFail($id);
 
-        return view('admin.obligors.create',
+        return view('admin.calculations.create',
         compact('recipient'));
     }
 
@@ -36,14 +36,16 @@ class ObligorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ObligorRequest $request, $id)
+    public function store(Request $request, $id)
     {
+        $recipient = Recipient::findOrFail($id);
+
         try{
-            DB::transaction(function () use($request, $id) {
-                Obligor::create([
-                    'recipient_id' => $id,
-                    'name' => $request->name,
-                    'family_relationship' => $request->family_relationship,
+            DB::transaction(function () use($request, $recipient) {
+                Calculation::create([
+                    'obligor_id' => $recipient->obligor->id,
+                    //'deducted_income' => $request->deducted_income
+                    'deducted_income' => 9870
                 ]);
             }, 2);
         }catch(Throwable $e){
@@ -53,7 +55,7 @@ class ObligorController extends Controller
 
         return redirect()
         ->route('admin.recipients.show', ['recipient' => $id])
-        ->with(['message' => '扶養義務者を新規登録しました。',
+        ->with(['message' => '扶養義務者の所得情報を新規登録しました。',
         'status' => 'info']); 
     }
 
@@ -67,7 +69,7 @@ class ObligorController extends Controller
     {
         $recipient = Recipient::findOrFail($id);
 
-        return view('admin.obligors.edit',
+        return view('admin.calculations.edit',
         compact('recipient'));
     }
 
@@ -78,16 +80,15 @@ class ObligorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ObligorRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $recipient = Recipient::findOrFail($id);
-        $obligor = Obligor::findOrFail($recipient->obligor->id);
 
         try{
-            DB::transaction(function () use($request, $obligor) {
-                $obligor->name = $request->name;
-                $obligor->family_relationship = $request->family_relationship;
-                $obligor->save();
+            DB::transaction(function () use($request, $recipient) {
+                //$recipient->obligor->calculation->deducted_income = $request->deducted_incom
+                $recipient->obligor->calculation->deducted_income = 9870;
+                $recipient->obligor->calculation->save();
             }, 2);
         }catch(Throwable $e){
             Log::error($e);
@@ -96,8 +97,8 @@ class ObligorController extends Controller
 
         return redirect()
         ->route('admin.recipients.show', ['recipient' => $id])
-        ->with(['message' => '扶養義務者情報を更新しました。',
-        'status' => 'info']);
+        ->with(['message' => '扶養義務者の所得情報を更新しました。',
+        'status' => 'info']); 
     }
 
     /**
@@ -108,12 +109,12 @@ class ObligorController extends Controller
      */
     public function destroy($id)
     {
-        $obligor = Obligor::findOrFail($id);
-        $obligor->delete();
+        $calculation = Calculation::findOrFail($id);
+        $calculation->delete();
 
         return redirect()
-        ->route('admin.recipients.show', ['recipient' => $obligor->recipient->id])
-        ->with(['message' => '扶養義務者を削除しました。',
+        ->route('admin.recipients.show', ['recipient' => $calculation->recipient->id])
+        ->with(['message' => '扶養義務者の所得情報を削除しました。',
         'status' => 'alert']);
     }
 }

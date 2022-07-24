@@ -12,7 +12,9 @@ use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\RecipientController;
 use App\Http\Controllers\Admin\SpouseController;
 use App\Http\Controllers\Admin\ObligorController;
-use App\Http\Controllers\Admin\CalculationController;
+use App\Http\Controllers\Admin\RecipientCalculationController;
+use App\Http\Controllers\Admin\SpouseCalculationController;
+use App\Http\Controllers\Admin\ObligorCalculationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,22 +43,17 @@ Route::resource('recipients.obligors', ObligorController::class)
 ->middleware('auth:admin')
 ->except(['index', 'show']);
 
-Route::resource('recipients.calculations', CalculationController::class)
+Route::resource('recipients.calculations', RecipientCalculationController::class)
 ->middleware('auth:admin')
 ->except(['index', 'show']);
 
-Route::resource('recipients.spouses.calculations', CalculationController::class)
+Route::resource('recipients.spouses.calculations', SpouseCalculationController::class)
 ->middleware('auth:admin')
 ->except(['index', 'show']);
 
-Route::resource('recipients.obligors.calculations', CalculationController::class)
+Route::resource('recipients.obligors.calculations', ObligorCalculationController::class)
 ->middleware('auth:admin')
 ->except(['index', 'show']);
-
-// Route::get('/dashboard', function () {
-//     return view('admin.dashboard');
-// })->middleware(['auth:admin'])
-// ->name('dashboard');
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])

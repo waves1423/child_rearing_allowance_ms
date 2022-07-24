@@ -66,10 +66,9 @@ class SpouseController extends Controller
     public function edit($id)
     {
         $recipient = Recipient::findOrFail($id);
-        $spouse = Spouse::findOrFail($recipient->spouse->id);
 
         return view('admin.spouses.edit',
-        compact('recipient', 'spouse'));
+        compact('recipient'));
     }
 
     /**
