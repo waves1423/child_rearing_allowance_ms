@@ -23,7 +23,7 @@ return new class extends Migration
             ->nullable();
             $table->tinyInteger('special')
             ->nullable();
-            $table->tinyInteger('16-18_year_old')
+            $table->tinyInteger('year_old_16to18')
             ->nullable();
             $table->tinyInteger('other_child')
             ->nullable();

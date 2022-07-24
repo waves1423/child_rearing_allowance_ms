@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Recipient;
 use App\Models\Calculation;
+use App\Models\Deduction;
+use App\Models\Dependent;
+use App\Models\Income;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -40,10 +43,34 @@ class RecipientCalculationController extends Controller
     {
         try{
             DB::transaction(function () use($request, $id) {
-                Calculation::create([
+                $calculation = Calculation::create([
                     'recipient_id' => $id,
-                    //'deducted_income' => $request->deducted_income
-                    'deducted_income' => 9870
+                    'deducted_income' => $request->deducted_income
+                ]);
+                Dependent::create([
+                    'calculation_id' => $calculation->id,
+                    'elder' => $request->elder,
+                    'special' => $request->special,
+                    'year_old_16to18' => $request->year_old_16to18,
+                    'other_child' => $request->other_child
+                ]);
+                Income::create([
+                    'calculation_id' => $calculation->id,
+                    'income' => $request->income,
+                    'type' => $request->type,
+                    'deducted_income' => $request->deducted_income,
+                    'support_payment' => $request->support_payment,
+                    'deducted_support_payment' => $request->deducted_support_payment
+                ]);
+                Deduction::create([
+                    'calculation_id' => $calculation->id,
+                    'disabled' => $request->disabled,
+                    'specially_disabled' => $request->specially_disabled,
+                    'singleparent_or_workingstudent' => $request->singleparent_or_workingstudent,
+                    'special_spouse' => $request->special_spouse,
+                    'small_enterprise' => $request->small_enterprise,
+                    'other' => $request->other,
+                    'common' => $request->common
                 ]);
             }, 2);
         }catch(Throwable $e){
@@ -81,12 +108,37 @@ class RecipientCalculationController extends Controller
     public function update(Request $request, $id)
     {
         $recipient = Recipient::findOrFail($id);
+        $calculation = Calculation::findOrFail($recipient->calculation->id);
+        $dependent = Dependent::findOrFail($calculation->dependent->id);
+        $income = Income::findOrFail($calculation->income->id);
+        $deduction = Deduction::findOrFail($calculation->deduction->id);
 
         try{
-            DB::transaction(function () use($request, $recipient) {
-                //$recipient->deducted_income = $request->deducted_incom
-                $recipient->calculation->deducted_income = 9870;
-                $recipient->calculation->save();
+            DB::transaction(function () use($request, $calculation, $dependent, $income, $deduction) {
+                $calculation->deducted_income = $request->deducted_income;
+                $calculation->save();
+
+                $dependent->elder = $request->elder;
+                $dependent->special = $request->special;
+                $dependent->year_old_16to18 = $request->year_old_16to18;
+                $dependent->other_child = $request->other_child;
+                $dependent->save();
+
+                $income->income = $request->income;
+                $income->type = $request->type;
+                $income->deducted_income = $request->deducted_income;
+                $income->support_payment = $request->support_payment;
+                $income->deducted_support_payment = $request->deducted_support_payment;
+                $income->save();
+            
+                $deduction->disabled = $request->disabled;
+                $deduction->specially_disabled = $request->specially_disabled;
+                $deduction->singleparent_or_workingstudent = $request->singleparent_or_workingstudent;
+                $deduction->special_spouse = $request->special_spouse;
+                $deduction->small_enterprise = $request->small_enterprise;
+                $deduction->other = $request->other;
+                $deduction->common = $request->common;
+                $deduction->save();
             }, 2);
         }catch(Throwable $e){
             Log::error($e);

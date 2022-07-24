@@ -13,7 +13,7 @@ class Dependent extends Model
         'calculation_id',
         'elder',
         'special',
-        '16-18_year_old',
+        'year_old_16to18',
         'other_child',
     ];
 

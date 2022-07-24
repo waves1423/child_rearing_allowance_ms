@@ -31,21 +31,6 @@ class Calculation extends Model
         return $this->belongsTo(Obligor::class);
     }
 
-    // public function recipient_calculation()
-    // {
-    //     return $this->hasOne(Recipient_calculation::class);
-    // }
-
-    // public function spouse_calculation()
-    // {
-    //     return $this->hasOne(Spouse_calculation::class);
-    // }
-
-    // public function obligor_calculation()
-    // {
-    //     return $this->hasOne(Obligor_calculation::class);
-    // }
-
     public function dependent()
     {
         return $this->hasOne(Dependent::class);
