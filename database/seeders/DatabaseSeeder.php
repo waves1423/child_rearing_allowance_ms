@@ -27,9 +27,6 @@ class DatabaseSeeder extends Seeder
             SpouseSeeder::class,
             ObligorSeeder::class,
             CalculationSeeder::class,
-            // RecipientCalculationSeeder::class,
-            // SpouseCalculationSeeder::class,
-            // ObligorCalculationSeeder::class,
         ]);
     }
 }
