@@ -104,6 +104,7 @@
                         @else
                         受給していない
                         @endif
+                      </div>
                     </div>
                   </div>
                   <div class="p-2 mx-auto">

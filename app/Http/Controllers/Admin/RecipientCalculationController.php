@@ -69,6 +69,7 @@ class RecipientCalculationController extends Controller
                     'specially_disabled' => $request->specially_disabled,
                     'singleparent_or_workingstudent' => $request->singleparent_or_workingstudent,
                     'special_spouse' => $request->special_spouse,
+                    'medical_expense' => $request->medical_expense,
                     'small_enterprise' => $request->small_enterprise,
                     'other' => $request->other,
                     'common' => $request->common
@@ -137,6 +138,7 @@ class RecipientCalculationController extends Controller
                 $deduction->specially_disabled = $request->specially_disabled;
                 $deduction->singleparent_or_workingstudent = $request->singleparent_or_workingstudent;
                 $deduction->special_spouse = $request->special_spouse;
+                $deduction->medical_expense = $request->medical_expense;
                 $deduction->small_enterprise = $request->small_enterprise;
                 $deduction->other = $request->other;
                 $deduction->common = $request->common;
