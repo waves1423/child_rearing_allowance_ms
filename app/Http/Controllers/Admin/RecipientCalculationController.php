@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\IncomeType;
 use App\Http\Controllers\Controller;
 use App\Models\Recipient;
 use App\Models\Calculation;
@@ -28,9 +29,10 @@ class RecipientCalculationController extends Controller
     public function create($id)
     {    
         $recipient = Recipient::findOrFail($id);
+        $income_type_categories = IncomeType::cases();
 
         return view('admin.calculations.create',
-        compact('recipient'));
+        compact('recipient', 'income_type_categories'));
     }
 
     /**

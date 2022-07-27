@@ -8,7 +8,7 @@ use Livewire\Component;
 class Calculation extends Component
 {
     public $recipient;
-    public $total;
+    public $income_type_categories;
 
     public function render()
     {
