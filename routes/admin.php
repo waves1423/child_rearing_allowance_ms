@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\RecipientCalculationController;
 use App\Http\Controllers\Admin\SpouseCalculationController;
 use App\Http\Controllers\Admin\ObligorCalculationController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Calculation;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +47,9 @@ Route::resource('recipients.obligors', ObligorController::class)
 Route::resource('recipients.calculations', RecipientCalculationController::class)
 ->middleware('auth:admin')
 ->except(['index', 'show']);
+
+// Route::get('recipients/{recipient}/calculations/create', [Calculation::class, 'render'])
+// ->name('recipients.calculations');
 
 Route::resource('recipients.spouses.calculations', SpouseCalculationController::class)
 ->middleware('auth:admin')

@@ -1,11 +1,11 @@
-<x-app-layout>
-    <x-slot name="header" :recipient="$recipient">
+{{-- <x-app-layout>
+    <x-slot name="header">
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
           所得計算：{{ $recipient->name }}
       </h2>
-    </x-slot>
-    <livewire:calculation :recipient="$recipient">
-    {{-- <div class="py-8">
+    </x-slot> --}}
+  
+    <div class="py-8">
         <x-auth-validation-errors class="mb-4" :errors="$errors" />
         <form method="POST" action="{{ route('admin.recipients.calculations.store', ['recipient' => $recipient->id]) }}">
             @csrf
@@ -22,7 +22,8 @@
                                     <div class="p-2 mx-auto">
                                         <div class="relative">
                                         <label for="total" class="leading-7 text-sm text-gray-600">合計人数</label>
-                                        <input type="number" id="total" name="total" value="{{ old('total') }}" required class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        <input wire:model="total" type="number" id="total" name="total" value="{{ old('total') }}" required class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                        {{ $total }}
                                     </div>
                                     </div>
                                     <div class="p-2 mx-auto">
@@ -161,5 +162,5 @@
                 </div>
             </div>
         </form>
-    </div> --}}
-  </x-app-layout>  
+    </div>
+  {{-- </x-app-layout>   --}}
