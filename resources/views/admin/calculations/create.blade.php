@@ -200,18 +200,23 @@
     <script>
       'use strict'
       let type = document.getElementById('type');
+
       type.addEventListener('change', function(){
         let income = document.getElementById('income').value;
-        let deducted_income = income - 100000;
-        document.getElementById('deducted_income').innerHTML = deducted_income;
+        if(type.value == 1 || type.value == 2){
+          let deducted_income = income - 100000;
+          document.getElementById('deducted_income').innerHTML = deducted_income;
+        } else {
+          let deducted_income = income;
+          document.getElementById('deducted_income').innerHTML = deducted_income;
+        }
       });
 
       function deducted_income(){
       let income = document.getElementById('income').value;
-      // let type = document.getElementById('type');
-      if(type == 1){
-      let deducted_income = income - 100000;
-      document.getElementById('deducted_income').innerHTML = deducted_income;
+      if(type.value == 1 || type.value == 2){
+        let deducted_income = income - 100000;
+        document.getElementById('deducted_income').innerHTML = deducted_income;
       }
       }
 
