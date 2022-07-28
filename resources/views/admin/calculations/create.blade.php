@@ -17,7 +17,7 @@
                   <div class="flex flex-col text-center w-full mb-4">
                     <h1 class="sm:text-3xl text-2xl font-medium title-font text-gray-900">扶養親族</h1>
                   </div>
-                  <div class="lg:w-3/4 md:w-2/3 mx-auto">
+                  <div class="lg:w-2/3 md:w-2/3 mx-auto">
                     <div class="-m-2">
                       <div class="p-2 mx-auto">
                         <div class="relative">
@@ -46,7 +46,7 @@
                       <div class="p-2 mx-auto">
                         <div class="relative">
                           <label for="other_child" class="leading-7 text-sm text-gray-600">その他扶養する子供</label>
-                          <input type="number" id="other_child" name="other_child" value="{{ old('other_child') }}" required placeholder="人" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                          <input type="number" id="other_child" name="other_child" value="{{ old('other_child', 0) }}" required placeholder="人" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                         </div>
                       </div>
                     </div>
@@ -61,7 +61,7 @@
                     <div class="flex flex-col text-center w-full mb-4">
                       <h1 class="sm:text-3xl text-2xl font-medium title-font text-gray-900">所得</h1>
                     </div>
-                    <div class="lg:w-3/4 md:w-2/3 mx-auto">
+                    <div class="lg:w-2/3 md:w-2/3 mx-auto">
                       <div class="-m-2">
                         <div class="p-2 mx-auto">
                           <div class="relative">
@@ -116,7 +116,7 @@
                     <div class="flex flex-col text-center w-full mb-4">
                       <h1 class="sm:text-3xl text-2xl font-medium title-font text-gray-900">控除</h1>
                     </div>
-                    <div class="lg:w-3/4 md:w-2/3 mx-auto">
+                    <div class="lg:w-2/3 md:w-2/3 mx-auto">
                       <div class="-m-2">
                         <div class="p-2 mx-auto">
                           <div class="relative">
@@ -133,13 +133,13 @@
                         <div class="p-2 mx-auto">
                           <div class="relative">
                             <label for="singleparent_or_workingstudent" class="leading-7 text-sm text-gray-600">ひとり親または勤労学生控除</label>
-                            <input type="number" id="singleparent_or_workingstudent" name="singleparent_or_workingstudent" value="{{ old('singleparent_or_workingstudent') }}" required placeholder="人" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                            <input type="number" id="singleparent_or_workingstudent" name="singleparent_or_workingstudent" value="{{ old('singleparent_or_workingstudent', 0) }}" required placeholder="人" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                           </div>
                         </div>
                         <div class="p-2 mx-auto">
                           <div class="relative">
                             <label for="special_spouse" class="leading-7 text-sm text-gray-600">配偶者特別控除</label>
-                            <input type="number" id="special_spouse" name="special_spouse" value="{{ old('special_spouse') }}" required placeholder="円" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                            <input type="number" id="special_spouse" name="special_spouse" value="{{ old('special_spouse', 0) }}" required placeholder="円" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                           </div>
                         </div>
                         <div class="p-2 mx-auto">
@@ -157,7 +157,7 @@
                         <div class="p-2 mx-auto">
                           <div class="relative">
                             <label for="other" class="leading-7 text-sm text-gray-600">その他控除</label>
-                            <input type="number" id="other" name="other" value="{{ old('other') }}" required placeholder="円" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                            <input type="number" id="other" name="other" value="{{ old('other', 0) }}" required placeholder="円" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                           </div>
                         </div>
                         <div class="p-2 mx-auto">
@@ -177,13 +177,6 @@
               <div class="p-6 bg-white border-b border-gray-200">
                 <section class="text-gray-600 body-font relative">
                   <div class="container px-5 mx-auto">
-                    <div class="p-2 mx-auto">
-                      <div class="relative">
-                        <label for="deducted_income" class="leading-7 text-sm text-gray-600">控除後所得金額</label>
-                        <div class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                        </div>
-                      </div>
-                    </div>
                     <div class="p-2 w-full flex justify-evenly mt-4">
                       <button type="button" onclick="location.href='{{ route('admin.recipients.show', ['recipient' => $recipient->id]) }}'" class=" bg-gray-200 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
                       <button type="submit" class="bg-green-400 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">計算する</button>
