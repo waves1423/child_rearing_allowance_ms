@@ -22,7 +22,7 @@ return new class extends Migration
             $table->tinyInteger('disabled');
             $table->tinyInteger('specially_disabled');
             $table->tinyInteger('singleparent_or_workingstudent');
-            $table->tinyInteger('special_spouse');
+            $table->unsignedInteger('special_spouse');
             $table->unsignedInteger('medical_expense');
             $table->unsignedInteger('small_enterprise');
             $table->unsignedInteger('other');

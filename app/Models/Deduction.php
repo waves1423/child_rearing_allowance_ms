@@ -16,6 +16,7 @@ class Deduction extends Model
         'singleparent_or_workingstudent',
         'special_spouse',
         'medical_expense',
+        'small_enterprise',
         'other',
         'common',
     ];

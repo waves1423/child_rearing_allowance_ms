@@ -48,9 +48,6 @@ Route::resource('recipients.calculations', RecipientCalculationController::class
 ->middleware('auth:admin')
 ->except(['index', 'show']);
 
-// Route::get('recipients/{recipient}/calculations/create', [Calculation::class, 'render'])
-// ->name('recipients.calculations');
-
 Route::resource('recipients.spouses.calculations', SpouseCalculationController::class)
 ->middleware('auth:admin')
 ->except(['index', 'show']);

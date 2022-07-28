@@ -47,7 +47,7 @@ class RecipientCalculationController extends Controller
             DB::transaction(function () use($request, $id) {
                 $calculation = Calculation::create([
                     'recipient_id' => $id,
-                    'deducted_income' => $request->deducted_income
+                    'deducted_income' => ''
                 ]);
                 Dependent::create([
                     'calculation_id' => $calculation->id,
@@ -57,15 +57,19 @@ class RecipientCalculationController extends Controller
                     'year_old_16to18' => $request->year_old_16to18,
                     'other_child' => $request->other_child
                 ]);
-                Income::create([
+                $income = Income::create([
                     'calculation_id' => $calculation->id,
                     'income' => $request->income,
                     'type' => $request->type,
-                    'deducted_income' => $request->deducted_income,
+                    'deducted_income' => $request->income,
                     'support_payment' => $request->support_payment,
-                    'deducted_support_payment' => $request->deducted_support_payment
+                    'deducted_support_payment' => $request->support_payment * 0.8
                 ]);
-                Deduction::create([
+                if($income->type == IncomeType::Salary->value || $income->type == IncomeType::Pention->value){
+                    $income->deducted_income = $income->deducted_income - 100000;
+                    $income->save();
+                }
+                $deduction = Deduction::create([
                     'calculation_id' => $calculation->id,
                     'disabled' => $request->disabled,
                     'specially_disabled' => $request->specially_disabled,
@@ -74,8 +78,26 @@ class RecipientCalculationController extends Controller
                     'medical_expense' => $request->medical_expense,
                     'small_enterprise' => $request->small_enterprise,
                     'other' => $request->other,
-                    'common' => $request->common
+                    'common' => 80000
                 ]);
+
+                $total_income =
+                $income->deducted_income
+                +$income->deducted_support_payment;
+
+                $total_deduction =
+                $deduction->disabled * 270000
+                +$deduction->specially_disabled * 400000
+                +$deduction->singleparent_or_workingstudent * 270000
+                +$deduction->special_spouse
+                +$deduction->medical_expense
+                +$deduction->small_enterprise
+                +$deduction->other
+                +$deduction->common;
+                
+                $calculation->deducted_income = 
+                $total_income - $total_deduction;
+                $calculation->save();
             }, 2);
         }catch(Throwable $e){
             Log::error($e);
@@ -119,8 +141,8 @@ class RecipientCalculationController extends Controller
 
         try{
             DB::transaction(function () use($request, $calculation, $dependent, $income, $deduction) {
-                $calculation->deducted_income = $request->deducted_income;
-                $calculation->save();
+                // $calculation->deducted_income = $request->deducted_income;
+                // $calculation->save();
 
                 $dependent->total = $request->total;
                 $dependent->elder = $request->elder;
@@ -131,9 +153,13 @@ class RecipientCalculationController extends Controller
 
                 $income->income = $request->income;
                 $income->type = $request->type;
-                $income->deducted_income = $request->deducted_income;
+                if($income->type == IncomeType::Salary->value || $income->type == IncomeType::Pention->value){
+                    $income->deducted_income = $request->income - 100000;
+                } else {
+                    $income->deducted_income = $request->income;
+                }
                 $income->support_payment = $request->support_payment;
-                $income->deducted_support_payment = $request->deducted_support_payment;
+                $income->deducted_support_payment = $request->support_payment * 0.8;
                 $income->save();
             
                 $deduction->disabled = $request->disabled;
@@ -145,6 +171,24 @@ class RecipientCalculationController extends Controller
                 $deduction->other = $request->other;
                 $deduction->common = $request->common;
                 $deduction->save();
+
+                $total_income =
+                $income->deducted_income
+                +$income->deducted_support_payment;
+
+                $total_deduction =
+                $deduction->disabled * 270000
+                +$deduction->specially_disabled * 400000
+                +$deduction->singleparent_or_workingstudent * 270000
+                +$deduction->special_spouse
+                +$deduction->medical_expense
+                +$deduction->small_enterprise
+                +$deduction->other
+                +$deduction->common;
+                
+                $calculation->deducted_income = 
+                $total_income - $total_deduction;
+                $calculation->save();
             }, 2);
         }catch(Throwable $e){
             Log::error($e);
