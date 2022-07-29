@@ -97,6 +97,9 @@ class RecipientCalculationController extends Controller
                 
                 $calculation->deducted_income = 
                 $total_income - $total_deduction;
+                if($calculation->deducted_income < 0){
+                    $calculation->deducted_income = 0;
+                }
                 $calculation->save();
             }, 2);
         }catch(Throwable $e){
