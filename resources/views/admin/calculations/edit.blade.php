@@ -190,7 +190,6 @@
         </div>
       </form>
     </div>
-
     <script>
       'use strict'
       let type = document.getElementById('type');
