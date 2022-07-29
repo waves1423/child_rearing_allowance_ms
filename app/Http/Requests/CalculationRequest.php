@@ -24,7 +24,6 @@ class CalculationRequest extends FormRequest
     public function rules()
     {
         return [
-            'deducted_income' => 'nullable',
             'total' => 'required|integer|max:10',
             'elder' => 'required|integer|max:10',
             'special' => 'required|integer|max:10',
@@ -32,9 +31,7 @@ class CalculationRequest extends FormRequest
             'other_child' => 'required|integer|max:10',
             'income' => 'required|integer|max:1000000000',
             'type' => 'required|integer|max:10',
-            'deducted_income' => 'required|integer|max:1000000000',
             'support_payment' => 'required|integer|max:1000000',
-            'deducted_support_payment' => 'required|integer|max:1000000',
             'disabled' => 'required|integer|max:10',
             'specially_disabled' => 'required|integer|max:10',
             'singleparent_or_workingstudent' => 'required|integer|max:10',
@@ -42,7 +39,6 @@ class CalculationRequest extends FormRequest
             'medical_expense' => 'required|integer|max:1000000',
             'small_enterprise' => 'required|integer|max:1000000',
             'other' => 'required|integer|max:1000000',
-            'common' => 'required|integer|max:1000000'
         ];
     }
 }

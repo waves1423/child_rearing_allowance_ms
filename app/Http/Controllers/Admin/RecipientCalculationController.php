@@ -9,6 +9,7 @@ use App\Models\Calculation;
 use App\Models\Deduction;
 use App\Models\Dependent;
 use App\Models\Income;
+use App\Http\Requests\CalculationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -41,7 +42,7 @@ class RecipientCalculationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $id)
+    public function store(CalculationRequest $request, $id)
     {
         try{
             DB::transaction(function () use($request, $id) {
@@ -134,7 +135,7 @@ class RecipientCalculationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CalculationRequest $request, $id)
     {
         $recipient = Recipient::findOrFail($id);
         $calculation = Calculation::findOrFail($recipient->calculation->id);
