@@ -19,6 +19,8 @@ return new class extends Migration
             ->constrained()
             ->onUpdate('cascade')
             ->onDelete('cascade');
+            $table->tinyInteger('total')
+            ->nullable();
             $table->tinyInteger('elder')
             ->nullable();
             $table->tinyInteger('special')

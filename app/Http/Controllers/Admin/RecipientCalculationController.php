@@ -10,7 +10,6 @@ use App\Models\Deduction;
 use App\Models\Dependent;
 use App\Models\Income;
 use App\Http\Requests\CalculationRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Throwable;
@@ -123,9 +122,10 @@ class RecipientCalculationController extends Controller
     public function edit($id)
     {
         $recipient = Recipient::findOrFail($id);
+        $income_type_categories = IncomeType::cases();
 
         return view('admin.calculations.edit',
-        compact('recipient'));
+        compact('recipient', 'income_type_categories'));
     }
 
     /**
@@ -145,9 +145,6 @@ class RecipientCalculationController extends Controller
 
         try{
             DB::transaction(function () use($request, $calculation, $dependent, $income, $deduction) {
-                // $calculation->deducted_income = $request->deducted_income;
-                // $calculation->save();
-
                 $dependent->total = $request->total;
                 $dependent->elder = $request->elder;
                 $dependent->special = $request->special;
@@ -173,7 +170,7 @@ class RecipientCalculationController extends Controller
                 $deduction->medical_expense = $request->medical_expense;
                 $deduction->small_enterprise = $request->small_enterprise;
                 $deduction->other = $request->other;
-                $deduction->common = $request->common;
+                $deduction->common = 80000;
                 $deduction->save();
 
                 $total_income =
@@ -192,6 +189,9 @@ class RecipientCalculationController extends Controller
                 
                 $calculation->deducted_income = 
                 $total_income - $total_deduction;
+                if($calculation->deducted_income < 0){
+                    $calculation->deducted_income = 0;
+                }
                 $calculation->save();
             }, 2);
         }catch(Throwable $e){

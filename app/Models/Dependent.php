@@ -11,6 +11,7 @@ class Dependent extends Model
 
     protected $fillable = [
         'calculation_id',
+        'total',
         'elder',
         'special',
         'year_old_16to18',

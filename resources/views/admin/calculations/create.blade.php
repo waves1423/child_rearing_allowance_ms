@@ -194,6 +194,11 @@
       'use strict'
       let type = document.getElementById('type');
 
+      window.addEventListener('DOMContentLoaded', function(){
+        deducted_income();
+        deducted_support_payment();
+      });
+
       type.addEventListener('change', function(){
         let income = document.getElementById('income').value;
         if(type.value == 1 || type.value == 2){
