@@ -197,10 +197,10 @@
           if(deducted_income < 0){
             deducted_income = 0
           }
-          document.getElementById('deducted_income').innerHTML = deducted_income;
+          document.getElementById('deducted_income').innerHTML = deducted_income.toLocaleString();
         } else {
           let deducted_income = income;
-          document.getElementById('deducted_income').innerHTML = deducted_income;
+          document.getElementById('deducted_income').innerHTML = deducted_income.toLocaleString();
         }
       }
     </script>

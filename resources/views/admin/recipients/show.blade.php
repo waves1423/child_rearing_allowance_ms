@@ -132,7 +132,7 @@
                       <label for="deducted_income" class="leading-7 text-sm text-gray-600">控除後所得</label>
                       <div class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                         @if(isset($recipient->calculation->deducted_income))
-                        {{ $recipient->calculation->deducted_income }}
+                        {{ number_format($recipient->calculation->deducted_income) }}
                         @else
                         未算定
                         @endif
@@ -184,7 +184,7 @@
                         <label for="deducted_income" class="leading-7 text-sm text-gray-600">控除後所得</label>
                         <div class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                           @if(isset($recipient->spouse->calculation->deducted_income))
-                          {{ $recipient->spouse->calculation->deducted_income }}
+                          {{ number_format($recipient->spouse->calculation->deducted_income) }}
                           @else
                           未算定
                           @endif
@@ -240,7 +240,7 @@
                         <label for="deducted_income" class="leading-7 text-sm text-gray-600">控除後所得</label>
                         <div class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                           @if(isset($recipient->obligor->calculation->deducted_income))
-                          {{ $recipient->obligor->calculation->deducted_income }}
+                          {{ number_format($recipient->obligor->calculation->deducted_income) }}
                           @else
                           未算定
                           @endif

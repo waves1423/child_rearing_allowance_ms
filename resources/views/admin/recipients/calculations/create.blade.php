@@ -1,7 +1,8 @@
 <x-app-layout>
     <x-slot name="header" :recipient="$recipient">
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          所得計算：{{ $recipient->name }}
+        <button type="button" onclick="location.href='{{ route('admin.recipients.show', ['recipient' => $recipient->id]) }}'" class=" bg-gray-200 border-0 py-2 px-8 mr-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
+        所得計算：{{ $recipient->name }}
       </h2>
     </x-slot>
 
@@ -210,17 +211,17 @@
           if(deducted_income < 0){
             deducted_income = 0
           }
-          document.getElementById('deducted_income').innerHTML = deducted_income;
+          document.getElementById('deducted_income').innerHTML = deducted_income.toLocaleString();
         } else {
           let deducted_income = income;
-          document.getElementById('deducted_income').innerHTML = deducted_income;
+          document.getElementById('deducted_income').innerHTML = deducted_income.toLocaleString();
         }
       }
 
       function deducted_support_payment(){
         let support_payment = document.getElementById('support_payment').value;
         let deducted_support_payment = support_payment * 0.8;
-        document.getElementById('deducted_support_payment').innerHTML = deducted_support_payment;
+        document.getElementById('deducted_support_payment').innerHTML = deducted_support_payment.toLocaleString();
       }
     </script>
   </x-app-layout>  
