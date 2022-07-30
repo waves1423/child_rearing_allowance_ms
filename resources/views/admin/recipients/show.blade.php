@@ -137,7 +137,7 @@
                     @if(isset($recipient->calculation->id))
                     <button type="button" onclick="location.href='{{ route('admin.recipients.calculations.edit', ['recipient' => $recipient->id, 'calculation' => $recipient->calculation->id]) }}'" class=" bg-green-400 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">所得計算</button>
                     @else
-                    <button type="button" onclick="location.href='{{ route('admin.recipients.calculations.create', ['recipient' => $recipient->id]) }}'" class=" bg-green-400 border-0 py-2 px-8 focus:outline-none hover:bg-gray-400 rounded text-lg">所得計算</button>
+                    <button type="button" onclick="location.href='{{ route('admin.recipients.calculations.create', ['recipient' => $recipient->id]) }}'" class=" bg-green-400 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">所得計算</button>
                     @endif
                   </div>
                 </div>
