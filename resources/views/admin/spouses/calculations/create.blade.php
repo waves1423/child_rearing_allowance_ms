@@ -1,13 +1,13 @@
 <x-app-layout>
     <x-slot name="header" :recipient="$recipient">
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          所得計算：{{ $recipient->name }}
+          所得計算：{{ $recipient->spouse->name }}
       </h2>
     </x-slot>
 
     <div class="py-8">
       <x-auth-validation-errors class="mb-4" :errors="$errors" />
-      <form method="POST" action="{{ route('admin.recipients.calculations.store', ['recipient' => $recipient->id]) }}">
+      <form method="POST" action="{{ route('admin.recipients.spouses.calculations.store', ['recipient' => $recipient->id, 'spouse' => $recipient->spouse->id]) }}">
         @csrf
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex">
           <div class="flex-1 mr-6">
@@ -85,19 +85,6 @@
                           <div class="relative">
                             <label for="deducted_income" class="leading-7 text-sm text-gray-600">控除後所得金額</label>
                             <div id="deducted_income" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                            </div>
-                          </div>
-                        </div>
-                        <div class="p-2 mx-auto">
-                          <div class="relative">
-                            <label for="support_payment" class="leading-7 text-sm text-gray-600">養育費</label>
-                            <input onkeyup="deducted_support_payment()" type="number" id="support_payment" name="support_payment" value="{{ old('support_payment') }}" required placeholder="円 ※8割掛け前の金額を入力して下さい" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
-                          </div>
-                        </div>
-                        <div class="p-2 mx-auto">
-                          <div class="relative">
-                            <label for="deducted_support_payment" class="leading-7 text-sm text-gray-600">控除後養育費</label>
-                            <div id="deducted_support_payment" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                             </div>
                           </div>
                         </div>
@@ -196,32 +183,24 @@
 
       window.addEventListener('DOMContentLoaded', function(){
         deducted_income();
-        deducted_support_payment();
       });
 
       type.addEventListener('change', function(){
+        deducted_income();
+      });
+
+      function deducted_income(){
         let income = document.getElementById('income').value;
         if(type.value == 1 || type.value == 2){
           let deducted_income = income - 100000;
+          if(deducted_income < 0){
+            deducted_income = 0
+          }
           document.getElementById('deducted_income').innerHTML = deducted_income;
         } else {
           let deducted_income = income;
           document.getElementById('deducted_income').innerHTML = deducted_income;
         }
-      });
-
-      function deducted_income(){
-      let income = document.getElementById('income').value;
-      if(type.value == 1 || type.value == 2){
-        let deducted_income = income - 100000;
-        document.getElementById('deducted_income').innerHTML = deducted_income;
-      }
-      }
-
-      function deducted_support_payment(){
-      let support_payment = document.getElementById('support_payment').value;
-      let deducted_support_payment = support_payment * 0.8;
-      document.getElementById('deducted_support_payment').innerHTML = deducted_support_payment;
       }
     </script>
   </x-app-layout>  

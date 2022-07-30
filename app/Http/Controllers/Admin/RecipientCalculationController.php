@@ -9,7 +9,7 @@ use App\Models\Calculation;
 use App\Models\Deduction;
 use App\Models\Dependent;
 use App\Models\Income;
-use App\Http\Requests\CalculationRequest;
+use App\Http\Requests\RecipientCalculationRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Throwable;
@@ -31,7 +31,7 @@ class RecipientCalculationController extends Controller
         $recipient = Recipient::findOrFail($id);
         $income_type_categories = IncomeType::cases();
 
-        return view('admin.calculations.create',
+        return view('admin.recipients.calculations.create',
         compact('recipient', 'income_type_categories'));
     }
 
@@ -41,7 +41,7 @@ class RecipientCalculationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CalculationRequest $request, $id)
+    public function store(RecipientCalculationRequest $request, $id)
     {
         try{
             DB::transaction(function () use($request, $id) {
@@ -67,6 +67,9 @@ class RecipientCalculationController extends Controller
                 ]);
                 if($income->type == IncomeType::Salary->value || $income->type == IncomeType::Pention->value){
                     $income->deducted_income = $income->deducted_income - 100000;
+                        if($income->deducted_income < 0){
+                            $income->deducted_income = 0;
+                        }
                     $income->save();
                 }
                 $deduction = Deduction::create([
@@ -124,7 +127,7 @@ class RecipientCalculationController extends Controller
         $recipient = Recipient::findOrFail($id);
         $income_type_categories = IncomeType::cases();
 
-        return view('admin.calculations.edit',
+        return view('admin.recipients.calculations.edit',
         compact('recipient', 'income_type_categories'));
     }
 
@@ -135,7 +138,7 @@ class RecipientCalculationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CalculationRequest $request, $id)
+    public function update(RecipientCalculationRequest $request, $id)
     {
         $recipient = Recipient::findOrFail($id);
         $calculation = Calculation::findOrFail($recipient->calculation->id);
@@ -156,6 +159,9 @@ class RecipientCalculationController extends Controller
                 $income->type = $request->type;
                 if($income->type == IncomeType::Salary->value || $income->type == IncomeType::Pention->value){
                     $income->deducted_income = $request->income - 100000;
+                        if($income->deducted_income < 0){
+                            $income->deducted_income = 0;
+                        }    
                 } else {
                     $income->deducted_income = $request->income;
                 }

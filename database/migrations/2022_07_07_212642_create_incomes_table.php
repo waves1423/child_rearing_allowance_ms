@@ -22,8 +22,10 @@ return new class extends Migration
             $table->unsignedInteger('income');
             $table->integer('type');
             $table->unsignedInteger('deducted_income');
-            $table->unsignedInteger('support_payment');
-            $table->unsignedInteger('deducted_support_payment');
+            $table->unsignedInteger('support_payment')
+            ->nullable();
+            $table->unsignedInteger('deducted_support_payment')
+            ->nullable();
             $table->timestamps();
         });
     }

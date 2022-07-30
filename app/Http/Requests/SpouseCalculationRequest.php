@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CalculationRequest extends FormRequest
+class SpouseCalculationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -31,7 +31,6 @@ class CalculationRequest extends FormRequest
             'other_child' => 'required|integer|max:10',
             'income' => 'required|integer|max:1000000000',
             'type' => 'required|integer|max:10',
-            'support_payment' => 'required|integer|max:1000000',
             'disabled' => 'required|integer|max:10',
             'specially_disabled' => 'required|integer|max:10',
             'singleparent_or_workingstudent' => 'required|integer|max:10',
