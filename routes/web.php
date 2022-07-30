@@ -1,7 +1,11 @@
 <?php
 
-use App\Http\Controllers\Users\RecipientController;
-use App\Http\Controllers\Users\CalculationController;
+use App\Http\Controllers\User\RecipientController;
+use App\Http\Controllers\User\SpouseController;
+use App\Http\Controllers\User\ObligorController;
+use App\Http\Controllers\User\RecipientCalculationController;
+use App\Http\Controllers\User\SpouseCalculationController;
+use App\Http\Controllers\User\ObligorCalculationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,20 +19,27 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('user.welcome');
-});
-
-/*
-add: controllers
-*/
 Route::resource('recipients', RecipientController::class)
-->middleware('auth:users')->except(['show']);
-Route::resource('recipients', CalculationController::class)
-->middleware('auth:users')->except(['show']);
+->middleware('auth:users');
 
-Route::get('/dashboard', function () {
-    return view('user.dashboard');
-})->middleware(['auth:users'])->name('dashboard');
+Route::resource('recipients.spouses', SpouseController::class)
+->middleware('auth:users')
+->except(['index', 'show']);
+
+Route::resource('recipients.obligors', ObligorController::class)
+->middleware('auth:users')
+->except(['index', 'show']);
+
+Route::resource('recipients.calculations', RecipientCalculationController::class)
+->middleware('auth:users')
+->except(['index', 'show']);
+
+Route::resource('recipients.spouses.calculations', SpouseCalculationController::class)
+->middleware('auth:users')
+->except(['index', 'show']);
+
+Route::resource('recipients.obligors.calculations', ObligorCalculationController::class)
+->middleware('auth:users')
+->except(['index', 'show']);
 
 require __DIR__.'/auth.php';
