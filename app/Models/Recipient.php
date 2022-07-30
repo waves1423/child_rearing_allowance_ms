@@ -12,6 +12,7 @@ class Recipient extends Model
     protected $fillable = [
         'number',
         'name',
+        'kana',
         'sex',
         'birth_date',
         'adress',

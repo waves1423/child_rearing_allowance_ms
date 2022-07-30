@@ -59,6 +59,7 @@ class RecipientController extends Controller
                 Recipient::create([
                     'number' => $request->number,
                     'name' => $request->name,
+                    'kana' => $request->kana,
                     'sex' => $request->sex,
                     'birth_date' => $request->birth_date,
                     'adress' => $request->adress,
@@ -125,6 +126,7 @@ class RecipientController extends Controller
             DB::transaction(function () use($request, $recipient) {
                 $recipient->number = $request->number;
                 $recipient->name = $request->name;
+                $recipient->kana = $request->kana;
                 $recipient->sex = $request->sex;
                 $recipient->birth_date = $request->birth_date;
                 $recipient->adress = $request->adress;

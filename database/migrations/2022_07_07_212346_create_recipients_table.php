@@ -18,6 +18,7 @@ return new class extends Migration
             $table->id();
             $table->string('number');
             $table->string('name');
+            $table->string('kana');
             $table->integer('sex');
             $table->date('birth_date');
             $table->string('adress');
