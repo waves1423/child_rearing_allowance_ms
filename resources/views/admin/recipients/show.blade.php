@@ -1,7 +1,7 @@
 <x-app-layout>
   <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-      <button type="button" onclick="location.href='{{ route('admin.recipients.index') }}'" class=" bg-gray-200 border-0 py-2 px-8 mr-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
+      <button type="button" onclick="location.href='{{ route('admin.recipients.index') }}'" class="bg-gray-200 border-0 py-2 px-8 mr-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
       受給者詳細：{{ $recipient->name }}
     </h2>
   </x-slot>
