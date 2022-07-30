@@ -60,6 +60,9 @@
                                 @endforeach
                               </tbody>
                             </table>
+                            <div class="flex justify-center">
+                            {{ $recipients->links() }}
+                            </div>
                           </div>
                         </div>
                       </section>

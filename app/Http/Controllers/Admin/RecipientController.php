@@ -6,7 +6,6 @@ use App\Enums\Sex;
 use App\Enums\AllowanceType;
 use App\Http\Controllers\Controller;
 use App\Models\Recipient;
-use App\Models\Calculation;
 use App\Http\Requests\RecipientRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -26,7 +25,8 @@ class RecipientController extends Controller
     public function index()
     {
         $recipients = Recipient::select('id', 'number', 'name', 'adress', 'is_submitted', 'additional_document', 'is_public_pentioner')
-        ->get();
+        ->orderBy('id', 'asc')
+        ->paginate(25);
 
         return view('admin.recipients.index',
         compact('recipients'));
