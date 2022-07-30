@@ -17,7 +17,9 @@
                   <div class="py-2">
                     <input type="search" placeholder="受給者名を入力" name="search" value="@if (isset($search)) {{ $search }} @endif" class="bg-white w-64 m-2 border-b border-gray-600 rounded text-lg">
                     <button type="submit" class="text-white bg-blue-500 border-0 py-2 px-4 m-1 focus:outline-none hover:bg-blue-600 rounded text-lg">検索</button>
-                    <button onclick="location.href='{{ route('admin.recipients.index') }}'" class="bg-gray-200 border-0 py-2 px-4 m-1 focus:outline-none hover:bg-gray-400 rounded text-lg">クリア</button>
+                    <button>
+                      <a href="{{ route('admin.recipients.index') }}" class="bg-gray-200 border-0 py-2 px-4 m-1 focus:outline-none hover:bg-gray-400 rounded text-lg">クリア</a>
+                    </button>
                   </div>
                 </form>
                 <button onclick="location.href='{{ route('admin.recipients.create') }}'" class="text-white bg-blue-500 border-0 py-2 px-4 m-3 focus:outline-none hover:bg-blue-600 rounded text-lg">新規登録する</button>
@@ -68,7 +70,7 @@
                   </tbody>
                 </table>
                 <div class="flex justify-center">
-                {{ $recipients->links() }}
+                  {{ $recipients->appends(request()->query())->links() }}
                 </div>
               </div>
             </div>
