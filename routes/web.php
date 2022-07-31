@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', [RecipientController::class, 'index']);
+
 Route::resource('recipients', RecipientController::class)
 ->middleware('auth:users');
 
