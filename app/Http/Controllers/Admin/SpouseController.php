@@ -109,10 +109,11 @@ class SpouseController extends Controller
     public function destroy($id)
     {
         $spouse = Spouse::findOrFail($id);
+        $recipient = Recipient::findOrFail($spouse->recipient->id);
         $spouse->delete();
 
         return redirect()
-        ->route('admin.recipients.show', ['recipient' => $spouse->recipient->id])
+        ->route('admin.recipients.show', ['recipient' => $recipient->id])
         ->with(['message' => '配偶者を削除しました。',
         'status' => 'alert']);
     }

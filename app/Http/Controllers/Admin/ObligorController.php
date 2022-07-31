@@ -109,10 +109,11 @@ class ObligorController extends Controller
     public function destroy($id)
     {
         $obligor = Obligor::findOrFail($id);
+        $recipient = Recipient::findOrFail($obligor->recipient->id);
         $obligor->delete();
 
         return redirect()
-        ->route('admin.recipients.show', ['recipient' => $obligor->recipient->id])
+        ->route('admin.recipients.show', ['recipient' => $recipient->id])
         ->with(['message' => '扶養義務者を削除しました。',
         'status' => 'alert']);
     }

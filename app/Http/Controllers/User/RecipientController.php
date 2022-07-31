@@ -43,7 +43,6 @@ class RecipientController extends Controller
 
             $recipients = $query->paginate(25);
         }
-        // dd($recipients);
         
         return view('user.recipients.index',
         compact('recipients', 'search'));
