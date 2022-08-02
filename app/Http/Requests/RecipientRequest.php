@@ -25,8 +25,8 @@ class RecipientRequest extends FormRequest
     {
         return [
             'number' => 'required|regex:/^[a-zA-Z0-9\-]+$/u|max:20',
-            'name' => 'required|string|max:20',
-            'kana' => 'required|string|max:20',
+            'name' => 'required|string|max:50',
+            'kana' => 'required|string|max:50',
             'sex' => 'required',
             'birth_date' => 'required|date',
             'adress' => 'required|string|max:100',
