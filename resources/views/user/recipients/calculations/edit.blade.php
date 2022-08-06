@@ -213,7 +213,7 @@
           }
           document.getElementById('deducted_income').innerHTML = deducted_income.toLocaleString();
         } else {
-          let deducted_income = income;
+          let deducted_income = Number(income);
           document.getElementById('deducted_income').innerHTML = deducted_income.toLocaleString();
         }
       }
