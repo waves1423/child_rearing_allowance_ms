@@ -44,9 +44,9 @@
                       <td class="md:px-4 py-3 border">{{ $recipient->number }}</td>
                       <td class="md:px-4 py-3 border">{{ $recipient->name }}</td>
                       <td class="md:px-4 py-3 border">{{ $recipient->adress }}</td>
-                      <td class="md:px-4 py-3 border">
+                      <td class="md:px-4 py-0 border">
                         @if($recipient->is_submitted === 1)
-                        提出済み
+                        <div class="font-semibold m-0 text-2xl text-blue-500">☑️</div>
                         @else
                         -
                         @endif
@@ -70,7 +70,7 @@
                   </tbody>
                 </table>
                 <div class="flex justify-center">
-                  {{ $recipients->appends(request()->query())->links() }}
+                  {{ $recipients->appends(request()->input())->links() }}
                 </div>
               </div>
             </div>
