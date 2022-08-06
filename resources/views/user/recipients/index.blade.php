@@ -35,6 +35,7 @@
                       <th class="md:px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">現況届</th>
                       <th class="md:px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">追加書類</th>
                       <th class="md:px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">公的年金</th>
+                      <th class="md:px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">特記事項</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -61,6 +62,13 @@
                       <td class="md:px-4 py-3 border">
                         @if($recipient->is_public_pentioner === 1)
                         受給中
+                        @else
+                        -
+                        @endif
+                      </td>
+                      <td class="md:px-4 py-3 border">
+                        @if(!empty($recipient->note))
+                        <div class="text-red-500">有り</div>
                         @else
                         -
                         @endif

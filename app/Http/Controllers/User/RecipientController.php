@@ -25,7 +25,7 @@ class RecipientController extends Controller
      */
     public function index(Request $request)
     {
-        $recipients = Recipient::select('id', 'number', 'name', 'adress', 'is_submitted', 'additional_document', 'is_public_pentioner')
+        $recipients = Recipient::select('id', 'number', 'name', 'adress', 'is_submitted', 'additional_document', 'is_public_pentioner', 'note')
         ->orderBy('id', 'asc')
         ->paginate(25);
 
