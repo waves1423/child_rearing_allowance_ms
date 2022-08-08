@@ -6,6 +6,7 @@ use App\Http\Controllers\User\ObligorController;
 use App\Http\Controllers\User\RecipientCalculationController;
 use App\Http\Controllers\User\SpouseCalculationController;
 use App\Http\Controllers\User\ObligorCalculationController;
+use App\Http\Controllers\User\SpecialRecipientController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +23,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [RecipientController::class, 'index']);
 
 Route::resource('recipients', RecipientController::class)
+->middleware('auth:users');
+
+Route::resource('special_recipients', SpecialRecipientController::class)
 ->middleware('auth:users');
 
 Route::resource('recipients.spouses', SpouseController::class)

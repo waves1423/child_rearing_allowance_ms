@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\ObligorController;
 use App\Http\Controllers\Admin\RecipientCalculationController;
 use App\Http\Controllers\Admin\SpouseCalculationController;
 use App\Http\Controllers\Admin\ObligorCalculationController;
+use App\Http\Controllers\Admin\SpecialRecipientController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +34,9 @@ Route::resource('users', UsersController::class)
 ->except(['show']);
 
 Route::resource('recipients', RecipientController::class)
+->middleware('auth:admin');
+
+Route::resource('special_recipients', SpecialRecipientController::class)
 ->middleware('auth:admin');
 
 Route::resource('recipients.spouses', SpouseController::class)
