@@ -20,7 +20,8 @@ class Recipient extends Model
         'is_submitted',
         'additional_document',
         'is_public_pentioner',
-        'note',
+        'multiple_recipient',
+        'note'
     ];
 
     public function calculation()
@@ -36,10 +37,5 @@ class Recipient extends Model
     public function obligor()
     {
         return $this->hasOne(Obligor::class);
-    }
-
-    public function special_recipient()
-    {
-        return $this->hasOne(SpecialRecipient::class);
     }
 }
