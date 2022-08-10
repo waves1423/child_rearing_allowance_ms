@@ -1,19 +1,53 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
+use App\Enums\Sex;
+use App\Enums\AllowanceType;
+use App\Http\Controllers\Controller;
+use App\Models\Recipient;
 use Illuminate\Http\Request;
+use App\Http\Requests\RecipientRequest;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class SpecialRecipientController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:users');
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $recipients = Recipient::where('multiple_recipient', 2)
+        ->orWhere('multiple_recipient', 3)
+        ->select('id', 'number', 'name', 'adress', 'is_submitted', 'additional_document', 'is_public_pentioner', 'note')
+        ->orderBy('id', 'asc')
+        ->paginate(25);
+        
+        $search = $request->input('search');
+        $query = Recipient::query();
+
+        if ($search) {
+            $spaceConversion = mb_convert_kana($search, 's');
+            $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
+
+            foreach($wordArraySearched as $value) {
+                $query->where('name', 'like', '%'.$value.'%')
+                ->orWhere('kana', 'like', '%'.$value.'%');
+            }
+
+            $recipients = $query->paginate(25);
+        }
+        
+        return view('user.recipients.index',
+        compact('recipients', 'search'));
     }
 
     /**
