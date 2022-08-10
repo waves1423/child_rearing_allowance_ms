@@ -25,7 +25,7 @@ class SpecialRecipientController extends Controller
      */
     public function index(Request $request)
     {
-        $recipients = Recipient::where('multiple_recipient', 2)
+        $special_recipients = Recipient::where('multiple_recipient', 2)
         ->orWhere('multiple_recipient', 3)
         ->select('id', 'number', 'name', 'adress', 'is_submitted', 'additional_document', 'is_public_pentioner', 'note')
         ->orderBy('id', 'asc')
@@ -47,7 +47,7 @@ class SpecialRecipientController extends Controller
         }
         
         return view('user.recipients.index',
-        compact('recipients', 'search'));
+        compact('special_recipients', 'search'));
     }
 
     /**
