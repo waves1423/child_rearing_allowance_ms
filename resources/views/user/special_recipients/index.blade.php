@@ -22,7 +22,7 @@
                     </button>
                   </div>
                 </form>
-                <button onclick="location.href='{{ route('user.special_recipients.create') }}'" class="text-white bg-blue-500 border-0 py-2 px-4 m-3 focus:outline-none hover:bg-blue-600 rounded text-lg">新規登録する</button>
+                <button onclick="location.href='{{ route('user.recipients.create') }}'" class="text-white bg-blue-500 border-0 py-2 px-4 m-3 focus:outline-none hover:bg-blue-600 rounded text-lg">新規登録する</button>
               </div>
               <div class="w-full mx-auto overflow-auto">
                 <table class="table-auto w-full text-left whitespace-no-wrap">

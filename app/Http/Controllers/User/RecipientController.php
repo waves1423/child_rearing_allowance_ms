@@ -33,11 +33,10 @@ class RecipientController extends Controller
 
         $search = $request->input('search');
         $query = Recipient::query();
-
         if ($search) {
             $spaceConversion = mb_convert_kana($search, 's');
             $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
-
+            
             foreach($wordArraySearched as $value) {
                 $query->where('name', 'like', '%'.$value.'%')
                 ->orWhere('kana', 'like', '%'.$value.'%');
@@ -45,6 +44,8 @@ class RecipientController extends Controller
 
             $recipients = $query->paginate(25);
         }
+
+        session()->flash('_back_url', $request->fullUrl());
         
         return view('user.recipients.index',
         compact('recipients', 'search'));
@@ -109,6 +110,10 @@ class RecipientController extends Controller
     {
         $recipient = Recipient::findOrFail($id);
 
+        if(session()->has('_back_url')){
+            session()->keep('_back_url');
+        }
+        
         return view('user.recipients.show',
         compact('recipient'));
     }
@@ -124,6 +129,10 @@ class RecipientController extends Controller
         $recipient = Recipient::findOrFail($id);
         $sex_categories = Sex::cases();
         $allowance_categories = AllowanceType::cases();
+
+        if(session()->has('_back_url')){
+            session()->keep('_back_url');
+        }
 
         return view('user.recipients.edit',
         compact('recipient', 'allowance_categories', 'sex_categories'));
@@ -158,6 +167,10 @@ class RecipientController extends Controller
         }catch(Throwable $e){
             Log::error($e);
             throw $e;
+        }
+
+        if(session()->has('_back_url')){
+            session()->keep('_back_url');
         }
 
         return redirect()

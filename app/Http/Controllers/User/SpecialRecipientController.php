@@ -2,16 +2,9 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Enums\AllowanceType;
-use App\Enums\MultipleRecipient;
-use App\Enums\Sex;
 use App\Http\Controllers\Controller;
 use App\Models\Recipient;
 use Illuminate\Http\Request;
-use App\Http\Requests\RecipientRequest;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Throwable;
 
 class SpecialRecipientController extends Controller
 {
@@ -34,7 +27,6 @@ class SpecialRecipientController extends Controller
         
         $search = $request->input('search');
         $query = Recipient::query();
-
         if ($search) {
             $spaceConversion = mb_convert_kana($search, 's');
             $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
@@ -47,73 +39,9 @@ class SpecialRecipientController extends Controller
             $special_recipients = $query->paginate(25);
         }
         
+        session()->flash('_back_url', $request->fullUrl());
+
         return view('user.special_recipients.index',
         compact('special_recipients', 'search'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

@@ -13,7 +13,12 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('user.recipients.index')" :active="request()->routeIs('user.recipients.index')">
-                        受給者一覧
+                        児童扶養手当
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('user.special_recipients.index')" :active="request()->routeIs('user.special_recipients.index')">
+                        特別児童扶養手当
                     </x-nav-link>
                 </div>
             </div>
