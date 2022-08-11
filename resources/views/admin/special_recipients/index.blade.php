@@ -1,10 +1,10 @@
 <x-app-layout>
   <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-      児童扶養手当　受給者一覧
+      特別児童扶養手当　受給者一覧
     </h2>
   </x-slot>
-
+  
   <div class="py-8">
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">          
       <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -13,12 +13,12 @@
             <div class="container md:px-5 mx-auto">
               <x-flash-message status="session('status')" />
               <div class="flex justify-between mb-2">
-                <form method="GET" action="{{ route('admin.recipients.index') }}">
+                <form method="GET" action="{{ route('admin.special_recipients.index') }}">
                   <div class="py-2">
                     <input type="search" placeholder="受給者名を入力" name="search" value="@if (isset($search)) {{ $search }} @endif" class="bg-white w-64 m-2 border-b border-gray-600 rounded text-lg">
                     <button type="submit" class="text-white bg-blue-500 border-0 py-2 px-4 m-1 focus:outline-none hover:bg-blue-600 rounded text-lg">検索</button>
                     <button>
-                      <a href="{{ route('admin.recipients.index') }}" class="bg-gray-200 border-0 py-2 px-4 m-1 focus:outline-none hover:bg-gray-400 rounded text-lg">クリア</a>
+                      <a href="{{ route('admin.special_recipients.index') }}" class="bg-gray-200 border-0 py-2 px-4 m-1 focus:outline-none hover:bg-gray-400 rounded text-lg">クリア</a>
                     </button>
                   </div>
                 </form>
@@ -39,45 +39,45 @@
                     </tr>
                   </thead>
                   <tbody>
-                    @foreach ($recipients as $recipient)
-                    <tr class="hover:bg-gray-200 border" onclick="location.href='{{ route('admin.recipients.show', ['recipient' => $recipient->id]) }}'">
-                      <td class="md:px-4 py-3 border">{{ $recipient->id }}</td>
-                      <td class="md:px-4 py-3 border">{{ $recipient->number }}</td>
+                    @foreach ($special_recipients as $special_recipient)
+                    <tr class="hover:bg-gray-200 border" onclick="location.href='{{ route('admin.recipients.show', ['recipient' => $special_recipient->id]) }}'">
+                      <td class="md:px-4 py-3 border">{{ $special_recipient->id }}</td>
+                      <td class="md:px-4 py-3 border">{{ $special_recipient->number }}</td>
                       <td class="md:px-4 py-3 border">
-                        {{ $recipient->name }}
-                        @if($recipient->multiple_recipient === 1)
+                        {{ $special_recipient->name }}
+                        @if($special_recipient->multiple_recipient === 1)
                         <span class="text-purple-400 border-solid border-2 border-purple-400 rounded ml-1">児</span>
-                        @elseif($recipient->multiple_recipient === 2)
+                        @elseif($special_recipient->multiple_recipient === 2)
                         <span class="text-red-400 border-solid border-2 border-red-400 rounded ml-1">特</span>
                         @else
                         <span class="text-purple-400 border-solid border-2 border-purple-400 rounded ml-1">児</span>
                         <span class="text-red-400 border-solid border-2 border-red-400 rounded ml-1">特</span>
                         @endif
                       </td>
-                      <td class="md:px-4 py-3 border">{{ $recipient->adress }}</td>
-                      <td class="md:px-4 py-3 border">
-                        @if($recipient->is_submitted === 1)
-                        提出済み
+                      <td class="md:px-4 py-3 border">{{ $special_recipient->adress }}</td>
+                      <td class="md:px-4 py-0 border">
+                        @if($special_recipient->is_submitted === 1)
+                        <div class="font-semibold m-0 text-2xl text-blue-500">☑️</div>
                         @else
                         -
                         @endif
                       </td>
                       <td class="md:px-4 py-3 border">
-                        @if(isset($recipient->additional_document))
-                        {{ $recipient->additional_document }}
+                        @if(isset($special_recipient->additional_document))
+                        {{ $special_recipient->additional_document }}
                         @else
                         -
                         @endif
                       </td>
                       <td class="md:px-4 py-3 border">
-                        @if($recipient->is_public_pentioner === 1)
+                        @if($special_recipient->is_public_pentioner === 1)
                         受給中
                         @else
                         -
                         @endif
                       </td>
                       <td class="md:px-4 py-3 border">
-                        @if(!empty($recipient->note))
+                        @if(!empty($special_recipient->note))
                         <div class="text-red-500">有り</div>
                         @else
                         -
@@ -88,7 +88,7 @@
                   </tbody>
                 </table>
                 <div class="flex justify-center">
-                  {{ $recipients->appends(request()->query())->links() }}
+                  {{ $special_recipients->appends(request()->input())->links() }}
                 </div>
               </div>
             </div>

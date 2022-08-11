@@ -26,6 +26,10 @@ class SpouseController extends Controller
     {
         $recipient = Recipient::findOrFail($id);
 
+        if(session()->has('_back_url')){
+            session()->keep('_back_url');
+        }
+
         return view('admin.spouses.create',
         compact('recipient'));
     }
@@ -51,6 +55,10 @@ class SpouseController extends Controller
             throw $e;
         }
 
+        if(session()->has('_back_url')){
+            session()->keep('_back_url');
+        }
+
         return redirect()
         ->route('admin.recipients.show', ['recipient' => $id])
         ->with(['message' => '配偶者を新規登録しました。',
@@ -66,6 +74,10 @@ class SpouseController extends Controller
     public function edit($id)
     {
         $recipient = Recipient::findOrFail($id);
+
+        if(session()->has('_back_url')){
+            session()->keep('_back_url');
+        }
 
         return view('admin.spouses.edit',
         compact('recipient'));
@@ -94,6 +106,10 @@ class SpouseController extends Controller
             throw $e;
         }
 
+        if(session()->has('_back_url')){
+            session()->keep('_back_url');
+        }
+
         return redirect()
         ->route('admin.recipients.show', ['recipient' => $id])
         ->with(['message' => '配偶者情報を更新しました。',
@@ -111,6 +127,10 @@ class SpouseController extends Controller
         $spouse = Spouse::findOrFail($id);
         $recipient = Recipient::findOrFail($spouse->recipient->id);
         $spouse->delete();
+
+        if(session()->has('_back_url')){
+            session()->keep('_back_url');
+        }
 
         return redirect()
         ->route('admin.recipients.show', ['recipient' => $recipient->id])

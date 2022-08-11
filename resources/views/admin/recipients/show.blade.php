@@ -1,7 +1,7 @@
 <x-app-layout>
   <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-      <button type="button" onclick="location.href='{{ route('admin.recipients.index') }}'" class="bg-gray-200 border-0 py-2 px-8 mr-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
+      <button type="button" onclick="location.href='{{ session('_back_url') }}'" class="bg-gray-200 border-0 py-2 px-8 mr-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
       受給者詳細：{{ $recipient->name }}
     </h2>
   </x-slot>
@@ -111,6 +111,20 @@
                         受給中
                         @else
                         受給していない
+                        @endif
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-2 mx-auto">
+                    <div class="relative">
+                      <label for="multiple_recipient" class="leading-7 text-sm text-gray-600">受給中の手当</label>
+                      <div class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                        @if($recipient->multiple_recipient === \MultipleRecipient::Normal_recipient->value)
+                        {{ \MultipleRecipient::Normal_recipient->type() }}
+                        @elseif($recipient->multiple_recipient === \MultipleRecipient::Special_recipient->value)
+                        {{ \MultipleRecipient::Special_recipient->type() }}
+                        @else
+                        {{ \MultipleRecipient::Dual_recipient->type() }}
                         @endif
                       </div>
                     </div>

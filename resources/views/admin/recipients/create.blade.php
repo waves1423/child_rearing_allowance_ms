@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            <button type="button" onclick="location.href='{{ route('admin.recipients.index') }}'" class=" bg-gray-200 border-0 py-2 px-8 mr-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
+            <button type="button" onclick="location.href='{{ session('_back_url') }}'" class="bg-gray-200 border-0 py-2 px-8 mr-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
             受給者新規登録
         </h2>
     </x-slot>
@@ -94,6 +94,18 @@
                                         <input type="radio" name="is_public_pentioner" value="0" class="mr-2" checked>受給していない
                                     </div>
                                 </div>
+                                </div>
+                            </div>
+                            <div class="p-2 w-1/2 mx-auto">
+                                <div class="relative">
+                                <label for="multiple_recipient" class="leading-7 text-sm text-gray-600">受給中の手当</label>
+                                <select id="multiple_recipient" name="multiple_recipient" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    @foreach ($multiple_recipient_categories as $multiple_recipient_category)
+                                        <option value="{{ $multiple_recipient_category->value }}">
+                                            {{ $multiple_recipient_category->type() }}
+                                        </option>
+                                    @endforeach
+                                </select>                                                 
                                 </div>
                             </div>
                             <div class="p-2 w-1/2 mx-auto">

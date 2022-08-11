@@ -37,7 +37,8 @@ Route::resource('recipients', RecipientController::class)
 ->middleware('auth:admin');
 
 Route::resource('special_recipients', SpecialRecipientController::class)
-->middleware('auth:admin');
+->middleware('auth:admin')
+->only(['index']);
 
 Route::resource('recipients.spouses', SpouseController::class)
 ->middleware('auth:admin')

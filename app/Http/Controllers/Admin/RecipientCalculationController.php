@@ -31,6 +31,10 @@ class RecipientCalculationController extends Controller
         $recipient = Recipient::findOrFail($id);
         $income_type_categories = IncomeType::cases();
 
+        if(session()->has('_back_url')){
+            session()->keep('_back_url');
+        }
+
         return view('admin.recipients.calculations.create',
         compact('recipient', 'income_type_categories'));
     }
@@ -110,6 +114,10 @@ class RecipientCalculationController extends Controller
             throw $e;
         }
 
+        if(session()->has('_back_url')){
+            session()->keep('_back_url');
+        }
+
         return redirect()
         ->route('admin.recipients.show', ['recipient' => $id])
         ->with(['message' => '受給者の所得情報を新規登録しました。',
@@ -126,6 +134,10 @@ class RecipientCalculationController extends Controller
     {
         $recipient = Recipient::findOrFail($id);
         $income_type_categories = IncomeType::cases();
+
+        if(session()->has('_back_url')){
+            session()->keep('_back_url');
+        }
 
         return view('admin.recipients.calculations.edit',
         compact('recipient', 'income_type_categories'));
@@ -205,6 +217,10 @@ class RecipientCalculationController extends Controller
             throw $e;
         }
 
+        if(session()->has('_back_url')){
+            session()->keep('_back_url');
+        }
+
         return redirect()
         ->route('admin.recipients.show', ['recipient' => $id])
         ->with(['message' => '受給者の所得情報を更新しました。',
@@ -221,6 +237,10 @@ class RecipientCalculationController extends Controller
     {
         $calculation = Calculation::findOrFail($id);
         $calculation->delete();
+
+        if(session()->has('_back_url')){
+            session()->keep('_back_url');
+        }
 
         return redirect()
         ->route('admin.recipients.show', ['recipient' => $calculation->recipient->id])

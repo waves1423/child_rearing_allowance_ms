@@ -26,6 +26,10 @@ class ObligorController extends Controller
     {
         $recipient = Recipient::findOrFail($id);
 
+        if(session()->has('_back_url')){
+            session()->keep('_back_url');
+        }
+
         return view('admin.obligors.create',
         compact('recipient'));
     }
@@ -51,6 +55,10 @@ class ObligorController extends Controller
             throw $e;
         }
 
+        if(session()->has('_back_url')){
+            session()->keep('_back_url');
+        }
+
         return redirect()
         ->route('admin.recipients.show', ['recipient' => $id])
         ->with(['message' => '扶養義務者を新規登録しました。',
@@ -66,6 +74,10 @@ class ObligorController extends Controller
     public function edit($id)
     {
         $recipient = Recipient::findOrFail($id);
+
+        if(session()->has('_back_url')){
+            session()->keep('_back_url');
+        }
 
         return view('admin.obligors.edit',
         compact('recipient'));
@@ -94,6 +106,10 @@ class ObligorController extends Controller
             throw $e;
         }
 
+        if(session()->has('_back_url')){
+            session()->keep('_back_url');
+        }
+
         return redirect()
         ->route('admin.recipients.show', ['recipient' => $id])
         ->with(['message' => '扶養義務者情報を更新しました。',
@@ -111,6 +127,10 @@ class ObligorController extends Controller
         $obligor = Obligor::findOrFail($id);
         $recipient = Recipient::findOrFail($obligor->recipient->id);
         $obligor->delete();
+
+        if(session()->has('_back_url')){
+            session()->keep('_back_url');
+        }
 
         return redirect()
         ->route('admin.recipients.show', ['recipient' => $recipient->id])
