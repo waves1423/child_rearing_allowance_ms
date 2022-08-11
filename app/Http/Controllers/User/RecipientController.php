@@ -63,6 +63,10 @@ class RecipientController extends Controller
         $multiple_recipient_categories = MultipleRecipient::cases();
         $sex_categories = Sex::cases();
 
+        if(session()->has('_back_url')){
+            session()->keep('_back_url');
+        }
+
         return view('user.recipients.create',
         compact('allowance_categories', 'multiple_recipient_categories', 'sex_categories'));
     }
@@ -95,6 +99,10 @@ class RecipientController extends Controller
         }catch(Throwable $e){
             Log::error($e);
             throw $e;
+        }
+
+        if(session()->has('_back_url')){
+            session()->keep('_back_url');
         }
 
         return redirect()
