@@ -12,9 +12,9 @@ enum MultipleRecipient: int
     {
         return match($this)
         {
-            self::Normal_recipient => '児童扶養手当受給',
-            self::Special_recipient => '特別児童扶養手当受給',
-            self::Dual_recipient => '両方の手当を受給'
+            self::Normal_recipient => '児童扶養手当',
+            self::Special_recipient => '特別児童扶養手当',
+            self::Dual_recipient => '児童扶養手当及び特別児童扶養手当'
         };
     }
 }

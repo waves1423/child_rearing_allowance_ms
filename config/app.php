@@ -212,7 +212,8 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
         'AllowanceType' => App\Enums\AllowanceType::class,
         'Sex' => App\Enums\Sex::class,
-        'IncomeType' => App\Enums\IncomeType::class
+        'IncomeType' => App\Enums\IncomeType::class,
+        'MultipleRecipient' => App\Enums\MultipleRecipient::class
     ])->toArray(),
 
 ];

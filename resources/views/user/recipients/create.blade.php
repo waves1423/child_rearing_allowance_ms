@@ -98,6 +98,18 @@
                             </div>
                             <div class="p-2 w-1/2 mx-auto">
                                 <div class="relative">
+                                <label for="multiple_recipient" class="leading-7 text-sm text-gray-600">受給中の手当</label>
+                                <select id="multiple_recipient" name="multiple_recipient" class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                                    @foreach ($multiple_recipient_categories as $multiple_recipient_category)
+                                        <option value="{{ $multiple_recipient_category->value }}">
+                                            {{ $multiple_recipient_category->type() }}
+                                        </option>
+                                    @endforeach
+                                </select>                                                 
+                                </div>
+                            </div>
+                            <div class="p-2 w-1/2 mx-auto">
+                                <div class="relative">
                                 <label for="note" class="leading-7 text-sm text-gray-600">特記事項</label>
                                 <textarea id="note" name="note" rows="4" class="w-full bg-gray-100 bg-opacity-50 rounded border focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">{{ old('note') }}</textarea>
                                 </div>

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Enums\Sex;
 use App\Enums\AllowanceType;
+use App\Enums\MultipleRecipient;
+use App\Enums\Sex;
 use App\Http\Controllers\Controller;
 use App\Models\Recipient;
 use Illuminate\Http\Request;
@@ -58,11 +59,12 @@ class RecipientController extends Controller
      */
     public function create()
     {
-        $sex_categories = Sex::cases();
         $allowance_categories = AllowanceType::cases();
+        $multiple_recipient_categories = MultipleRecipient::cases();
+        $sex_categories = Sex::cases();
 
         return view('user.recipients.create',
-        compact('sex_categories', 'allowance_categories'));
+        compact('allowance_categories', 'multiple_recipient_categories', 'sex_categories'));
     }
 
     /**
@@ -86,6 +88,7 @@ class RecipientController extends Controller
                     'is_submitted' => $request->is_submitted,
                     'additional_document' => $request->additional_document,
                     'is_public_pentioner' => $request->is_public_pentioner,
+                    'multiple_recipient' => $request->multiple_recipient,
                     'note' => $request->note  
                 ]);
             }, 2);
@@ -127,15 +130,16 @@ class RecipientController extends Controller
     public function edit($id)
     {
         $recipient = Recipient::findOrFail($id);
-        $sex_categories = Sex::cases();
         $allowance_categories = AllowanceType::cases();
+        $multiple_recipient_categories = MultipleRecipient::cases();
+        $sex_categories = Sex::cases();
 
         if(session()->has('_back_url')){
             session()->keep('_back_url');
         }
 
         return view('user.recipients.edit',
-        compact('recipient', 'allowance_categories', 'sex_categories'));
+        compact('recipient', 'allowance_categories', 'multiple_recipient_categories', 'sex_categories'));
     }
 
     /**
@@ -161,6 +165,7 @@ class RecipientController extends Controller
                 $recipient->is_submitted = $request->is_submitted;
                 $recipient->additional_document = $request->additional_document;
                 $recipient->is_public_pentioner = $request->is_public_pentioner;
+                $recipient->multiple_recipient = $request->multiple_recipient;
                 $recipient->note = $request->note;
                 $recipient->save();
             }, 2);

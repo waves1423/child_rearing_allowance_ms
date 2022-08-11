@@ -34,6 +34,7 @@ class RecipientRequest extends FormRequest
             'is_submitted' => 'required|boolean',
             'additional_document' => 'nullable|string|max:100',
             'is_public_pentioner' => 'required|boolean',
+            'multiple_recipient' => 'required',
             'note' => 'nullable|string|max:1000',
         ];
     }
