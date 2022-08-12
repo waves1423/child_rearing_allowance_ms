@@ -24,7 +24,7 @@ class RecipientRequest extends FormRequest
     public function rules()
     {
         return [
-            'number' => 'required|regex:/^[a-zA-Z0-9\-]+$/u|max:20',
+            'number' => 'required|regex:/^[a-zA-Z0-9\-\/]+$/u|max:20',
             'name' => 'required|string|max:50',
             'kana' => 'required|string|max:50',
             'sex' => 'required',
