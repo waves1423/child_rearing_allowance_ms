@@ -13,7 +13,7 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('admin.recipients.index')" :active="request()->routeIs('admin.recipients.index')">
-                        受給者一覧
+                        児童扶養手当
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
@@ -72,8 +72,18 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('admin.recipients.index')" :active="request()->routeIs('admin.recipient.index')">
-                受給者一覧
+            <x-responsive-nav-link :href="route('admin.recipients.index')" :active="request()->routeIs('admin.recipients.index')">
+                児童扶養手当
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('admin.special_recipients.index')" :active="request()->routeIs('admin.special_recipients.index')">
+                特別児童扶養手当
+            </x-responsive-nav-link>
+        </div>
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.index')">
+                ユーザー一覧
             </x-responsive-nav-link>
         </div>
 
