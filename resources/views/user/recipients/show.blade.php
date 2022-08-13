@@ -1,7 +1,11 @@
 <x-app-layout>
   <x-slot name="header">
     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+      @if(session()->has('_back_url'))
       <button type="button" onclick="location.href='{{ session('_back_url') }}'" class="bg-gray-200 border-0 py-2 px-8 mr-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
+      @else
+      <button type="button" onclick="location.href='{{ route('user.recipients.index') }}'" class="bg-gray-200 border-0 py-2 px-8 mr-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
+      @endif
       受給者詳細：{{ $recipient->name }}
     </h2>
   </x-slot>
@@ -20,7 +24,7 @@
                 <div class="-m-2">
                   <div class="p-2 mx-auto">
                     <div class="relative">
-                      <label for="number" class="leading-7 text-sm text-gray-600">三児扶/三特児</label>
+                      <label for="number" class="leading-7 text-sm text-gray-600">三児扶</label>
                       <div class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                         {{ $recipient->number }}</div>
                     </div>

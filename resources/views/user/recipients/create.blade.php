@@ -1,7 +1,11 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            @if(session()->has('_back_url'))
             <button type="button" onclick="location.href='{{ session('_back_url') }}'" class="bg-gray-200 border-0 py-2 px-8 mr-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
+            @else
+            <button type="button" onclick="location.href='{{ route('user.recipients.index') }}'" class="bg-gray-200 border-0 py-2 px-8 mr-8 focus:outline-none hover:bg-gray-400 rounded text-lg">戻る</button>
+            @endif
             受給者新規登録
         </h2>
     </x-slot>

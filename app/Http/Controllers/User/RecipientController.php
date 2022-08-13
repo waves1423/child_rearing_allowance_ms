@@ -34,7 +34,7 @@ class RecipientController extends Controller
 
         $search = $request->input('search');
         $query = Recipient::query();
-        if ($search) {
+        if($search) {
             $spaceConversion = mb_convert_kana($search, 's');
             $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
             
@@ -102,13 +102,15 @@ class RecipientController extends Controller
         }
 
         if(session()->has('_back_url')){
-            session()->keep('_back_url');
+            return redirect(session('_back_url'))
+            ->with(['message' => '受給者を新規登録しました。',
+            'status' => 'info']);     
+        } else {
+            return redirect()
+            ->route('user.recipients.index')
+            ->with(['message' => '受給者を新規登録しました。',
+            'status' => 'info']);     
         }
-
-        return redirect()
-        ->route('user.recipients.index')
-        ->with(['message' => '受給者を新規登録しました。',
-        'status' => 'info']); 
     }
 
     /**
