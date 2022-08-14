@@ -39,7 +39,7 @@ How to install is here.
 
 # Architecture
 ## ERD
-https://user-images.githubusercontent.com/101188604/184527114-23d118b1-4f2b-4626-9057-d8390af051c9.png
+![er](https://user-images.githubusercontent.com/101188604/184527258-586dc908-7866-4305-a267-a7090ce3ad15.png)
 
 ## AWS
 
