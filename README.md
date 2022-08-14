@@ -1,23 +1,25 @@
-# Child Rearing Allowance Management System (児童扶養手当管理システム)
+# Child Rearing Allowance Management System
+![jifu-ms-logo](https://user-images.githubusercontent.com/101188604/184539984-0cfaaa1b-2b2b-486c-a736-f72c357ac96c.png)  
 You can manage information on recipients of child rearing allowance(児童扶養手当) and special child rearing allowance(特別児童扶養手当).  
 
 # Description
 Allowance recipients, their spouses, and support obligors can be registered, and income calculations can be performed.  
-**This system is compatible with income deduction in accordance with tax law revisions applicable from October 2021 onward.**  
 For more infomation on these allowances, see Ministry of Health, Labor and Welfare website.  
 [Child rearing allowance](https://www.mhlw.go.jp/bunya/kodomo/osirase/100526-1.html)  
 [Special child rearing allowance](https://www.mhlw.go.jp/bunya/shougaihoken/jidou/huyou.html) 
 
+***This system is compatible with income deduction in accordance with tax law revisions applicable from October 2021 onward.***  
+
 # URL
 URL is here.
 
-# Demo
+# Demonstration
 Demo is here.
 
 # Usage
 Usage is here.
 
-# Requirement
+# Requirements
 ## Front-end
 - HTML
 - TailwindCSS 3.1.0
@@ -26,7 +28,7 @@ Usage is here.
 ## Back-end
 - PHP 8.1.8
 - Laravel 9.24.0
-- MYSQL 8.0.29
+- MySQL 8.0.29
 - Composer 2.3.10
 - npm 8.15.1 
 
@@ -34,7 +36,7 @@ Usage is here.
 - AWS (EC2, ALB, ACM, RDS, Route53, VPC, EIP, IAM)
 - Laravel Sail 8.1
 
-# Install
+# Installation
 How to install is here.
 
 # Architecture
