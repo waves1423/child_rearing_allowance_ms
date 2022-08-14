@@ -39,8 +39,7 @@ How to install is here.
 
 # Architecture
 ## ERD
-![er](https://user-images.githubusercontent.com/101188604/184527258-586dc908-7866-4305-a267-a7090ce3ad15.png)
-
+![er](https://user-images.githubusercontent.com/101188604/184528045-b97b0ea5-8d81-465d-991d-13a44ad664d4.png)
 ## AWS
 
 # Licence
