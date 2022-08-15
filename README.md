@@ -4,11 +4,7 @@ You can manage information on recipients of child rearing allowance(児童扶養
 
 # Description
 Allowance recipients, their spouses, and support obligors can be registered, and income calculations can be performed.  
-For more infomation on these allowances, see Ministry of Health, Labor and Welfare website.  
-[Child rearing allowance](https://www.mhlw.go.jp/bunya/kodomo/osirase/100526-1.html)  
-[Special child rearing allowance](https://www.mhlw.go.jp/bunya/shougaihoken/jidou/huyou.html) 
-
-***This system is compatible with income deduction in accordance with tax law revisions applicable from October 2021 onward.***  
+***This system is compatible with 100,000 yen income deduction in accordance with tax law revisions applicable from October 2021 onward.***  
 
 # URL
 URL is here.
@@ -16,12 +12,23 @@ URL is here.
 # Demonstration
 Demo is here.
 
-# Usage
-Usage is here.
+# Features
+- Multi-login
+    - Administrator and user
+- Registration
+    - Recipient, its spouse and support obligor
+- Search recipient
+    - Multiple keyword search for kana and kanji
+    - Type of receiving allowance can be identified by an icon
+- Income calculation
+    - Deductions based on type of income
+
+# What issue to solve?
 
 # Requirements
 ## Front-end
-- HTML
+- HTML/CSS
+- JavaScript
 - TailwindCSS 3.1.0
 - Alpine.js 3.4.2
 
@@ -30,7 +37,7 @@ Usage is here.
 - Laravel 9.24.0
 - MySQL 8.0.29
 - Composer 2.3.10
-- npm 8.15.1 
+- Node.js 16.16.0
 
 ## Infrastracture
 - AWS (EC2, ALB, ACM, RDS, Route53, VPC, EIP, IAM)
@@ -49,3 +56,8 @@ Licence is here.
 
 # Future Features
 Coming soon ...
+
+# References
+For more infomation on these allowances, see Ministry of Health, Labor and Welfare website.  
+[Child rearing allowance](https://www.mhlw.go.jp/bunya/kodomo/osirase/100526-1.html)  
+[Special child rearing allowance](https://www.mhlw.go.jp/bunya/shougaihoken/jidou/huyou.html) 
