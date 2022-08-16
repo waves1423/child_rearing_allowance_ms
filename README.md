@@ -51,8 +51,8 @@ How to install is here.
 ![er](https://user-images.githubusercontent.com/101188604/184528045-b97b0ea5-8d81-465d-991d-13a44ad664d4.png)
 ## AWS
 
-# Licence
-Licence is here.
+# License
+The source code is under the MIT license.
 
 # Future Features
 Coming soon ...
