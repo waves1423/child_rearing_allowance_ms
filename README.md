@@ -43,8 +43,8 @@ Demo is here.
 - AWS (EC2, ALB, ACM, RDS, Route53, VPC, EIP, IAM)
 - Laravel Sail 8.1
 
-# Installation
-How to install is here.
+# Usage
+How to install(git clone, composer) is here.
 
 # Architecture
 ## ERD
