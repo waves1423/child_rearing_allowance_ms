@@ -1,3 +1,6 @@
+/database/seeders/AdminSeeder.php
+/database/seeders/RecipientSeeder.php
+/database/seeders/UserSeeder.php
 /node_modules
 /public/build
 /public/hot
