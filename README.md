@@ -12,6 +12,9 @@ URL is here.
 # Demonstration
 Demo is here.
 
+# What issue to solve?
+
+
 # Features
 - Multi-login
     - Administrator and user
@@ -19,11 +22,9 @@ Demo is here.
     - Recipient, its spouse and support obligor
 - Search recipient
     - Multiple keyword search for kana and kanji
-    - Type of receiving allowance can be identified by an icon
+    - Type of receiving allowance can be identified by icons
 - Income calculation
     - Deductions based on type of income
-
-# What issue to solve?
 
 # Requirements
 ## Front-end
@@ -37,7 +38,6 @@ Demo is here.
 - Laravel 9.24.0
 - MySQL 8.0.29
 - Composer 2.3.10
-- Node.js 16.16.0
 
 ## Infrastracture
 - AWS (EC2, ALB, ACM, RDS, Route53, VPC, EIP, IAM)
