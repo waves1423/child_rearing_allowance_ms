@@ -38,4 +38,14 @@ class Recipient extends Model
     {
         return $this->hasOne(Obligor::class);
     }
+
+    public function getRecipient()
+    {
+        return $this->where('multiple_recipient', 1)
+        ->orWhere('multiple_recipient', 3)
+        ->select('id', 'number', 'name', 'adress', 'is_submitted', 'additional_document', 'is_public_pentioner', 'multiple_recipient', 'note')
+        ->orderBy('id', 'asc')
+        ->paginate(25);
+
+    }
 }
