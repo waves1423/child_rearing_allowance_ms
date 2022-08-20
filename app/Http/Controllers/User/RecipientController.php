@@ -18,6 +18,7 @@ class RecipientController extends Controller
     public function __construct()
     {
         $this->middleware('auth:users');
+        $this->recipient = new Recipient();
     }
     /**
      * Display a listing of the resource.
@@ -26,24 +27,12 @@ class RecipientController extends Controller
      */
     public function index(Request $request)
     {
-        $recipients = Recipient::where('multiple_recipient', 1)
-        ->orWhere('multiple_recipient', 3)
-        ->select('id', 'number', 'name', 'adress', 'is_submitted', 'additional_document', 'is_public_pentioner', 'multiple_recipient', 'note')
-        ->orderBy('id', 'asc')
-        ->paginate(25);
-
         $search = $request->input('search');
-        $query = Recipient::query();
-        if($search) {
-            $spaceConversion = mb_convert_kana($search, 's');
-            $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
-            
-            foreach($wordArraySearched as $value) {
-                $query->where('name', 'like', '%'.$value.'%')
-                ->orWhere('kana', 'like', '%'.$value.'%');
-            }
-
-            $recipients = $query->paginate(25);
+        
+        if($search){
+            $recipients = $this->recipient->searchRecipients($search);
+        } else {
+            $recipients = $this->recipient->getRecipients();
         }
 
         session()->flash('_back_url', $request->fullUrl());
