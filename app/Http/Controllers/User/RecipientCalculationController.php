@@ -10,6 +10,7 @@ use App\Models\Deduction;
 use App\Models\Dependent;
 use App\Models\Income;
 use App\Http\Requests\RecipientCalculationRequest;
+use App\Services\BackUrlService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Throwable;
@@ -19,6 +20,7 @@ class RecipientCalculationController extends Controller
     public function __construct()
     {
         $this->middleware('auth:users');
+        $this->backUrlService = new BackUrlService();
     }
 
     /**
@@ -31,9 +33,7 @@ class RecipientCalculationController extends Controller
         $recipient = Recipient::findOrFail($id);
         $income_type_categories = IncomeType::cases();
 
-        if(session()->has('_back_url')){
-            session()->keep('_back_url');
-        }
+        $this->backUrlService->keepBackUrl();
 
         return view('user.recipients.calculations.create',
         compact('recipient', 'income_type_categories'));
@@ -114,9 +114,7 @@ class RecipientCalculationController extends Controller
             throw $e;
         }
 
-        if(session()->has('_back_url')){
-            session()->keep('_back_url');
-        }
+        $this->backUrlService->keepBackUrl();
 
         return redirect()
         ->route('user.recipients.show', ['recipient' => $id])
@@ -135,9 +133,7 @@ class RecipientCalculationController extends Controller
         $recipient = Recipient::findOrFail($id);
         $income_type_categories = IncomeType::cases();
 
-        if(session()->has('_back_url')){
-            session()->keep('_back_url');
-        }
+        $this->backUrlService->keepBackUrl();
 
         return view('user.recipients.calculations.edit',
         compact('recipient', 'income_type_categories'));
@@ -217,9 +213,7 @@ class RecipientCalculationController extends Controller
             throw $e;
         }
 
-        if(session()->has('_back_url')){
-            session()->keep('_back_url');
-        }
+        $this->backUrlService->keepBackUrl();
 
         return redirect()
         ->route('user.recipients.show', ['recipient' => $id])
@@ -238,9 +232,7 @@ class RecipientCalculationController extends Controller
         $calculation = Calculation::findOrFail($id);
         $calculation->delete();
 
-        if(session()->has('_back_url')){
-            session()->keep('_back_url');
-        }
+        $this->backUrlService->keepBackUrl();
 
         return redirect()
         ->route('user.recipients.show', ['recipient' => $calculation->recipient->id])

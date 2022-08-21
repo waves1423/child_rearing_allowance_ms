@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 
 class Recipient extends Model
 {
@@ -40,7 +39,7 @@ class Recipient extends Model
         return $this->hasOne(Obligor::class);
     }
     
-    public function getRecipients()
+    public function getAllRecipients()
     {
         return $this->where('multiple_recipient', 1)
         ->orWhere('multiple_recipient', 3)
@@ -49,7 +48,7 @@ class Recipient extends Model
         ->paginate(25);
     }
 
-    public function getSpecialRecipients()
+    public function getAllSpecialRecipients()
     {
         return $this->where('multiple_recipient', 2)
         ->orWhere('multiple_recipient', 3)

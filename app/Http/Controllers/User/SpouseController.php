@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Recipient;
 use App\Models\Spouse;
 use App\Http\Requests\SpouseRequest;
+use App\Services\BackUrlService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Throwable;
@@ -15,6 +16,7 @@ class SpouseController extends Controller
     public function __construct()
     {
         $this->middleware('auth:users');
+        $this->backUrlService = new BackUrlService();
     }
 
     /**
@@ -26,9 +28,7 @@ class SpouseController extends Controller
     {
         $recipient = Recipient::findOrFail($id);
 
-        if(session()->has('_back_url')){
-            session()->keep('_back_url');
-        }
+        $this->backUrlService->keepBackUrl();
 
         return view('user.spouses.create',
         compact('recipient'));
@@ -55,9 +55,7 @@ class SpouseController extends Controller
             throw $e;
         }
 
-        if(session()->has('_back_url')){
-            session()->keep('_back_url');
-        }
+        $this->backUrlService->keepBackUrl();
 
         return redirect()
         ->route('user.recipients.show', ['recipient' => $id])
@@ -75,9 +73,7 @@ class SpouseController extends Controller
     {
         $recipient = Recipient::findOrFail($id);
 
-        if(session()->has('_back_url')){
-            session()->keep('_back_url');
-        }
+        $this->backUrlService->keepBackUrl();
 
         return view('user.spouses.edit',
         compact('recipient'));
@@ -106,9 +102,7 @@ class SpouseController extends Controller
             throw $e;
         }
 
-        if(session()->has('_back_url')){
-            session()->keep('_back_url');
-        }
+        $this->backUrlService->keepBackUrl();
 
         return redirect()
         ->route('user.recipients.show', ['recipient' => $id])
@@ -127,9 +121,7 @@ class SpouseController extends Controller
         $spouse = Spouse::findOrFail($id);
         $spouse->delete();
 
-        if(session()->has('_back_url')){
-            session()->keep('_back_url');
-        }
+        $this->backUrlService->keepBackUrl();
 
         return redirect()
         ->route('user.recipients.show', ['recipient' => $spouse->recipient->id])

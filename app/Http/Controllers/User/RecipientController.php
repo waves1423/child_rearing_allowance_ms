@@ -7,6 +7,8 @@ use App\Enums\MultipleRecipient;
 use App\Enums\Sex;
 use App\Http\Controllers\Controller;
 use App\Models\Recipient;
+use App\Services\BackUrlService;
+use App\Services\RecipientService;
 use Illuminate\Http\Request;
 use App\Http\Requests\RecipientRequest;
 use Illuminate\Support\Facades\DB;
@@ -19,6 +21,8 @@ class RecipientController extends Controller
     {
         $this->middleware('auth:users');
         $this->recipient = new Recipient();
+        $this->recipientService = new RecipientService();
+        $this->backUrlService = new BackUrlService();
     }
     /**
      * Display a listing of the resource.
@@ -28,15 +32,10 @@ class RecipientController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        
-        if($search){
-            $recipients = $this->recipient->searchRecipients($search);
-        } else {
-            $recipients = $this->recipient->getRecipients();
-        }
+        $recipients = $this->recipientService->getRecipients($search);
 
-        session()->flash('_back_url', $request->fullUrl());
-        
+        $this->backUrlService->setBackUrl($request);
+
         return view('user.recipients.index',
         compact('recipients', 'search'));
     }
@@ -52,9 +51,7 @@ class RecipientController extends Controller
         $multiple_recipient_categories = MultipleRecipient::cases();
         $sex_categories = Sex::cases();
 
-        if(session()->has('_back_url')){
-            session()->keep('_back_url');
-        }
+        $this->backUrlService->keepBackUrl();
 
         return view('user.recipients.create',
         compact('allowance_categories', 'multiple_recipient_categories', 'sex_categories'));
@@ -112,9 +109,7 @@ class RecipientController extends Controller
     {
         $recipient = Recipient::findOrFail($id);
 
-        if(session()->has('_back_url')){
-            session()->keep('_back_url');
-        }
+        $this->backUrlService->keepBackUrl();
         
         return view('user.recipients.show',
         compact('recipient'));
@@ -133,9 +128,7 @@ class RecipientController extends Controller
         $multiple_recipient_categories = MultipleRecipient::cases();
         $sex_categories = Sex::cases();
 
-        if(session()->has('_back_url')){
-            session()->keep('_back_url');
-        }
+        $this->backUrlService->keepBackUrl();
 
         return view('user.recipients.edit',
         compact('recipient', 'allowance_categories', 'multiple_recipient_categories', 'sex_categories'));
@@ -173,9 +166,7 @@ class RecipientController extends Controller
             throw $e;
         }
 
-        if(session()->has('_back_url')){
-            session()->keep('_back_url');
-        }
+        $this->backUrlService->keepBackUrl();
 
         return redirect()
         ->route('user.recipients.show', ['recipient' => $recipient->id])
