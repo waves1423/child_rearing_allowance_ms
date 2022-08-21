@@ -20,6 +20,11 @@ class RecipientCalculationController extends Controller
     public function __construct()
     {
         $this->middleware('auth:users');
+        $this->recipient = new Recipient();
+        $this->calculation = new Calculation();
+        $this->deduction = new Deduction();
+        $this->dependent = new Dependent();
+        $this->income = new Income();
         $this->backUrlService = new BackUrlService();
     }
 
@@ -30,7 +35,7 @@ class RecipientCalculationController extends Controller
      */
     public function create($id)
     {    
-        $recipient = Recipient::findOrFail($id);
+        $recipient = $this->recipient->findOrFail($id);
         $income_type_categories = IncomeType::cases();
 
         $this->backUrlService->keepBackUrl();
@@ -49,11 +54,11 @@ class RecipientCalculationController extends Controller
     {
         try{
             DB::transaction(function () use($request, $id) {
-                $calculation = Calculation::create([
+                $calculation = $this->calculation->create([
                     'recipient_id' => $id,
                     'deducted_income' => ''
                 ]);
-                Dependent::create([
+                $this->dependent->create([
                     'calculation_id' => $calculation->id,
                     'total' => $request->total,
                     'elder' => $request->elder,
@@ -61,7 +66,7 @@ class RecipientCalculationController extends Controller
                     'year_old_16to18' => $request->year_old_16to18,
                     'other_child' => $request->other_child
                 ]);
-                $income = Income::create([
+                $income = $this->income->create([
                     'calculation_id' => $calculation->id,
                     'income' => $request->income,
                     'type' => $request->type,
@@ -76,7 +81,7 @@ class RecipientCalculationController extends Controller
                         }
                     $income->save();
                 }
-                $deduction = Deduction::create([
+                $deduction = $this->deduction->create([
                     'calculation_id' => $calculation->id,
                     'disabled' => $request->disabled,
                     'specially_disabled' => $request->specially_disabled,
@@ -130,7 +135,7 @@ class RecipientCalculationController extends Controller
      */
     public function edit($id)
     {
-        $recipient = Recipient::findOrFail($id);
+        $recipient = $this->recipient->findOrFail($id);
         $income_type_categories = IncomeType::cases();
 
         $this->backUrlService->keepBackUrl();
@@ -148,11 +153,11 @@ class RecipientCalculationController extends Controller
      */
     public function update(RecipientCalculationRequest $request, $id)
     {
-        $recipient = Recipient::findOrFail($id);
-        $calculation = Calculation::findOrFail($recipient->calculation->id);
-        $dependent = Dependent::findOrFail($calculation->dependent->id);
-        $income = Income::findOrFail($calculation->income->id);
-        $deduction = Deduction::findOrFail($calculation->deduction->id);
+        $recipient = $this->recipient->findOrFail($id);
+        $calculation = $this->calculation->findOrFail($recipient->calculation->id);
+        $dependent = $this->dependent->findOrFail($calculation->dependent->id);
+        $income = $this->income->findOrFail($calculation->income->id);
+        $deduction = $this->deduction->findOrFail($calculation->deduction->id);
 
         try{
             DB::transaction(function () use($request, $calculation, $dependent, $income, $deduction) {
@@ -229,7 +234,7 @@ class RecipientCalculationController extends Controller
      */
     public function destroy($id)
     {
-        $calculation = Calculation::findOrFail($id);
+        $calculation = $this->calculation->findOrFail($id);
         $calculation->delete();
 
         $this->backUrlService->keepBackUrl();

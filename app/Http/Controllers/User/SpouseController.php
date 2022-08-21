@@ -16,6 +16,8 @@ class SpouseController extends Controller
     public function __construct()
     {
         $this->middleware('auth:users');
+        $this->recipient = new Recipient();
+        $this->spouse = new Spouse();
         $this->backUrlService = new BackUrlService();
     }
 
@@ -26,7 +28,7 @@ class SpouseController extends Controller
      */
     public function create($id)
     {
-        $recipient = Recipient::findOrFail($id);
+        $recipient = $this->recipient->findOrFail($id);
 
         $this->backUrlService->keepBackUrl();
 
@@ -44,7 +46,7 @@ class SpouseController extends Controller
     {
         try{
             DB::transaction(function () use($request, $id) {
-                Spouse::create([
+                $this->spouse->create([
                     'recipient_id' => $id,
                     'name' => $request->name,
                     'family_relationship' => $request->family_relationship,
@@ -71,7 +73,7 @@ class SpouseController extends Controller
      */
     public function edit($id)
     {
-        $recipient = Recipient::findOrFail($id);
+        $recipient = $this->recipient->findOrFail($id);
 
         $this->backUrlService->keepBackUrl();
 
@@ -88,8 +90,8 @@ class SpouseController extends Controller
      */
     public function update(SpouseRequest $request, $id)
     {
-        $recipient = Recipient::findOrFail($id);
-        $spouse = Spouse::findOrFail($recipient->spouse->id);
+        $recipient = $this->recipient->findOrFail($id);
+        $spouse = $this->spouse->findOrFail($recipient->spouse->id);
 
         try{
             DB::transaction(function () use($request, $spouse) {
@@ -118,7 +120,7 @@ class SpouseController extends Controller
      */
     public function destroy($id)
     {
-        $spouse = Spouse::findOrFail($id);
+        $spouse = $this->spouse->findOrFail($id);
         $spouse->delete();
 
         $this->backUrlService->keepBackUrl();

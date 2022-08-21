@@ -21,6 +21,12 @@ class SpouseCalculationController extends Controller
     public function __construct()
     {
         $this->middleware('auth:users');
+        $this->recipient = new Recipient();
+        $this->spouse = new Spouse();
+        $this->calculation = new Calculation();
+        $this->deduction = new Deduction();
+        $this->dependent = new Dependent();
+        $this->income = new Income();
         $this->backUrlService = new BackUrlService();
     }
 
@@ -31,7 +37,7 @@ class SpouseCalculationController extends Controller
      */
     public function create($id)
     {    
-        $recipient = Recipient::findOrFail($id);
+        $recipient = $this->recipient->findOrFail($id);
         $income_type_categories = IncomeType::cases();
 
         $this->backUrlService->keepBackUrl();
@@ -48,7 +54,7 @@ class SpouseCalculationController extends Controller
      */
     public function store(SpouseCalculationRequest $request, $id)
     {
-        $recipient = Recipient::findOrFail($id);
+        $recipient = $this->recipient->findOrFail($id);
 
         try{
             DB::transaction(function () use($request, $recipient) {
@@ -56,7 +62,7 @@ class SpouseCalculationController extends Controller
                     'spouse_id' => $recipient->spouse->id,
                     'deducted_income' => ''
                 ]);
-                Dependent::create([
+                $this->dependent->create([
                     'calculation_id' => $calculation->id,
                     'total' => $request->total,
                     'elder' => $request->elder,
@@ -64,7 +70,7 @@ class SpouseCalculationController extends Controller
                     'year_old_16to18' => $request->year_old_16to18,
                     'other_child' => $request->other_child
                 ]);
-                $income = Income::create([
+                $income = $this->income->create([
                     'calculation_id' => $calculation->id,
                     'income' => $request->income,
                     'type' => $request->type,
@@ -77,7 +83,7 @@ class SpouseCalculationController extends Controller
                         }
                     $income->save();
                 }
-                $deduction = Deduction::create([
+                $deduction = $this->deduction->create([
                     'calculation_id' => $calculation->id,
                     'disabled' => $request->disabled,
                     'specially_disabled' => $request->specially_disabled,
@@ -130,7 +136,7 @@ class SpouseCalculationController extends Controller
      */
     public function edit($id)
     {
-        $recipient = Recipient::findOrFail($id);
+        $recipient = $this->recipient->findOrFail($id);
         $income_type_categories = IncomeType::cases();
 
         $this->backUrlService->keepBackUrl();
@@ -148,12 +154,12 @@ class SpouseCalculationController extends Controller
      */
     public function update(SpouseCalculationRequest $request, $id)
     {
-        $recipient = Recipient::findOrFail($id);
-        $spouse = Spouse::findOrFail($recipient->spouse->id);
-        $calculation = Calculation::findOrFail($spouse->calculation->id);
-        $dependent = Dependent::findOrFail($calculation->dependent->id);
-        $income = Income::findOrFail($calculation->income->id);
-        $deduction = Deduction::findOrFail($calculation->deduction->id);
+        $recipient = $this->recipient->findOrFail($id);
+        $spouse = $this->spouse->findOrFail($recipient->spouse->id);
+        $calculation = $this->spouse->findOrFail($spouse->calculation->id);
+        $dependent = $this->spouse->findOrFail($calculation->dependent->id);
+        $income = $this->spouse->findOrFail($calculation->income->id);
+        $deduction = $this->spouse->findOrFail($calculation->deduction->id);
 
         try{
             DB::transaction(function () use($request, $calculation, $dependent, $income, $deduction) {
@@ -227,7 +233,7 @@ class SpouseCalculationController extends Controller
      */
     public function destroy($id)
     {
-        $calculation = Calculation::findOrFail($id);
+        $calculation = $this->calculation->findOrFail($id);
         $calculation->delete();
 
         $this->backUrlService->keepBackUrl();

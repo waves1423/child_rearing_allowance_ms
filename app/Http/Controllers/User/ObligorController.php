@@ -16,6 +16,8 @@ class ObligorController extends Controller
     public function __construct()
     {
         $this->middleware('auth:users');
+        $this->recipient = new Recipient();
+        $this->obligor = new Obligor();
         $this->backUrlService = new BackUrlService();
     }
 
@@ -26,7 +28,7 @@ class ObligorController extends Controller
      */
     public function create($id)
     {
-        $recipient = Recipient::findOrFail($id);
+        $recipient = $this->recipient->findOrFail($id);
 
         $this->backUrlService->keepBackUrl();
 
@@ -44,7 +46,7 @@ class ObligorController extends Controller
     {
         try{
             DB::transaction(function () use($request, $id) {
-                Obligor::create([
+                $this->obligor->create([
                     'recipient_id' => $id,
                     'name' => $request->name,
                     'family_relationship' => $request->family_relationship,
@@ -71,7 +73,7 @@ class ObligorController extends Controller
      */
     public function edit($id)
     {
-        $recipient = Recipient::findOrFail($id);
+        $recipient = $this->recipient->findOrFail($id);
 
         $this->backUrlService->keepBackUrl();
 
@@ -88,8 +90,8 @@ class ObligorController extends Controller
      */
     public function update(ObligorRequest $request, $id)
     {
-        $recipient = Recipient::findOrFail($id);
-        $obligor = Obligor::findOrFail($recipient->obligor->id);
+        $recipient = $this->recipient->findOrFail($id);
+        $obligor = $this->obligor->findOrFail($recipient->obligor->id);
 
         try{
             DB::transaction(function () use($request, $obligor) {
@@ -118,7 +120,7 @@ class ObligorController extends Controller
      */
     public function destroy($id)
     {
-        $obligor = Obligor::findOrFail($id);
+        $obligor = $this->obligor->findOrFail($id);
         $obligor->delete();
 
         $this->backUrlService->keepBackUrl();

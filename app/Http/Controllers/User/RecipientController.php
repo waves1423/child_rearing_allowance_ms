@@ -107,7 +107,7 @@ class RecipientController extends Controller
      */
     public function show($id)
     {
-        $recipient = Recipient::findOrFail($id);
+        $recipient = $this->recipient->findOrFail($id);
 
         $this->backUrlService->keepBackUrl();
         
@@ -123,7 +123,7 @@ class RecipientController extends Controller
      */
     public function edit($id)
     {
-        $recipient = Recipient::findOrFail($id);
+        $recipient = $this->recipient->findOrFail($id);
         $allowance_categories = AllowanceType::cases();
         $multiple_recipient_categories = MultipleRecipient::cases();
         $sex_categories = Sex::cases();
@@ -143,7 +143,7 @@ class RecipientController extends Controller
      */
     public function update(RecipientRequest $request, $id)
     {
-        $recipient = Recipient::findOrFail($id);
+        $recipient = $this->recipient->findOrFail($id);
 
         try{
             DB::transaction(function () use($request, $recipient) {
@@ -182,7 +182,7 @@ class RecipientController extends Controller
      */
     public function destroy($id)
     {
-        Recipient::findOrFail($id)->delete();
+        $this->recipient->findOrFail($id)->delete();
 
         return redirect()
         ->route('user.recipients.index')

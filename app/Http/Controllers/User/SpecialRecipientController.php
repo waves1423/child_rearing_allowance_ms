@@ -13,7 +13,6 @@ class SpecialRecipientController extends Controller
     public function __construct()
     {
         $this->middleware('auth:users');
-        $this->recipient = new Recipient();
         $this->recipientService = new RecipientService();
         $this->backUrlService = new BackUrlService();
     }
