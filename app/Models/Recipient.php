@@ -39,6 +39,29 @@ class Recipient extends Model
         return $this->hasOne(Obligor::class);
     }
     
+    public function getRecipients($search)
+    {
+        return $search ? $this->searchRecipients($search) : $this->getAllRecipients();
+    }
+
+    public function getSpecialRecipients($search)
+    {
+        return $search ? $this->searchRecipients($search) : $this->getAllSpecialRecipients();
+    }
+
+    public function searchRecipients($search)
+    {
+        $spaceConversion = mb_convert_kana($search, 's');
+        $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
+        
+        foreach($wordArraySearched as $value) {
+            return $this->query()
+            ->where('name', 'like', '%'.$value.'%')
+            ->orWhere('kana', 'like', '%'.$value.'%')
+            ->paginate(25);
+        }
+    }
+
     public function getAllRecipients()
     {
         return $this->where('multiple_recipient', 1)
@@ -55,18 +78,5 @@ class Recipient extends Model
         ->select('id', 'number', 'name', 'adress', 'is_submitted', 'additional_document', 'is_public_pentioner', 'multiple_recipient', 'note')
         ->orderBy('id', 'asc')
         ->paginate(25);
-    }
-
-    public function searchRecipients($search)
-    {
-        $spaceConversion = mb_convert_kana($search, 's');
-        $wordArraySearched = preg_split('/[\s,]+/', $spaceConversion, -1, PREG_SPLIT_NO_EMPTY);
-        
-        foreach($wordArraySearched as $value) {
-            return $this->query()
-            ->where('name', 'like', '%'.$value.'%')
-            ->orWhere('kana', 'like', '%'.$value.'%')
-            ->paginate(25);
-        }
     }
 }

@@ -8,7 +8,6 @@ use App\Enums\Sex;
 use App\Http\Controllers\Controller;
 use App\Models\Recipient;
 use App\Services\BackUrlService;
-use App\Services\RecipientService;
 use Illuminate\Http\Request;
 use App\Http\Requests\RecipientRequest;
 use Illuminate\Support\Facades\DB;
@@ -21,7 +20,6 @@ class RecipientController extends Controller
     {
         $this->middleware('auth:users');
         $this->recipient = new Recipient();
-        $this->recipientService = new RecipientService();
         $this->backUrlService = new BackUrlService();
     }
     /**
@@ -32,7 +30,7 @@ class RecipientController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        $recipients = $this->recipientService->getRecipients($search);
+        $recipients = $this->recipient->getRecipients($search);
 
         $this->backUrlService->setBackUrl($request);
 

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Recipient;
 use App\Services\BackUrlService;
-use App\Services\RecipientService;
 use Illuminate\Http\Request;
 
 class SpecialRecipientController extends Controller
@@ -13,7 +12,7 @@ class SpecialRecipientController extends Controller
     public function __construct()
     {
         $this->middleware('auth:users');
-        $this->recipientService = new RecipientService();
+        $this->recipient = new Recipient();
         $this->backUrlService = new BackUrlService();
     }
     /**
@@ -24,7 +23,7 @@ class SpecialRecipientController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        $special_recipients = $this->recipientService->getSpecialRecipients($search);
+        $special_recipients = $this->recipient->getSpecialRecipients($search);
 
         $this->backUrlService->setBackUrl($request);
 
