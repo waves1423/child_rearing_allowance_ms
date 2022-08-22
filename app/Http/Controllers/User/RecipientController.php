@@ -16,11 +16,15 @@ use Throwable;
 
 class RecipientController extends Controller
 {
-    public function __construct()
+    public function __construct(Recipient $recipient, Request $request, BackUrlService $backUrlService)
     {
         $this->middleware('auth:users');
-        $this->recipient = new Recipient();
-        $this->backUrlService = new BackUrlService();
+        $this->recipient = $recipient;
+        $this->request = $request;
+        $this->backUrlService = $backUrlService;
+        $this->allowanceCategories = AllowanceType::cases();
+        $this->multipleRecipientCategories = MultipleRecipient::cases();
+        $this->sexCategories = Sex::cases();
     }
     /**
      * Display a listing of the resource.
@@ -29,13 +33,13 @@ class RecipientController extends Controller
      */
     public function index(Request $request)
     {
-        $search = $request->input('search');
-        $recipients = $this->recipient->getRecipients($search);
-
         $this->backUrlService->setBackUrl($request);
 
         return view('user.recipients.index',
-        compact('recipients', 'search'));
+        [
+            'recipients' => $this->recipient->getRecipients($this->request->search),
+            'search' => $this->request->search
+        ]);
     }
 
     /**
@@ -45,14 +49,14 @@ class RecipientController extends Controller
      */
     public function create()
     {
-        $allowance_categories = AllowanceType::cases();
-        $multiple_recipient_categories = MultipleRecipient::cases();
-        $sex_categories = Sex::cases();
-
         $this->backUrlService->keepBackUrl();
 
         return view('user.recipients.create',
-        compact('allowance_categories', 'multiple_recipient_categories', 'sex_categories'));
+        [
+            'allowance_categories' => $this->allowanceCategories,
+            'multiple_recipient_categories' => $this->multipleRecipientCategories,
+            'sex_categories' => $this->sexCategories
+        ]);
     }
 
     /**
@@ -105,12 +109,10 @@ class RecipientController extends Controller
      */
     public function show($id)
     {
-        $recipient = $this->recipient->findOrFail($id);
-
         $this->backUrlService->keepBackUrl();
         
         return view('user.recipients.show',
-        compact('recipient'));
+        ['recipient' => $this->recipient->findOrFail($id)]);
     }
 
     /**
@@ -121,15 +123,15 @@ class RecipientController extends Controller
      */
     public function edit($id)
     {
-        $recipient = $this->recipient->findOrFail($id);
-        $allowance_categories = AllowanceType::cases();
-        $multiple_recipient_categories = MultipleRecipient::cases();
-        $sex_categories = Sex::cases();
-
         $this->backUrlService->keepBackUrl();
 
         return view('user.recipients.edit',
-        compact('recipient', 'allowance_categories', 'multiple_recipient_categories', 'sex_categories'));
+        [
+            'recipient' => $this->recipient->findOrFail($id),
+            'allowance_categories' => $this->allowanceCategories,
+            'multiple_recipient_categories' => $this->multipleRecipientCategories,
+            'sex_categories' => $this->sexCategories
+        ]);
     }
 
     /**
@@ -167,7 +169,7 @@ class RecipientController extends Controller
         $this->backUrlService->keepBackUrl();
 
         return redirect()
-        ->route('user.recipients.show', ['recipient' => $recipient->id])
+        ->route('user.recipients.show', ['recipient' => $this->recipient->findOrFail($id)])
         ->with(['message' => '受給者情報を更新しました。',
         'status' => 'info']);
     }
