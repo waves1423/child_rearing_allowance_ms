@@ -24,8 +24,8 @@ class SpouseRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:10',
-            'family_relationship' => 'required|string|max:10',
+            'name' => 'required|string|max:50',
+            'family_relationship' => 'required|string|max:50',
         ];
     }
 }
