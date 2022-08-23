@@ -39,16 +39,19 @@ class Recipient extends Model
         return $this->hasOne(Obligor::class);
     }
     
+    //児童扶養手当受給者情報取得
     public function getRecipients($search)
     {
         return $search ? $this->searchRecipients($search) : $this->getAllRecipients();
     }
 
+    //特別児童扶養手当受給者情報取得
     public function getSpecialRecipients($search)
     {
         return $search ? $this->searchRecipients($search) : $this->getAllSpecialRecipients();
     }
 
+    //受給者検索(児扶・特児共通)
     public function searchRecipients($search)
     {
         $spaceConversion = mb_convert_kana($search, 's');
@@ -62,6 +65,7 @@ class Recipient extends Model
         }
     }
 
+    //児扶全受給者取得
     public function getAllRecipients()
     {
         return $this->where('multiple_recipient', 1)
@@ -71,6 +75,7 @@ class Recipient extends Model
         ->paginate(25);
     }
 
+    //特児全受給者取得
     public function getAllSpecialRecipients()
     {
         return $this->where('multiple_recipient', 2)
