@@ -67,27 +67,7 @@ class RecipientController extends Controller
      */
     public function store(RecipientRequest $request)
     {
-        try{
-            DB::transaction(function () use($request) {
-                Recipient::create([
-                    'number' => $request->number,
-                    'name' => $request->name,
-                    'kana' => $request->kana,
-                    'sex' => $request->sex,
-                    'birth_date' => $request->birth_date,
-                    'adress' => $request->adress,
-                    'allowance_type' => $request->allowance_type,
-                    'is_submitted' => $request->is_submitted,
-                    'additional_document' => $request->additional_document,
-                    'is_public_pentioner' => $request->is_public_pentioner,
-                    'multiple_recipient' => $request->multiple_recipient,
-                    'note' => $request->note  
-                ]);
-            }, 2);
-        }catch(Throwable $e){
-            Log::error($e);
-            throw $e;
-        }
+        $this->recipient->createRecipient($request);
 
         if(session()->has('_back_url')){
             return redirect(session('_back_url'))
