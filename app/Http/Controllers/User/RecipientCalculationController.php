@@ -17,15 +17,16 @@ use Throwable;
 
 class RecipientCalculationController extends Controller
 {
-    public function __construct()
+    public function __construct(Recipient $recipient, Calculation $calculation, BackUrlService $backUrlService)
     {
         $this->middleware('auth:users');
-        $this->recipient = new Recipient();
-        $this->calculation = new Calculation();
-        $this->deduction = new Deduction();
-        $this->dependent = new Dependent();
-        $this->income = new Income();
-        $this->backUrlService = new BackUrlService();
+        $this->recipient = $recipient;
+        $this->calculation = $calculation;
+        // $this->deduction = $deduction;
+        // $this->dependent = $dependent;
+        // $this->income = $income;
+        $this->backUrlService = $backUrlService;
+        $this->incomeTypeCategories = IncomeType::cases();
     }
 
     /**
@@ -35,13 +36,13 @@ class RecipientCalculationController extends Controller
      */
     public function create($id)
     {    
-        $recipient = $this->recipient->findOrFail($id);
-        $income_type_categories = IncomeType::cases();
-
         $this->backUrlService->keepBackUrl();
 
         return view('user.recipients.calculations.create',
-        compact('recipient', 'income_type_categories'));
+        [
+            'recipient' => $this->recipient->findOrFail($id),
+            'income_type_categories' => $this->incomeTypeCategories
+        ]);
     }
 
     /**
@@ -79,6 +80,9 @@ class RecipientCalculationController extends Controller
                         if($income->deducted_income < 0){
                             $income->deducted_income = 0;
                         }
+                    $income->save();
+                } elseif($income->income < 0) {
+                    $income->income = 0;
                     $income->save();
                 }
                 $deduction = $this->deduction->create([
@@ -135,13 +139,13 @@ class RecipientCalculationController extends Controller
      */
     public function edit($id)
     {
-        $recipient = $this->recipient->findOrFail($id);
-        $income_type_categories = IncomeType::cases();
-
         $this->backUrlService->keepBackUrl();
 
         return view('user.recipients.calculations.edit',
-        compact('recipient', 'income_type_categories'));
+        [
+            'recipient' => $this->recipient->findOrFail($id),
+            'income_type_categories' => $this->incomeTypeCategories
+        ]);
     }
 
     /**
@@ -234,13 +238,11 @@ class RecipientCalculationController extends Controller
      */
     public function destroy($id)
     {
-        $calculation = $this->calculation->findOrFail($id);
-        $calculation->delete();
-
+        $this->calculation->findOrFail($id)->delete();
         $this->backUrlService->keepBackUrl();
 
         return redirect()
-        ->route('user.recipients.show', ['recipient' => $calculation->recipient->id])
+        ->route('user.recipients.show', ['recipient' => $this->calculation->recipient->id])
         ->with(['message' => '受給者の所得情報を削除しました。',
         'status' => 'alert']);
     }

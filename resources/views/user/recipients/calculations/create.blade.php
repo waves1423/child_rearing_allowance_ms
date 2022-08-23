@@ -214,6 +214,9 @@
           document.getElementById('deducted_income').innerHTML = deducted_income.toLocaleString();
         } else {
           let deducted_income = Number(income);
+          if(deducted_income < 0){
+            deducted_income = 0
+          }
           document.getElementById('deducted_income').innerHTML = deducted_income.toLocaleString();
         }
       }

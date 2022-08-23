@@ -13,12 +13,12 @@ use Throwable;
 
 class ObligorController extends Controller
 {
-    public function __construct()
+    public function __construct(Recipient $recipient, Obligor $obligor, BackUrlService $backUrlService)
     {
         $this->middleware('auth:users');
-        $this->recipient = new Recipient();
-        $this->obligor = new Obligor();
-        $this->backUrlService = new BackUrlService();
+        $this->recipient = $recipient;
+        $this->obligor = $obligor;
+        $this->backUrlService = $backUrlService;
     }
 
     /**
@@ -28,12 +28,10 @@ class ObligorController extends Controller
      */
     public function create($id)
     {
-        $recipient = $this->recipient->findOrFail($id);
-
         $this->backUrlService->keepBackUrl();
 
         return view('user.obligors.create',
-        compact('recipient'));
+        ['recipient' => $this->recipient->findOrFail($id)]);
     }
 
     /**
@@ -73,12 +71,10 @@ class ObligorController extends Controller
      */
     public function edit($id)
     {
-        $recipient = $this->recipient->findOrFail($id);
-
         $this->backUrlService->keepBackUrl();
 
         return view('user.obligors.edit',
-        compact('recipient'));
+        ['recipient' => $this->recipient->findOrFail($id)]);
     }
 
     /**
@@ -120,9 +116,7 @@ class ObligorController extends Controller
      */
     public function destroy($id)
     {
-        $obligor = $this->obligor->findOrFail($id);
-        $obligor->delete();
-
+        $obligor = $this->obligor->findOrFail($id)->delete();
         $this->backUrlService->keepBackUrl();
 
         return redirect()
