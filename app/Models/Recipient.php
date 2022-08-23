@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class Recipient extends Model
 {
@@ -83,5 +86,17 @@ class Recipient extends Model
         ->select('id', 'number', 'name', 'adress', 'is_submitted', 'additional_document', 'is_public_pentioner', 'multiple_recipient', 'note')
         ->orderBy('id', 'asc')
         ->paginate(25);
+    }
+
+    public function createRecipient($request)
+    {
+        try{
+            DB::transaction(function () use($request) {
+                return $this->create($request->validated());
+            }, 2);
+        }catch(Throwable $e){
+            Log::error($e);
+            throw $e;
+        }
     }
 }
