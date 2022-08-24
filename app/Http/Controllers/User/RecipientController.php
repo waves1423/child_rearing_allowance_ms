@@ -10,9 +10,6 @@ use App\Models\Recipient;
 use App\Services\BackUrlService;
 use Illuminate\Http\Request;
 use App\Http\Requests\RecipientRequest;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Throwable;
 
 class RecipientController extends Controller
 {
@@ -68,17 +65,9 @@ class RecipientController extends Controller
     public function store(RecipientRequest $request)
     {
         $this->recipient->createRecipient($request);
+        $redirect = session()->has('_back_url') ? redirect(session('_back_url')) : redirect()->route('user.recipients.index');
 
-        if(session()->has('_back_url')){
-            return redirect(session('_back_url'))
-            ->with(['message' => '受給者を新規登録しました。',
-            'status' => 'info']);     
-        } else {
-            return redirect()
-            ->route('user.recipients.index')
-            ->with(['message' => '受給者を新規登録しました。',
-            'status' => 'info']);     
-        }
+        return $redirect->with(['message' => '受給者を新規登録しました。', 'status' => 'info']);     
     }
 
     /**
@@ -91,8 +80,7 @@ class RecipientController extends Controller
     {
         $this->backUrlService->keepBackUrl();
         
-        return view('user.recipients.show',
-        ['recipient' => $this->recipient->findOrFail($id)]);
+        return view('user.recipients.show', ['recipient' => $this->recipient->findOrFail($id)]);
     }
 
     /**
@@ -123,35 +111,12 @@ class RecipientController extends Controller
      */
     public function update(RecipientRequest $request, $id)
     {
-        $recipient = $this->recipient->findOrFail($id);
-
-        try{
-            DB::transaction(function () use($request, $recipient) {
-                $recipient->number = $request->number;
-                $recipient->name = $request->name;
-                $recipient->kana = $request->kana;
-                $recipient->sex = $request->sex;
-                $recipient->birth_date = $request->birth_date;
-                $recipient->adress = $request->adress;
-                $recipient->allowance_type = $request->allowance_type;
-                $recipient->is_submitted = $request->is_submitted;
-                $recipient->additional_document = $request->additional_document;
-                $recipient->is_public_pentioner = $request->is_public_pentioner;
-                $recipient->multiple_recipient = $request->multiple_recipient;
-                $recipient->note = $request->note;
-                $recipient->save();
-            }, 2);
-        }catch(Throwable $e){
-            Log::error($e);
-            throw $e;
-        }
-
+        $this->recipient->updateRecipient($request, $id);
         $this->backUrlService->keepBackUrl();
 
         return redirect()
         ->route('user.recipients.show', ['recipient' => $this->recipient->findOrFail($id)])
-        ->with(['message' => '受給者情報を更新しました。',
-        'status' => 'info']);
+        ->with(['message' => '受給者情報を更新しました。', 'status' => 'info']);
     }
 
     /**
@@ -166,7 +131,6 @@ class RecipientController extends Controller
 
         return redirect()
         ->route('user.recipients.index')
-        ->with(['message' => '受給者を削除しました。',
-            'status' => 'alert']);
+        ->with(['message' => '受給者を削除しました。', 'status' => 'alert']);
     }
 }
