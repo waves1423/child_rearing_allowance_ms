@@ -7,18 +7,15 @@ use App\Models\Recipient;
 use App\Models\Obligor;
 use App\Http\Requests\ObligorRequest;
 use App\Services\BackUrlService;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Throwable;
 
 class ObligorController extends Controller
 {
-    public function __construct()
+    public function __construct(Recipient $recipient, Obligor $obligor, BackUrlService $backUrlService)
     {
         $this->middleware('auth:users');
-        $this->recipient = new Recipient();
-        $this->obligor = new Obligor();
-        $this->backUrlService = new BackUrlService();
+        $this->recipient = $recipient;
+        $this->obligor = $obligor;
+        $this->backUrlService = $backUrlService;
     }
 
     /**
@@ -28,12 +25,9 @@ class ObligorController extends Controller
      */
     public function create($id)
     {
-        $recipient = $this->recipient->findOrFail($id);
-
         $this->backUrlService->keepBackUrl();
 
-        return view('user.obligors.create',
-        compact('recipient'));
+        return view('user.obligors.create', ['recipient' => $this->recipient->findOrFail($id)]);
     }
 
     /**
@@ -44,25 +38,12 @@ class ObligorController extends Controller
      */
     public function store(ObligorRequest $request, $id)
     {
-        try{
-            DB::transaction(function () use($request, $id) {
-                $this->obligor->create([
-                    'recipient_id' => $id,
-                    'name' => $request->name,
-                    'family_relationship' => $request->family_relationship,
-                ]);
-            }, 2);
-        }catch(Throwable $e){
-            Log::error($e);
-            throw $e;
-        }
-
+        $this->obligor->storeObligor($request, $id);
         $this->backUrlService->keepBackUrl();
 
         return redirect()
         ->route('user.recipients.show', ['recipient' => $id])
-        ->with(['message' => '扶養義務者を新規登録しました。',
-        'status' => 'info']); 
+        ->with(['message' => '扶養義務者を新規登録しました。', 'status' => 'info']); 
     }
 
     /**
@@ -73,12 +54,9 @@ class ObligorController extends Controller
      */
     public function edit($id)
     {
-        $recipient = $this->recipient->findOrFail($id);
-
         $this->backUrlService->keepBackUrl();
 
-        return view('user.obligors.edit',
-        compact('recipient'));
+        return view('user.obligors.edit', ['recipient' => $this->recipient->findOrFail($id)]);
     }
 
     /**
@@ -90,26 +68,12 @@ class ObligorController extends Controller
      */
     public function update(ObligorRequest $request, $id)
     {
-        $recipient = $this->recipient->findOrFail($id);
-        $obligor = $this->obligor->findOrFail($recipient->obligor->id);
-
-        try{
-            DB::transaction(function () use($request, $obligor) {
-                $obligor->name = $request->name;
-                $obligor->family_relationship = $request->family_relationship;
-                $obligor->save();
-            }, 2);
-        }catch(Throwable $e){
-            Log::error($e);
-            throw $e;
-        }
-
+        $this->obligor->updateObligor($request, $id);
         $this->backUrlService->keepBackUrl();
 
         return redirect()
         ->route('user.recipients.show', ['recipient' => $id])
-        ->with(['message' => '扶養義務者情報を更新しました。',
-        'status' => 'info']);
+        ->with(['message' => '扶養義務者情報を更新しました。', 'status' => 'info']);
     }
 
     /**
@@ -120,14 +84,11 @@ class ObligorController extends Controller
      */
     public function destroy($id)
     {
-        $obligor = $this->obligor->findOrFail($id);
-        $obligor->delete();
-
+        $this->obligor->findOrFail($id)->delete();
         $this->backUrlService->keepBackUrl();
 
         return redirect()
-        ->route('user.recipients.show', ['recipient' => $obligor->recipient->id])
-        ->with(['message' => '扶養義務者を削除しました。',
-        'status' => 'alert']);
+        ->route('user.recipients.show', ['recipient' => $this->obligor->recipient->findOrFail($id)])
+        ->with(['message' => '扶養義務者を削除しました。', 'status' => 'alert']);
     }
 }

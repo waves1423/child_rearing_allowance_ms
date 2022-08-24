@@ -89,7 +89,7 @@ class Recipient extends Model
     }
 
     //受給者新規作成
-    public function createRecipient($request)
+    public function storeRecipient($request)
     {
         try{
             DB::transaction(function () use($request) {

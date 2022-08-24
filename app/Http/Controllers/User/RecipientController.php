@@ -64,7 +64,7 @@ class RecipientController extends Controller
      */
     public function store(RecipientRequest $request)
     {
-        $this->recipient->createRecipient($request);
+        $this->recipient->storeRecipient($request);
         $redirect = session()->has('_back_url') ? redirect(session('_back_url')) : redirect()->route('user.recipients.index');
 
         return $redirect->with(['message' => '受給者を新規登録しました。', 'status' => 'info']);     
