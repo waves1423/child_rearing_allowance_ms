@@ -88,11 +88,25 @@ class Recipient extends Model
         ->paginate(25);
     }
 
+    //受給者新規作成
     public function createRecipient($request)
     {
         try{
             DB::transaction(function () use($request) {
                 return $this->create($request->validated());
+            }, 2);
+        }catch(Throwable $e){
+            Log::error($e);
+            throw $e;
+        }
+    }
+
+    //受給者情報更新
+    public function updateRecipient($request, $id)
+    {
+        try{
+            DB::transaction(function () use($request, $id) {
+                return $this->findOrFail($id)->fill($request->validated())->save();
             }, 2);
         }catch(Throwable $e){
             Log::error($e);
