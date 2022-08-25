@@ -7,18 +7,15 @@ use App\Models\Recipient;
 use App\Models\Spouse;
 use App\Http\Requests\SpouseRequest;
 use App\Services\BackUrlService;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Throwable;
 
 class SpouseController extends Controller
 {
-    public function __construct()
+    public function __construct(Recipient $recipient, Spouse $spouse, BackUrlService $backUrlService)
     {
         $this->middleware('auth:users');
-        $this->recipient = new Recipient();
-        $this->spouse = new Spouse();
-        $this->backUrlService = new BackUrlService();
+        $this->recipient = $recipient;
+        $this->spouse = $spouse;
+        $this->backUrlService = $backUrlService;
     }
 
     /**
@@ -28,12 +25,9 @@ class SpouseController extends Controller
      */
     public function create($id)
     {
-        $recipient = $this->recipient->findOrFail($id);
-
         $this->backUrlService->keepBackUrl();
 
-        return view('user.spouses.create',
-        compact('recipient'));
+        return view('user.spouses.create', ['recipient' => $this->recipient->findOrFail($id)]);
     }
 
     /**
@@ -44,25 +38,12 @@ class SpouseController extends Controller
      */
     public function store(SpouseRequest $request, $id)
     {
-        try{
-            DB::transaction(function () use($request, $id) {
-                $this->spouse->create([
-                    'recipient_id' => $id,
-                    'name' => $request->name,
-                    'family_relationship' => $request->family_relationship,
-                ]);
-            }, 2);
-        }catch(Throwable $e){
-            Log::error($e);
-            throw $e;
-        }
-
+        $this->spouse->storeSpouse($request, $id);
         $this->backUrlService->keepBackUrl();
 
         return redirect()
         ->route('user.recipients.show', ['recipient' => $id])
-        ->with(['message' => '配偶者を新規登録しました。',
-        'status' => 'info']); 
+        ->with(['message' => '配偶者を新規登録しました。', 'status' => 'info']); 
     }
 
     /**
@@ -73,12 +54,9 @@ class SpouseController extends Controller
      */
     public function edit($id)
     {
-        $recipient = $this->recipient->findOrFail($id);
-
         $this->backUrlService->keepBackUrl();
 
-        return view('user.spouses.edit',
-        compact('recipient'));
+        return view('user.spouses.edit', ['recipient' => $this->recipient->findOrFail($id)]);
     }
 
     /**
@@ -90,26 +68,12 @@ class SpouseController extends Controller
      */
     public function update(SpouseRequest $request, $id)
     {
-        $recipient = $this->recipient->findOrFail($id);
-        $spouse = $this->spouse->findOrFail($recipient->spouse->id);
-
-        try{
-            DB::transaction(function () use($request, $spouse) {
-                $spouse->name = $request->name;
-                $spouse->family_relationship = $request->family_relationship;
-                $spouse->save();
-            }, 2);
-        }catch(Throwable $e){
-            Log::error($e);
-            throw $e;
-        }
-
+        $this->spouse->updateSpouse($request, $id);
         $this->backUrlService->keepBackUrl();
 
         return redirect()
         ->route('user.recipients.show', ['recipient' => $id])
-        ->with(['message' => '配偶者情報を更新しました。',
-        'status' => 'info']);
+        ->with(['message' => '配偶者情報を更新しました。', 'status' => 'info']);
     }
 
     /**
@@ -120,14 +84,11 @@ class SpouseController extends Controller
      */
     public function destroy($id)
     {
-        $spouse = $this->spouse->findOrFail($id);
-        $spouse->delete();
-
+        $this->spouse->findOrFail($id)->delete();
         $this->backUrlService->keepBackUrl();
 
         return redirect()
-        ->route('user.recipients.show', ['recipient' => $spouse->recipient->id])
-        ->with(['message' => '配偶者を削除しました。',
-        'status' => 'alert']);
+        ->route('user.recipients.show', ['recipient' => $this->spouse->recipient->findOrFail($id)])
+        ->with(['message' => '配偶者を削除しました。', 'status' => 'alert']);
     }
 }

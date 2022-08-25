@@ -38,7 +38,7 @@ class ObligorController extends Controller
      */
     public function store(ObligorRequest $request, $id)
     {
-        $this->obligor->storeObligor($request, $id);
+        $this->obligor->storeObligor($request);
         $this->backUrlService->keepBackUrl();
 
         return redirect()
