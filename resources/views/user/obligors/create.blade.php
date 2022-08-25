@@ -14,6 +14,7 @@
                     <form method="POST" action="{{ route('user.recipients.obligors.store', ['recipient' => $recipient->id]) }}">        
                         @csrf
                         <div class="-m-2">
+                            <input type="hidden" type="text" name="recipient_id" value="{{ $recipient->id }}">
                             <div class="p-2 w-1/2 mx-auto">
                                 <div class="relative">
                                 <label for="name" class="leading-7 text-sm text-gray-600">名前</label>
