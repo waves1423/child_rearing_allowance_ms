@@ -6,9 +6,9 @@ use App\Enums\IncomeType;
 use App\Http\Controllers\Controller;
 use App\Models\Recipient;
 use App\Models\Calculation;
-use App\Models\Deduction;
-use App\Models\Dependent;
-use App\Models\Income;
+// use App\Models\Deduction;
+// use App\Models\Dependent;
+// use App\Models\Income;
 use App\Http\Requests\RecipientCalculationRequest;
 use App\Services\BackUrlService;
 use Illuminate\Support\Facades\DB;
@@ -17,15 +17,16 @@ use Throwable;
 
 class RecipientCalculationController extends Controller
 {
-    public function __construct()
+    public function __construct(Recipient $recipient, Calculation $calculation, BackUrlService $backUrlService)
     {
         $this->middleware('auth:users');
-        $this->recipient = new Recipient();
-        $this->calculation = new Calculation();
-        $this->deduction = new Deduction();
-        $this->dependent = new Dependent();
-        $this->income = new Income();
-        $this->backUrlService = new BackUrlService();
+        $this->recipient = $recipient;
+        $this->calculation = $calculation;
+        // $this->deduction = new Deduction();
+        // $this->dependent = new Dependent();
+        // $this->income = new Income();
+        $this->backUrlService = $backUrlService;
+        $this->incomeTypeCategories = IncomeType::cases();
     }
 
     /**
@@ -35,13 +36,13 @@ class RecipientCalculationController extends Controller
      */
     public function create($id)
     {    
-        $recipient = $this->recipient->findOrFail($id);
-        $income_type_categories = IncomeType::cases();
-
         $this->backUrlService->keepBackUrl();
 
         return view('user.recipients.calculations.create',
-        compact('recipient', 'income_type_categories'));
+        [
+            'recipient' => $this->recipient->findOrFail($id),
+            'income_type_categories' => $this->incomeTypeCategories
+        ]);
     }
 
     /**
@@ -123,8 +124,7 @@ class RecipientCalculationController extends Controller
 
         return redirect()
         ->route('user.recipients.show', ['recipient' => $id])
-        ->with(['message' => '受給者の所得情報を新規登録しました。',
-        'status' => 'info']); 
+        ->with(['message' => '受給者の所得情報を新規登録しました。', 'status' => 'info']); 
     }
 
     /**
@@ -135,13 +135,13 @@ class RecipientCalculationController extends Controller
      */
     public function edit($id)
     {
-        $recipient = $this->recipient->findOrFail($id);
-        $income_type_categories = IncomeType::cases();
-
         $this->backUrlService->keepBackUrl();
 
         return view('user.recipients.calculations.edit',
-        compact('recipient', 'income_type_categories'));
+        [
+            'recipient' => $this->recipient->findOrFail($id),
+            'income_type_categories' => $this->incomeTypeCategories
+        ]);
     }
 
     /**
@@ -222,8 +222,7 @@ class RecipientCalculationController extends Controller
 
         return redirect()
         ->route('user.recipients.show', ['recipient' => $id])
-        ->with(['message' => '受給者の所得情報を更新しました。',
-        'status' => 'info']); 
+        ->with(['message' => '受給者の所得情報を更新しました。', 'status' => 'info']); 
     }
 
     /**
@@ -234,14 +233,11 @@ class RecipientCalculationController extends Controller
      */
     public function destroy($id)
     {
-        $calculation = $this->calculation->findOrFail($id);
-        $calculation->delete();
-
+        $this->calculation->findOrFail($id)->delete();
         $this->backUrlService->keepBackUrl();
 
         return redirect()
-        ->route('user.recipients.show', ['recipient' => $calculation->recipient->id])
-        ->with(['message' => '受給者の所得情報を削除しました。',
-        'status' => 'alert']);
+        ->route('user.recipients.show', ['recipient' => $this->calculation->recipient->findOrFail($id)])
+        ->with(['message' => '受給者の所得情報を削除しました。', 'status' => 'alert']);
     }
 }
