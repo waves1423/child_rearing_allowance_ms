@@ -6,9 +6,9 @@ use App\Enums\IncomeType;
 use App\Http\Controllers\Controller;
 use App\Models\Recipient;
 use App\Models\Calculation;
-use App\Models\Deduction;
-use App\Models\Dependent;
-use App\Models\Income;
+// use App\Models\Deduction;
+// use App\Models\Dependent;
+// use App\Models\Income;
 use App\Http\Requests\RecipientCalculationRequest;
 use App\Services\BackUrlService;
 use Illuminate\Support\Facades\DB;
@@ -22,9 +22,9 @@ class RecipientCalculationController extends Controller
         $this->middleware('auth:users');
         $this->recipient = $recipient;
         $this->calculation = $calculation;
-        // $this->deduction = $deduction;
-        // $this->dependent = $dependent;
-        // $this->income = $income;
+        // $this->deduction = new Deduction();
+        // $this->dependent = new Dependent();
+        // $this->income = new Income();
         $this->backUrlService = $backUrlService;
         $this->incomeTypeCategories = IncomeType::cases();
     }
@@ -127,8 +127,7 @@ class RecipientCalculationController extends Controller
 
         return redirect()
         ->route('user.recipients.show', ['recipient' => $id])
-        ->with(['message' => '受給者の所得情報を新規登録しました。',
-        'status' => 'info']); 
+        ->with(['message' => '受給者の所得情報を新規登録しました。', 'status' => 'info']); 
     }
 
     /**
@@ -226,8 +225,7 @@ class RecipientCalculationController extends Controller
 
         return redirect()
         ->route('user.recipients.show', ['recipient' => $id])
-        ->with(['message' => '受給者の所得情報を更新しました。',
-        'status' => 'info']); 
+        ->with(['message' => '受給者の所得情報を更新しました。', 'status' => 'info']); 
     }
 
     /**
@@ -242,8 +240,7 @@ class RecipientCalculationController extends Controller
         $this->backUrlService->keepBackUrl();
 
         return redirect()
-        ->route('user.recipients.show', ['recipient' => $this->calculation->recipient->id])
-        ->with(['message' => '受給者の所得情報を削除しました。',
-        'status' => 'alert']);
+        ->route('user.recipients.show', ['recipient' => $this->calculation->recipient->findOrFail($id)])
+        ->with(['message' => '受給者の所得情報を削除しました。', 'status' => 'alert']);
     }
 }
