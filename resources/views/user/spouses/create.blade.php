@@ -13,6 +13,7 @@
                     <x-auth-validation-errors class="mb-4" :errors="$errors" />
                     <form method="POST" action="{{ route('user.recipients.spouses.store', ['recipient' => $recipient->id]) }}">        
                         @csrf
+                        <input type="hidden" name="recipient_id" value="{{ $recipient->id }}">
                         <div class="-m-2">
                             <div class="p-2 w-1/2 mx-auto">
                                 <div class="relative">

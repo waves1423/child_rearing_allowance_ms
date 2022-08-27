@@ -15,6 +15,7 @@
                     <form method="POST" action="{{ route('user.recipients.spouses.update', ['recipient' => $recipient->id, 'spouse' => $recipient->spouse->id]) }}">        
                         @csrf
                         @method('put')
+                        <input type="hidden" name="recipient_id" value="{{ $recipient->id }}">
                         <div class="-m-2">
                             <div class="p-2 w-1/2 mx-auto">
                                 <div class="relative">

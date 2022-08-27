@@ -6,9 +6,6 @@ use App\Enums\IncomeType;
 use App\Http\Controllers\Controller;
 use App\Models\Recipient;
 use App\Models\Calculation;
-// use App\Models\Deduction;
-// use App\Models\Dependent;
-// use App\Models\Income;
 use App\Http\Requests\RecipientCalculationRequest;
 use App\Services\BackUrlService;
 use Illuminate\Support\Facades\DB;
@@ -22,9 +19,6 @@ class RecipientCalculationController extends Controller
         $this->middleware('auth:users');
         $this->recipient = $recipient;
         $this->calculation = $calculation;
-        // $this->deduction = new Deduction();
-        // $this->dependent = new Dependent();
-        // $this->income = new Income();
         $this->backUrlService = $backUrlService;
         $this->incomeTypeCategories = IncomeType::cases();
     }
@@ -53,76 +47,7 @@ class RecipientCalculationController extends Controller
      */
     public function store(RecipientCalculationRequest $request, $id)
     {
-        try{
-            DB::transaction(function () use($request, $id) {
-                $calculation = $this->calculation->create([
-                    'recipient_id' => $id,
-                    'deducted_income' => ''
-                ]);
-                $this->dependent->create([
-                    'calculation_id' => $calculation->id,
-                    'total' => $request->total,
-                    'elder' => $request->elder,
-                    'special' => $request->special,
-                    'year_old_16to18' => $request->year_old_16to18,
-                    'other_child' => $request->other_child
-                ]);
-                $income = $this->income->create([
-                    'calculation_id' => $calculation->id,
-                    'income' => $request->income,
-                    'type' => $request->type,
-                    'deducted_income' => $request->income,
-                    'support_payment' => $request->support_payment,
-                    'deducted_support_payment' => $request->support_payment * 0.8
-                ]);
-                if($income->type == IncomeType::Salary->value || $income->type == IncomeType::Pention->value){
-                    $income->deducted_income = $income->deducted_income - 100000;
-                        if($income->deducted_income < 0){
-                            $income->deducted_income = 0;
-                        }
-                    $income->save();
-                } elseif($income->income < 0) {
-                    $income->income = 0;
-                    $income->save();
-                }
-                $deduction = $this->deduction->create([
-                    'calculation_id' => $calculation->id,
-                    'disabled' => $request->disabled,
-                    'specially_disabled' => $request->specially_disabled,
-                    'singleparent_or_workingstudent' => $request->singleparent_or_workingstudent,
-                    'special_spouse' => $request->special_spouse,
-                    'medical_expense' => $request->medical_expense,
-                    'small_enterprise' => $request->small_enterprise,
-                    'other' => $request->other,
-                    'common' => 80000
-                ]);
-
-                $total_income =
-                $income->deducted_income
-                +$income->deducted_support_payment;
-
-                $total_deduction =
-                $deduction->disabled * 270000
-                +$deduction->specially_disabled * 400000
-                +$deduction->singleparent_or_workingstudent * 270000
-                +$deduction->special_spouse
-                +$deduction->medical_expense
-                +$deduction->small_enterprise
-                +$deduction->other
-                +$deduction->common;
-                
-                $calculation->deducted_income = 
-                $total_income - $total_deduction;
-                if($calculation->deducted_income < 0){
-                    $calculation->deducted_income = 0;
-                }
-                $calculation->save();
-            }, 2);
-        }catch(Throwable $e){
-            Log::error($e);
-            throw $e;
-        }
-
+        $this->calculation->storeCalculation($request, $id);
         $this->backUrlService->keepBackUrl();
 
         return redirect()
