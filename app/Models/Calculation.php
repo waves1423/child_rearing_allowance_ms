@@ -111,9 +111,7 @@ class Calculation extends Model
         +$request->common;
         
         $total_deducted_income = $total_income - $total_deduction;
-        if($total_deducted_income < 0){
-            $total_deducted_income = 0;
-        }
+        $total_deducted_income < 0 ? $total_deducted_income = 0 : '';
 
         return $total_deducted_income;
     }
