@@ -190,7 +190,6 @@
         </div>
       </form>
     </div>
-
     <script>
       'use strict'
       let type = document.getElementById('type');
@@ -208,6 +207,12 @@
         let income = document.getElementById('income').value;
         if(type.value == 1 || type.value == 2){
           let deducted_income = income - 100000;
+          if(deducted_income < 0){
+            deducted_income = 0
+          }
+          document.getElementById('deducted_income').innerHTML = deducted_income.toLocaleString();
+        } else if(type.value == 5) {
+          let deducted_income = income - 200000;
           if(deducted_income < 0){
             deducted_income = 0
           }
