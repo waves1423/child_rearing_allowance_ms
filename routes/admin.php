@@ -12,9 +12,9 @@ use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\RecipientController;
 use App\Http\Controllers\Admin\SpouseController;
 use App\Http\Controllers\Admin\ObligorController;
-use App\Http\Controllers\Admin\RecipientCalculationController;
-use App\Http\Controllers\Admin\SpouseCalculationController;
-use App\Http\Controllers\Admin\ObligorCalculationController;
+use App\Http\Controllers\Admin\Calculation\RecipientCalculationController;
+use App\Http\Controllers\Admin\Calculation\SpouseCalculationController;
+use App\Http\Controllers\Admin\Calculation\ObligorCalculationController;
 use App\Http\Controllers\Admin\SpecialRecipientController;
 use Illuminate\Support\Facades\Route;
 

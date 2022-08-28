@@ -3,9 +3,9 @@
 use App\Http\Controllers\User\RecipientController;
 use App\Http\Controllers\User\SpouseController;
 use App\Http\Controllers\User\ObligorController;
-use App\Http\Controllers\User\RecipientCalculationController;
-use App\Http\Controllers\User\SpouseCalculationController;
-use App\Http\Controllers\User\ObligorCalculationController;
+use App\Http\Controllers\User\Calculation\RecipientCalculationController;
+use App\Http\Controllers\User\Calculation\SpouseCalculationController;
+use App\Http\Controllers\User\Calculation\ObligorCalculationController;
 use App\Http\Controllers\User\SpecialRecipientController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,7 +23,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [RecipientController::class, 'index']);
 
 Route::resource('recipients', RecipientController::class)
-->middleware('auth:users');
+->middleware('auth:users')
+->except(['destroy']);
 
 Route::resource('special_recipients', SpecialRecipientController::class)
 ->middleware('auth:users')
@@ -31,22 +32,22 @@ Route::resource('special_recipients', SpecialRecipientController::class)
 
 Route::resource('recipients.spouses', SpouseController::class)
 ->middleware('auth:users')
-->except(['index', 'show']);
+->except(['index', 'show', 'destroy']);
 
 Route::resource('recipients.obligors', ObligorController::class)
 ->middleware('auth:users')
-->except(['index', 'show']);
+->except(['index', 'show', 'destroy']);
 
 Route::resource('recipients.calculations', RecipientCalculationController::class)
 ->middleware('auth:users')
-->except(['index', 'show']);
+->except(['index', 'show', 'destroy']);
 
 Route::resource('recipients.spouses.calculations', SpouseCalculationController::class)
 ->middleware('auth:users')
-->except(['index', 'show']);
+->except(['index', 'show', 'destroy']);
 
 Route::resource('recipients.obligors.calculations', ObligorCalculationController::class)
 ->middleware('auth:users')
-->except(['index', 'show']);
+->except(['index', 'show', 'destroy']);
 
 require __DIR__.'/auth.php';
