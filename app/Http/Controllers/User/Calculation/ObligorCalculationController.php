@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\User\Calculation;
 
 use App\Enums\IncomeType;
 use App\Http\Controllers\Controller;
@@ -9,7 +9,7 @@ use App\Models\Calculation;
 use App\Http\Requests\CalculationRequest;
 use App\Services\BackUrlService;
 
-class SpouseCalculationController extends Controller
+class ObligorCalculationController extends Controller
 {
     public function __construct(Recipient $recipient, Calculation $calculation, BackUrlService $backUrlService)
     {
@@ -29,7 +29,7 @@ class SpouseCalculationController extends Controller
     {    
         $this->backUrlService->keepBackUrl();
 
-        return view('user.spouses.calculations.create',
+        return view('user.obligors.calculations.create',
         [
             'recipient' => $this->recipient->findOrFail($id),
             'income_type_categories' => $this->incomeTypeCategories
@@ -44,12 +44,12 @@ class SpouseCalculationController extends Controller
      */
     public function store(CalculationRequest $request, $id)
     {
-        $this->calculation->storeSpouseCalculation($request, $id);
+        $this->calculation->storeObligorCalculation($request, $id);
         $this->backUrlService->keepBackUrl();
 
         return redirect()
         ->route('user.recipients.show', ['recipient' => $id])
-        ->with(['message' => '配偶者の所得情報を新規登録しました。', 'status' => 'info']); 
+        ->with(['message' => '扶養義務者の所得情報を新規登録しました。', 'status' => 'info']); 
     }
 
     /**
@@ -62,7 +62,7 @@ class SpouseCalculationController extends Controller
     {
         $this->backUrlService->keepBackUrl();
 
-        return view('user.spouses.calculations.edit',
+        return view('user.obligors.calculations.edit',
         [
             'recipient' => $this->recipient->findOrFail($id),
             'income_type_categories' => $this->incomeTypeCategories
@@ -78,27 +78,11 @@ class SpouseCalculationController extends Controller
      */
     public function update(CalculationRequest $request, $id)
     {
-        $this->calculation->updateSpouseCalculation($request, $id);
+        $this->calculation->updateObligorCalculation($request, $id);
         $this->backUrlService->keepBackUrl();
 
         return redirect()
         ->route('user.recipients.show', ['recipient' => $id])
-        ->with(['message' => '配偶者の所得情報を更新しました。', 'status' => 'info']); 
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $this->calculation->findOrFail($id)->delete();
-        $this->backUrlService->keepBackUrl();
-
-        return redirect()
-        ->route('user.recipients.show', ['recipient' => $this->calculation->recipient->id])
-        ->with(['message' => '配偶者の所得情報を削除しました。', 'status' => 'alert']);
+        ->with(['message' => '扶養義務者の所得情報を更新しました。', 'status' => 'info']); 
     }
 }

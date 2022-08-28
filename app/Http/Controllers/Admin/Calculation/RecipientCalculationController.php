@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers\Admin\Calculation;
 
 use App\Enums\IncomeType;
 use App\Http\Controllers\Controller;
@@ -13,7 +13,7 @@ class RecipientCalculationController extends Controller
 {
     public function __construct(Recipient $recipient, Calculation $calculation, BackUrlService $backUrlService)
     {
-        $this->middleware('auth:users');
+        $this->middleware('auth:admin');
         $this->recipient = $recipient;
         $this->calculation = $calculation;
         $this->backUrlService = $backUrlService;
@@ -29,7 +29,7 @@ class RecipientCalculationController extends Controller
     {    
         $this->backUrlService->keepBackUrl();
 
-        return view('user.recipients.calculations.create',
+        return view('admin.recipients.calculations.create',
         [
             'recipient' => $this->recipient->findOrFail($id),
             'income_type_categories' => $this->incomeTypeCategories
@@ -48,7 +48,7 @@ class RecipientCalculationController extends Controller
         $this->backUrlService->keepBackUrl();
 
         return redirect()
-        ->route('user.recipients.show', ['recipient' => $id])
+        ->route('admin.recipients.show', ['recipient' => $id])
         ->with(['message' => '受給者の所得情報を新規登録しました。', 'status' => 'info']); 
     }
 
@@ -62,7 +62,7 @@ class RecipientCalculationController extends Controller
     {
         $this->backUrlService->keepBackUrl();
 
-        return view('user.recipients.calculations.edit',
+        return view('admin.recipients.calculations.edit',
         [
             'recipient' => $this->recipient->findOrFail($id),
             'income_type_categories' => $this->incomeTypeCategories
@@ -82,7 +82,7 @@ class RecipientCalculationController extends Controller
         $this->backUrlService->keepBackUrl();
 
         return redirect()
-        ->route('user.recipients.show', ['recipient' => $id])
+        ->route('admin.recipients.show', ['recipient' => $id])
         ->with(['message' => '受給者の所得情報を更新しました。', 'status' => 'info']); 
     }
 
@@ -98,7 +98,7 @@ class RecipientCalculationController extends Controller
         $this->backUrlService->keepBackUrl();
 
         return redirect()
-        ->route('user.recipients.show', ['recipient' => $this->calculation->recipient->findOrFail($id)])
+        ->route('admin.recipients.show', ['recipient' => $this->calculation->recipient->id])
         ->with(['message' => '受給者の所得情報を削除しました。', 'status' => 'alert']);
     }
 }
