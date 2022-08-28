@@ -153,15 +153,54 @@ class Calculation extends Model
         return $total_deducted_income;
     }
 
-    public function updateCalculation($request, $id)
+    public function updateRecipientCalculation($request, $id)
     {
         try{
             DB::transaction(function () use($request, $id) {
-                return $this->findOrFail($id)->fill($request->validated())->save();
+                $calculation = Recipient::findOrFail($id)->calculation;
+                $this->updateCalculationInfomation($request, $calculation);
             }, 2);
         }catch(Throwable $e){
             Log::error($e);
             throw $e;
         }
+    }
+
+    public function updateSpouseCalculation($request, $id)
+    {
+        try{
+            DB::transaction(function () use($request, $id) {
+                $calculation = Recipient::findOrFail($id)->spouse->calculation;
+                $this->updateCalculationInfomation($request, $calculation);
+            }, 2);
+        }catch(Throwable $e){
+            Log::error($e);
+            throw $e;
+        }
+    }
+
+    public function updateObligorCalculation($request, $id)
+    {
+        try{
+            DB::transaction(function () use($request, $id) {
+                $calculation = Recipient::findOrFail($id)->obligor->calculation;
+                $this->updateCalculationInfomation($request, $calculation);
+            }, 2);
+        }catch(Throwable $e){
+            Log::error($e);
+            throw $e;
+        }
+    }
+
+    public function updateCalculationInfomation($request, $calculation)
+    {
+        $this->findOrFail($calculation->id)
+        ->fill(['deducted_income' => $this->getTotalIncome($request)])->save();
+        Dependent::findOrFail($calculation->dependent->id)
+        ->fill($request->validated())->save();
+        Income::findOrFail($calculation->income->id)
+        ->fill($request->validated())->save();
+        Deduction::findOrFail($calculation->deduction->id)
+        ->fill($request->validated())->save();
     }
 }

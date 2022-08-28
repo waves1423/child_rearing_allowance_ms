@@ -64,4 +64,26 @@ class CalculationRequest extends FormRequest
         // 養育費の入力がある場合、8割掛けした額をリクエストに追加
         $this->support_payment ? $this->merge(['deducted_support_payment' => $this->support_payment * 0.8]) : "";
     }
+
+    protected function getTotalIncome($request)
+    {
+        $total_income =
+        $request->deducted_income
+        +$request->deducted_support_payment;
+
+        $total_deduction =
+        $request->disabled * 270000
+        +$request->specially_disabled * 400000
+        +$request->singleparent_or_workingstudent * 270000
+        +$request->special_spouse
+        +$request->medical_expense
+        +$request->small_enterprise
+        +$request->other
+        +$request->common;
+        
+        $total_deducted_income = $total_income - $total_deduction;
+        $total_deducted_income < 0 ? $total_deducted_income = 0 : '';
+
+        return $total_deducted_income;
+    }
 }
