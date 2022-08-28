@@ -57,7 +57,7 @@
                       <td class="md:px-4 py-3 border">{{ $recipient->adress }}</td>
                       <td class="md:px-4 py-3 border">
                         @if($recipient->is_submitted === 1)
-                        提出済み
+                        <div class="font-semibold m-0 text-2xl text-blue-500">☑️</div>
                         @else
                         -
                         @endif
