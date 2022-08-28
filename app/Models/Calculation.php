@@ -52,7 +52,7 @@ class Calculation extends Model
         return $this->hasOne(Deduction::class);
     }
 
-    public function storeCalculation($request, $id)
+    public function storeRecipientCalculation($request, $id)
     {
         try{
             DB::transaction(function () use($request, $id) {
@@ -60,38 +60,75 @@ class Calculation extends Model
                     'recipient_id' => $id,
                     'deducted_income' => $this->getTotalIncome($request)
                 ]);
-                Dependent::create([
-                    'calculation_id' => $calculation->id,
-                    'total' => $request->total,
-                    'elder' => $request->elder,
-                    'special' => $request->special,
-                    'year_old_16to18' => $request->year_old_16to18,
-                    'other_child' => $request->other_child
-                ]);
-                Income::create([
-                    'calculation_id' => $calculation->id,
-                    'income' => $request->income,
-                    'type' => $request->type,
-                    'deducted_income' => $request->deducted_income,
-                    'support_payment' => $request->support_payment,
-                    'deducted_support_payment' => $request->deducted_support_payment
-                ]);
-                Deduction::create([
-                    'calculation_id' => $calculation->id,
-                    'disabled' => $request->disabled,
-                    'specially_disabled' => $request->specially_disabled,
-                    'singleparent_or_workingstudent' => $request->singleparent_or_workingstudent,
-                    'special_spouse' => $request->special_spouse,
-                    'medical_expense' => $request->medical_expense,
-                    'small_enterprise' => $request->small_enterprise,
-                    'other' => $request->other,
-                    'common' => 80000
-                ]);
+                $this->storeCalculationInfomation($calculation, $request);
             }, 2);
         }catch(Throwable $e){
             Log::error($e);
             throw $e;
         }
+    }
+
+    public function storeSpouseCalculation($request, $id)
+    {
+        try{
+            DB::transaction(function () use($request, $id) {
+                $calculation = $this->create([
+                    'spouse_id' => Recipient::findOrFail($id)->spouse->id,
+                    'deducted_income' => $this->getTotalIncome($request)
+                ]);
+                $this->storeCalculationInfomation($calculation, $request);
+            }, 2);
+        }catch(Throwable $e){
+            Log::error($e);
+            throw $e;
+        }
+    }
+
+    public function storeObligorCalculation($request, $id)
+    {
+        try{
+            DB::transaction(function () use($request, $id) {
+                $calculation = $this->create([
+                    'obligor_id' => Recipient::findOrFail($id)->obligor->id,
+                    'deducted_income' => $this->getTotalIncome($request)
+                ]);
+                $this->storeCalculationInfomation($calculation, $request);
+            }, 2);
+        }catch(Throwable $e){
+            Log::error($e);
+            throw $e;
+        }
+    }
+
+    public function storeCalculationInfomation($calculation, $request)
+    {
+        Dependent::create([
+            'calculation_id' => $calculation->id,
+            'total' => $request->total,
+            'elder' => $request->elder,
+            'special' => $request->special,
+            'year_old_16to18' => $request->year_old_16to18,
+            'other_child' => $request->other_child
+        ]);
+        Income::create([
+            'calculation_id' => $calculation->id,
+            'income' => $request->income,
+            'type' => $request->type,
+            'deducted_income' => $request->deducted_income,
+            'support_payment' => $request->support_payment,
+            'deducted_support_payment' => $request->deducted_support_payment
+        ]);
+        Deduction::create([
+            'calculation_id' => $calculation->id,
+            'disabled' => $request->disabled,
+            'specially_disabled' => $request->specially_disabled,
+            'singleparent_or_workingstudent' => $request->singleparent_or_workingstudent,
+            'special_spouse' => $request->special_spouse,
+            'medical_expense' => $request->medical_expense,
+            'small_enterprise' => $request->small_enterprise,
+            'other' => $request->other,
+            'common' => 80000
+        ]);
     }
 
     public function getTotalIncome($request)
@@ -114,5 +151,17 @@ class Calculation extends Model
         $total_deducted_income < 0 ? $total_deducted_income = 0 : '';
 
         return $total_deducted_income;
+    }
+
+    public function updateCalculation($request, $id)
+    {
+        try{
+            DB::transaction(function () use($request, $id) {
+                return $this->findOrFail($id)->fill($request->validated())->save();
+            }, 2);
+        }catch(Throwable $e){
+            Log::error($e);
+            throw $e;
+        }
     }
 }

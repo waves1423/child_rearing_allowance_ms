@@ -6,7 +6,7 @@ use App\Enums\IncomeType;
 use App\Http\Controllers\Controller;
 use App\Models\Recipient;
 use App\Models\Calculation;
-use App\Http\Requests\RecipientCalculationRequest;
+use App\Http\Requests\CalculationRequest;
 use App\Services\BackUrlService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -45,9 +45,10 @@ class RecipientCalculationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(RecipientCalculationRequest $request, $id)
+    public function store(CalculationRequest $request, $id)
     {
-        $this->calculation->storeCalculation($request, $id);
+        $recipient_id = $id;
+        $this->calculation->storeRecipientCalculation($request, $recipient_id);
         $this->backUrlService->keepBackUrl();
 
         return redirect()
@@ -79,7 +80,7 @@ class RecipientCalculationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(RecipientCalculationRequest $request, $id)
+    public function update(CalculationRequest $request, $id)
     {
         $recipient = $this->recipient->findOrFail($id);
         $calculation = $this->calculation->findOrFail($recipient->calculation->id);
