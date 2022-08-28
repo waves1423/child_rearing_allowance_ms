@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\Enums\IncomeType;
 use Illuminate\Foundation\Http\FormRequest;
 
-class RecipientCalculationRequest extends FormRequest
+class CalculationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
