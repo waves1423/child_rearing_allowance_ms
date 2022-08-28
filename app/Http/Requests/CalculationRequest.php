@@ -30,10 +30,10 @@ class CalculationRequest extends FormRequest
             'special' => 'required|integer|min:0|max:10',
             'year_old_16to18' => 'required|integer|min:0|max:10',
             'other_child' => 'required|integer|min:0|max:10',
-            'income' => 'required|integer|max:1000000000',
+            'income' => 'required|integer|min:0|max:1000000000',
             'type' => 'required|integer|max:10',
-            'deducted_income' => 'required|integer|max:1000000000',
-            'support_payment' => 'min:0|max:1000000',
+            'deducted_income' => 'required|integer|min:0|max:1000000000',
+            'support_payment' => 'integer|min:0|max:1000000',
             'deducted_support_payment' => 'integer|min:0|max:1000000',
             'disabled' => 'required|integer|min:0|max:10',
             'specially_disabled' => 'required|integer|min:0|max:10',
@@ -56,34 +56,14 @@ class CalculationRequest extends FormRequest
             $deducted_income = $this->income;
         }
 
-        //所得がマイナスになる場合は0とした上、リクエストに追加
+        //所得及び控除後所得がマイナスになる場合は0とする
         $this->income < 0 ? $this->income = 0 : '';
         $deducted_income < 0 ? $deducted_income = 0 : '';
+
+        //控除後所得をリクエストへ追加
         $this->merge(['deducted_income' => $deducted_income]);
 
-        // 養育費の入力がある場合、8割掛けした額をリクエストに追加
+        // 養育費の入力がある場合、8割掛けした額をリクエストへ追加
         $this->support_payment ? $this->merge(['deducted_support_payment' => $this->support_payment * 0.8]) : "";
-    }
-
-    protected function getTotalIncome($request)
-    {
-        $total_income =
-        $request->deducted_income
-        +$request->deducted_support_payment;
-
-        $total_deduction =
-        $request->disabled * 270000
-        +$request->specially_disabled * 400000
-        +$request->singleparent_or_workingstudent * 270000
-        +$request->special_spouse
-        +$request->medical_expense
-        +$request->small_enterprise
-        +$request->other
-        +$request->common;
-        
-        $total_deducted_income = $total_income - $total_deduction;
-        $total_deducted_income < 0 ? $total_deducted_income = 0 : '';
-
-        return $total_deducted_income;
     }
 }
