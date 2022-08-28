@@ -20,7 +20,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [RecipientController::class, 'index']);
+Route::get('/', [RecipientController::class, 'index'])
+->middleware('auth:users');
 
 Route::resource('recipients', RecipientController::class)
 ->middleware('auth:users')
