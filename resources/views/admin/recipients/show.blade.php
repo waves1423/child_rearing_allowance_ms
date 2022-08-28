@@ -227,7 +227,7 @@
                       <button type="button" onclick="location.href='{{ route('admin.recipients.spouses.calculations.create', ['recipient' => $recipient->id, 'spouse' => $recipient->spouse->id]) }}'" class=" bg-green-400 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">所得計算</button>
                       @endif
                     </div>
-                    {{-- <div class="p-2 w-full flex justify-around mt-4">
+                    <div class="p-2 w-full flex justify-around mt-4">
                       <form id="delete_{{$recipient->spouse->id}}" method="POST" action="{{ route('admin.recipients.spouses.destroy', ['recipient' => $recipient->id, 'spouse' => $recipient->spouse->id]) }}">
                         @csrf
                         @method('delete')
@@ -235,7 +235,7 @@
                             <a href="#" data-id="{{ $recipient->spouse->id }}" onclick="deletePost(this)" class="text-white bg-red-400 border-0 py-2 px-4 focus:outline-none hover:bg-red-500 rounded">削除する</a>
                         </div>
                       </form>
-                    </div> --}}
+                    </div>
                   </div>
                 </div>
                 @else
@@ -292,7 +292,7 @@
                       <button type="button" onclick="location.href='{{ route('admin.recipients.obligors.calculations.create', ['recipient' => $recipient->id, 'obligor' => $recipient->obligor->id]) }}'" class=" bg-green-400 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">所得計算</button>
                       @endif
                     </div>
-                    {{-- <div class="p-2 w-full flex justify-around mt-4">
+                    <div class="p-2 w-full flex justify-around mt-4">
                       <form id="delete_{{$recipient->obligor->id}}" method="POST" action="{{ route('admin.recipients.obligors.destroy', ['recipient' => $recipient->id, 'obligor' => $recipient->obligor->id]) }}">
                         @csrf
                         @method('delete')
@@ -300,7 +300,7 @@
                             <a href="#" data-id="{{ $recipient->obligor->id }}" onclick="deletePost(this)" class="text-white bg-red-400 border-0 py-2 px-4 focus:outline-none hover:bg-red-500 rounded">削除する</a>
                         </div>
                       </form>
-                    </div> --}}
+                    </div>
                   </div>
                 </div>
                 @else
