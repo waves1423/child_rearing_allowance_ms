@@ -118,19 +118,4 @@ class RecipientController extends Controller
         ->route('user.recipients.show', ['recipient' => $this->recipient->findOrFail($id)])
         ->with(['message' => '受給者情報を更新しました。', 'status' => 'info']);
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $this->recipient->findOrFail($id)->delete();
-
-        return redirect()
-        ->route('user.recipients.index')
-        ->with(['message' => '受給者を削除しました。', 'status' => 'alert']);
-    }
 }

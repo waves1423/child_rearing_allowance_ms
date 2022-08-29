@@ -75,20 +75,4 @@ class ObligorController extends Controller
         ->route('user.recipients.show', ['recipient' => $id])
         ->with(['message' => '扶養義務者情報を更新しました。', 'status' => 'info']);
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $this->obligor->findOrFail($id)->delete();
-        $this->backUrlService->keepBackUrl();
-
-        return redirect()
-        ->route('user.recipients.show', ['recipient' => $this->obligor->recipient->findOrFail($id)])
-        ->with(['message' => '扶養義務者を削除しました。', 'status' => 'alert']);
-    }
 }
