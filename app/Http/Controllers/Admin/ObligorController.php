@@ -6,15 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Models\Recipient;
 use App\Models\Obligor;
 use App\Http\Requests\ObligorRequest;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Throwable;
+use App\Services\BackUrlService;
 
 class ObligorController extends Controller
 {
-    public function __construct()
+    public function __construct(Recipient $recipient, Obligor $obligor, BackUrlService $backUrlService)
     {
         $this->middleware('auth:admin');
+        $this->recipient = $recipient;
+        $this->obligor = $obligor;
+        $this->backUrlService = $backUrlService;
     }
 
     /**
@@ -24,14 +25,9 @@ class ObligorController extends Controller
      */
     public function create($id)
     {
-        $recipient = Recipient::findOrFail($id);
+        $this->backUrlService->keepBackUrl();
 
-        if(session()->has('_back_url')){
-            session()->keep('_back_url');
-        }
-
-        return view('admin.obligors.create',
-        compact('recipient'));
+        return view('admin.obligors.create', ['recipient' => $this->recipient->findOrFail($id)]);
     }
 
     /**
@@ -42,27 +38,12 @@ class ObligorController extends Controller
      */
     public function store(ObligorRequest $request, $id)
     {
-        try{
-            DB::transaction(function () use($request, $id) {
-                Obligor::create([
-                    'recipient_id' => $id,
-                    'name' => $request->name,
-                    'family_relationship' => $request->family_relationship,
-                ]);
-            }, 2);
-        }catch(Throwable $e){
-            Log::error($e);
-            throw $e;
-        }
-
-        if(session()->has('_back_url')){
-            session()->keep('_back_url');
-        }
+        $this->obligor->storeObligor($request);
+        $this->backUrlService->keepBackUrl();
 
         return redirect()
         ->route('admin.recipients.show', ['recipient' => $id])
-        ->with(['message' => '扶養義務者を新規登録しました。',
-        'status' => 'info']); 
+        ->with(['message' => '扶養義務者を新規登録しました。', 'status' => 'info']); 
     }
 
     /**
@@ -73,14 +54,9 @@ class ObligorController extends Controller
      */
     public function edit($id)
     {
-        $recipient = Recipient::findOrFail($id);
+        $this->backUrlService->keepBackUrl();
 
-        if(session()->has('_back_url')){
-            session()->keep('_back_url');
-        }
-
-        return view('admin.obligors.edit',
-        compact('recipient'));
+        return view('admin.obligors.edit', ['recipient' => $this->recipient->findOrFail($id)]);
     }
 
     /**
@@ -92,28 +68,12 @@ class ObligorController extends Controller
      */
     public function update(ObligorRequest $request, $id)
     {
-        $recipient = Recipient::findOrFail($id);
-        $obligor = Obligor::findOrFail($recipient->obligor->id);
-
-        try{
-            DB::transaction(function () use($request, $obligor) {
-                $obligor->name = $request->name;
-                $obligor->family_relationship = $request->family_relationship;
-                $obligor->save();
-            }, 2);
-        }catch(Throwable $e){
-            Log::error($e);
-            throw $e;
-        }
-
-        if(session()->has('_back_url')){
-            session()->keep('_back_url');
-        }
+        $this->obligor->updateObligor($request, $id);
+        $this->backUrlService->keepBackUrl();
 
         return redirect()
         ->route('admin.recipients.show', ['recipient' => $id])
-        ->with(['message' => '扶養義務者情報を更新しました。',
-        'status' => 'info']);
+        ->with(['message' => '扶養義務者情報を更新しました。', 'status' => 'info']);
     }
 
     /**
@@ -124,17 +84,11 @@ class ObligorController extends Controller
      */
     public function destroy($id)
     {
-        $obligor = Obligor::findOrFail($id);
-        $recipient = Recipient::findOrFail($obligor->recipient->id);
-        $obligor->delete();
-
-        if(session()->has('_back_url')){
-            session()->keep('_back_url');
-        }
+        $this->obligor->findOrFail($id)->delete();
+        $this->backUrlService->keepBackUrl();
 
         return redirect()
-        ->route('admin.recipients.show', ['recipient' => $recipient->id])
-        ->with(['message' => '扶養義務者を削除しました。',
-        'status' => 'alert']);
+        ->route('admin.recipients.show', ['recipient' => $this->obligor->recipient->findOrFail($id)])
+        ->with(['message' => '扶養義務者を削除しました。', 'status' => 'alert']);
     }
 }

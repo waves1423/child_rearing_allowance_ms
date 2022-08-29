@@ -6,15 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Models\Recipient;
 use App\Models\Spouse;
 use App\Http\Requests\SpouseRequest;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Throwable;
+use App\Services\BackUrlService;
 
 class SpouseController extends Controller
 {
-    public function __construct()
+    public function __construct(Recipient $recipient, Spouse $spouse, BackUrlService $backUrlService)
     {
         $this->middleware('auth:admin');
+        $this->recipient = $recipient;
+        $this->spouse = $spouse;
+        $this->backUrlService = $backUrlService;
     }
 
     /**
@@ -24,14 +25,9 @@ class SpouseController extends Controller
      */
     public function create($id)
     {
-        $recipient = Recipient::findOrFail($id);
+        $this->backUrlService->keepBackUrl();
 
-        if(session()->has('_back_url')){
-            session()->keep('_back_url');
-        }
-
-        return view('admin.spouses.create',
-        compact('recipient'));
+        return view('admin.spouses.create', ['recipient' => $this->recipient->findOrFail($id)]);
     }
 
     /**
@@ -42,27 +38,12 @@ class SpouseController extends Controller
      */
     public function store(SpouseRequest $request, $id)
     {
-        try{
-            DB::transaction(function () use($request, $id) {
-                Spouse::create([
-                    'recipient_id' => $id,
-                    'name' => $request->name,
-                    'family_relationship' => $request->family_relationship,
-                ]);
-            }, 2);
-        }catch(Throwable $e){
-            Log::error($e);
-            throw $e;
-        }
-
-        if(session()->has('_back_url')){
-            session()->keep('_back_url');
-        }
+        $this->spouse->storeSpouse($request, $id);
+        $this->backUrlService->keepBackUrl();
 
         return redirect()
         ->route('admin.recipients.show', ['recipient' => $id])
-        ->with(['message' => '配偶者を新規登録しました。',
-        'status' => 'info']); 
+        ->with(['message' => '配偶者を新規登録しました。', 'status' => 'info']); 
     }
 
     /**
@@ -73,14 +54,9 @@ class SpouseController extends Controller
      */
     public function edit($id)
     {
-        $recipient = Recipient::findOrFail($id);
+        $this->backUrlService->keepBackUrl();
 
-        if(session()->has('_back_url')){
-            session()->keep('_back_url');
-        }
-
-        return view('admin.spouses.edit',
-        compact('recipient'));
+        return view('admin.spouses.edit', ['recipient' => $this->recipient->findOrFail($id)]);
     }
 
     /**
@@ -92,28 +68,12 @@ class SpouseController extends Controller
      */
     public function update(SpouseRequest $request, $id)
     {
-        $recipient = Recipient::findOrFail($id);
-        $spouse = Spouse::findOrFail($recipient->spouse->id);
-
-        try{
-            DB::transaction(function () use($request, $spouse) {
-                $spouse->name = $request->name;
-                $spouse->family_relationship = $request->family_relationship;
-                $spouse->save();
-            }, 2);
-        }catch(Throwable $e){
-            Log::error($e);
-            throw $e;
-        }
-
-        if(session()->has('_back_url')){
-            session()->keep('_back_url');
-        }
+        $this->spouse->updateSpouse($request, $id);
+        $this->backUrlService->keepBackUrl();
 
         return redirect()
         ->route('admin.recipients.show', ['recipient' => $id])
-        ->with(['message' => '配偶者情報を更新しました。',
-        'status' => 'info']);
+        ->with(['message' => '配偶者情報を更新しました。', 'status' => 'info']);
     }
 
     /**
@@ -124,17 +84,11 @@ class SpouseController extends Controller
      */
     public function destroy($id)
     {
-        $spouse = Spouse::findOrFail($id);
-        $recipient = Recipient::findOrFail($spouse->recipient->id);
-        $spouse->delete();
-
-        if(session()->has('_back_url')){
-            session()->keep('_back_url');
-        }
+        $this->spouse->findOrFail($id)->delete();
+        $this->backUrlService->keepBackUrl();
 
         return redirect()
-        ->route('admin.recipients.show', ['recipient' => $recipient->id])
-        ->with(['message' => '配偶者を削除しました。',
-        'status' => 'alert']);
+        ->route('user.recipients.show', ['recipient' => $this->spouse->recipient->findOrFail($id)])
+        ->with(['message' => '配偶者を削除しました。', 'status' => 'alert']);
     }
 }

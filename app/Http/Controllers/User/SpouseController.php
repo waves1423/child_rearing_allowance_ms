@@ -75,20 +75,4 @@ class SpouseController extends Controller
         ->route('user.recipients.show', ['recipient' => $id])
         ->with(['message' => '配偶者情報を更新しました。', 'status' => 'info']);
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        $this->spouse->findOrFail($id)->delete();
-        $this->backUrlService->keepBackUrl();
-
-        return redirect()
-        ->route('user.recipients.show', ['recipient' => $this->spouse->recipient->findOrFail($id)])
-        ->with(['message' => '配偶者を削除しました。', 'status' => 'alert']);
-    }
 }
