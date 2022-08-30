@@ -166,15 +166,9 @@
                     <button type="button" onclick="location.href='{{ route('admin.recipients.calculations.create', ['recipient' => $recipient->id]) }}'" class=" bg-green-400 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">所得計算</button>
                     @endif
                   </div>
-                  <div class="p-2 w-full flex justify-around mt-4">
-                    <form id="delete_{{$recipient->id}}" method="POST" action="{{ route('admin.recipients.destroy', ['recipient' => $recipient->id]) }}">
-                      @csrf
-                      @method('delete')
-                      <div class="flex justify-center items-center">
-                          <a href="#" data-id="{{ $recipient->id }}" onclick="deletePost(this)" class="text-white bg-red-400 border-0 py-2 px-4 focus:outline-none hover:bg-red-500 rounded">削除する</a>
-                      </div>
-                    </form>
-                  </div>
+                  @auth('admin')
+                  <x-delete-recipient :recipient="$recipient" />
+                  @endauth
                 </div>
               </div>
             </div>
@@ -227,15 +221,9 @@
                       <button type="button" onclick="location.href='{{ route('admin.recipients.spouses.calculations.create', ['recipient' => $recipient->id, 'spouse' => $recipient->spouse->id]) }}'" class=" bg-green-400 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">所得計算</button>
                       @endif
                     </div>
-                    <div class="p-2 w-full flex justify-around mt-4">
-                      <form id="delete_{{$recipient->spouse->id}}" method="POST" action="{{ route('admin.recipients.spouses.destroy', ['recipient' => $recipient->id, 'spouse' => $recipient->spouse->id]) }}">
-                        @csrf
-                        @method('delete')
-                        <div class="flex justify-center items-center">
-                            <a href="#" data-id="{{ $recipient->spouse->id }}" onclick="deletePost(this)" class="text-white bg-red-400 border-0 py-2 px-4 focus:outline-none hover:bg-red-500 rounded">削除する</a>
-                        </div>
-                      </form>
-                    </div>
+                    @auth('admin')
+                    <x-delete-spouse :recipient="$recipient" />
+                    @endauth
                   </div>
                 </div>
                 @else
@@ -292,15 +280,9 @@
                       <button type="button" onclick="location.href='{{ route('admin.recipients.obligors.calculations.create', ['recipient' => $recipient->id, 'obligor' => $recipient->obligor->id]) }}'" class=" bg-green-400 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg">所得計算</button>
                       @endif
                     </div>
-                    <div class="p-2 w-full flex justify-around mt-4">
-                      <form id="delete_{{$recipient->obligor->id}}" method="POST" action="{{ route('admin.recipients.obligors.destroy', ['recipient' => $recipient->id, 'obligor' => $recipient->obligor->id]) }}">
-                        @csrf
-                        @method('delete')
-                        <div class="flex justify-center items-center">
-                            <a href="#" data-id="{{ $recipient->obligor->id }}" onclick="deletePost(this)" class="text-white bg-red-400 border-0 py-2 px-4 focus:outline-none hover:bg-red-500 rounded">削除する</a>
-                        </div>
-                      </form>
-                    </div>
+                    @auth('admin')
+                    <x-delete-obligor :recipient="$recipient" />
+                    @endauth
                   </div>
                 </div>
                 @else
@@ -315,12 +297,4 @@
       </div>
     </div>
   </div>
-  <script>
-    function deletePost(e) {
-      'use strict';
-      if (confirm('本当に削除しますか?')) {
-        document.getElementById('delete_' + e.dataset.id).submit(); 
-      }
-    }
-  </script>    
 </x-app-layout>

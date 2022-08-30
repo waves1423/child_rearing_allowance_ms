@@ -145,7 +145,7 @@ class Calculation extends Model
         +$request->medical_expense
         +$request->small_enterprise
         +$request->other
-        +$request->common;
+        +80000;
         
         $total_deducted_income = $total_income - $total_deduction;
         $total_deducted_income < 0 ? $total_deducted_income = 0 : '';
