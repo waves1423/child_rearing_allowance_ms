@@ -84,11 +84,11 @@ class ObligorController extends Controller
      */
     public function destroy($id)
     {
-        $this->obligor->findOrFail($id)->delete();
+        $this->recipient->findOrFail($id)->obligor->delete();
         $this->backUrlService->keepBackUrl();
 
         return redirect()
-        ->route('admin.recipients.show', ['recipient' => $this->obligor->recipient->findOrFail($id)])
+        ->route('admin.recipients.show', ['recipient' => $id])
         ->with(['message' => '扶養義務者を削除しました。', 'status' => 'alert']);
     }
 }

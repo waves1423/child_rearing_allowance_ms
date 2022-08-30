@@ -84,11 +84,11 @@ class SpouseController extends Controller
      */
     public function destroy($id)
     {
-        $this->spouse->findOrFail($id)->delete();
+        $this->recipient->findOrFail($id)->spouse->delete();
         $this->backUrlService->keepBackUrl();
 
         return redirect()
-        ->route('user.recipients.show', ['recipient' => $this->spouse->recipient->findOrFail($id)])
+        ->route('admin.recipients.show', ['recipient' => $id])
         ->with(['message' => '配偶者を削除しました。', 'status' => 'alert']);
     }
 }

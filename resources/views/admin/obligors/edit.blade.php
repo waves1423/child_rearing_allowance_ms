@@ -15,6 +15,7 @@
                     <form method="POST" action="{{ route('admin.recipients.obligors.update', ['recipient' => $recipient->id, 'obligor' => $recipient->obligor->id]) }}">        
                         @csrf
                         @method('put')
+                        <input type="hidden" name="recipient_id" value="{{ $recipient->id }}">
                         <div class="-m-2">
                             <div class="p-2 w-1/2 mx-auto">
                                 <div class="relative">
