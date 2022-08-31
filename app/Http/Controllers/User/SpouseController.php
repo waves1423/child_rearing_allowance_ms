@@ -12,7 +12,7 @@ class SpouseController extends Controller
 {
     public function __construct(Recipient $recipient, Spouse $spouse, BackUrlService $backUrlService)
     {
-        $this->middleware('auth:users');
+        $this->middleware('auth:users', ['only' => ['store', 'update']]);
         $this->recipient = $recipient;
         $this->spouse = $spouse;
         $this->backUrlService = $backUrlService;

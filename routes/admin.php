@@ -28,8 +28,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/', [RecipientController::class, 'index'])
-->middleware('auth:admin');
 
 Route::resource('users', UsersController::class)
 ->middleware('auth:admin')
