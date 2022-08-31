@@ -15,7 +15,7 @@ class RecipientController extends Controller
 {
     public function __construct(Recipient $recipient, Request $request, BackUrlService $backUrlService)
     {
-        $this->middleware('auth:users');
+        $this->middleware('auth:users', ['only' => ['store', 'update']]);
         $this->recipient = $recipient;
         $this->request = $request;
         $this->backUrlService = $backUrlService;

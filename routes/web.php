@@ -23,31 +23,24 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [RecipientController::class, 'index']);
 
 Route::resource('recipients', RecipientController::class)
-->middleware('auth:users')
 ->except(['destroy']);
 
 Route::resource('special_recipients', SpecialRecipientController::class)
-->middleware('auth:users')
 ->only(['index']);
 
 Route::resource('recipients.spouses', SpouseController::class)
-->middleware('auth:users')
 ->except(['index', 'show', 'destroy']);
 
 Route::resource('recipients.obligors', ObligorController::class)
-->middleware('auth:users')
 ->except(['index', 'show', 'destroy']);
 
 Route::resource('recipients.calculations', RecipientCalculationController::class)
-->middleware('auth:users')
 ->except(['index', 'show', 'destroy']);
 
 Route::resource('recipients.spouses.calculations', SpouseCalculationController::class)
-->middleware('auth:users')
 ->except(['index', 'show', 'destroy']);
 
 Route::resource('recipients.obligors.calculations', ObligorCalculationController::class)
-->middleware('auth:users')
 ->except(['index', 'show', 'destroy']);
 
 require __DIR__.'/auth.php';

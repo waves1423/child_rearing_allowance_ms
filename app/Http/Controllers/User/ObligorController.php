@@ -12,7 +12,7 @@ class ObligorController extends Controller
 {
     public function __construct(Recipient $recipient, Obligor $obligor, BackUrlService $backUrlService)
     {
-        $this->middleware('auth:users');
+        $this->middleware('auth:users', ['only' => ['store', 'update']]);
         $this->recipient = $recipient;
         $this->obligor = $obligor;
         $this->backUrlService = $backUrlService;

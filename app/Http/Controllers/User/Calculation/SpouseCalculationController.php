@@ -13,7 +13,7 @@ class SpouseCalculationController extends Controller
 {
     public function __construct(Recipient $recipient, Calculation $calculation, BackUrlService $backUrlService)
     {
-        $this->middleware('auth:users');
+        $this->middleware('auth:users', ['only' => ['store', 'update']]);
         $this->recipient = $recipient;
         $this->calculation = $calculation;
         $this->backUrlService = $backUrlService;
