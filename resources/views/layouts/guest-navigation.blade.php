@@ -22,6 +22,9 @@
                     </x-nav-link>
                 </div>
             </div>
+            
+            <!-- Login Button-->
+            <button onclick="location.href='{{ route('user.login') }}'" class="text-white bg-orange-500 border-0 py-2 px-4 m-2 focus:outline-none hover:bg-orange-600 rounded text-lg">ログイン</button>
 
             <!-- Hamburger -->
             <div class="-mr-2 flex items-center sm:hidden">
