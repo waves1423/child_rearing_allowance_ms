@@ -196,10 +196,13 @@ class Calculation extends Model
     {
         $this->findOrFail($calculation->id)
         ->fill(['deducted_income' => $this->getTotalIncome($request)])->save();
+
         Dependent::findOrFail($calculation->dependent->id)
         ->fill($request->validated())->save();
+
         Income::findOrFail($calculation->income->id)
         ->fill($request->validated())->save();
+        
         Deduction::findOrFail($calculation->deduction->id)
         ->fill($request->validated())->save();
     }

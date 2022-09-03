@@ -3,18 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
-use Throwable;
 
 class UsersController extends Controller
 {
-    public function __construct()
+    public function __construct(User $user)
     {
         $this->middleware('auth:admin');
+        $this->user = $user;
     }
     
     /**
@@ -24,11 +21,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::select('id', 'name', 'email', 'created_at')
-        ->paginate(25);
-
-        return view('admin.users.index',
-        compact('users'));
+        return view('admin.users.index', ['users' => $this->user->getUsers()]);
     }
 
     /**
@@ -47,31 +40,13 @@ class UsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|confirmed|min:6',
-        ]);
-
-        try{
-            DB::transaction(function () use($request) {
-                User::create([
-                    'name' => $request->name,
-                    'email' => $request->email,
-                    'password' => Hash::make($request->password),
-                ]);
-            }, 2);
-        }catch(Throwable $e){
-            Log::error($e);
-            throw $e;
-        }
+        $this->user->storeUser($request);
 
         return redirect()
         ->route('admin.users.index')
-        ->with(['message' => 'ユーザーを新規登録しました。',
-        'status' => 'info']);
+        ->with(['message' => 'ユーザーを新規登録しました。', 'status' => 'info']);
     }
 
     /**
@@ -82,10 +57,7 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
-        $user = User::findOrFail($id);
-
-        return view('admin.users.edit',
-        compact('user'));
+        return view('admin.users.edit', ['user' => $this->user->findOrFail($id)]);
     }
 
     /**
@@ -95,18 +67,13 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
-        $user = User::findOrFail($id);
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password);
-        $user->save();
+        $this->user->updateUser($request, $id);
 
         return redirect()
         ->route('admin.users.index')
-        ->with(['message' => 'ユーザー情報を更新しました。',
-        'status' => 'info']);
+        ->with(['message' => 'ユーザー情報を更新しました。', 'status' => 'info']);
     }
 
     /**
@@ -117,11 +84,10 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        User::findOrFail($id)->delete();
+        $this->user->findOrFail($id)->delete();
 
         return redirect()
         ->route('admin.users.index')
-        ->with(['message' => 'ユーザーを削除しました。',
-        'status' => 'alert']);
+        ->with(['message' => 'ユーザーを削除しました。', 'status' => 'alert']);
     }
 }

@@ -24,7 +24,7 @@
                 <div class="-m-2">
                   <div class="p-2 mx-auto">
                     <div class="relative">
-                      <label for="number" class="leading-7 text-sm text-gray-600">三児扶/三特児</label>
+                      <label for="number" class="leading-7 text-sm text-gray-600">三児扶/三特</label>
                       <div class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                         {{ $recipient->number }}</div>
                     </div>
