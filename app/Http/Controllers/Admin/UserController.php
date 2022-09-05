@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 
-class UsersController extends Controller
+class UserController extends Controller
 {
     public function __construct(User $user)
     {

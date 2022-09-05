@@ -8,7 +8,7 @@ use App\Http\Controllers\Admin\Auth\NewPasswordController;
 use App\Http\Controllers\Admin\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Admin\Auth\RegisteredUserController;
 use App\Http\Controllers\Admin\Auth\VerifyEmailController;
-use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\RecipientController;
 use App\Http\Controllers\Admin\SpouseController;
 use App\Http\Controllers\Admin\ObligorController;
@@ -29,7 +29,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('users', UsersController::class)
+Route::resource('users', UserController::class)
 ->middleware('auth:admin')
 ->except(['show']);
 
