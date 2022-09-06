@@ -7,13 +7,10 @@ Allowance recipients, their spouses, and support obligors can be registered, and
 ***This system is compatible with 100,000 yen income deduction in accordance with tax law revisions applicable from October 2021 onward.***  
 
 # URL
-URL is here.
+https://child-allowance.com
 
 # Demonstration
 Demo is here.
-
-# What issue to solve?
-
 
 # Features
 - Multi-login
@@ -43,9 +40,6 @@ Demo is here.
 - AWS (EC2, ALB, ACM, RDS, Route53, VPC, EIP, IAM)
 - Laravel Sail 8.1
 
-# Usage
-How to install(git clone, composer) is here.
-
 # Architecture
 ## ERD
 ![er](https://user-images.githubusercontent.com/101188604/184528045-b97b0ea5-8d81-465d-991d-13a44ad664d4.png)
@@ -53,9 +47,6 @@ How to install(git clone, composer) is here.
 
 # License
 The source code is under the MIT license.
-
-# Future Features
-Coming soon ...
 
 # References
 For more infomation on these allowances, see Ministry of Health, Labor and Welfare website.  
