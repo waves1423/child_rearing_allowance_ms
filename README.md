@@ -44,6 +44,7 @@ Demo is here.
 ## ERD
 ![er](https://user-images.githubusercontent.com/101188604/184528045-b97b0ea5-8d81-465d-991d-13a44ad664d4.png)
 ## AWS
+![aws](https://user-images.githubusercontent.com/101188604/188660011-a446ed8e-b77e-43d6-b9f9-8e7a292625fa.png)
 
 # License
 The source code is under the MIT license.
