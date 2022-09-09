@@ -204,7 +204,7 @@ class RecipientSeeder extends Seeder
                 'kana' => 'じふ　じゅうしろう',
                 'sex' => 1,
                 'birth_date' => '1990/09/01',
-                'adress' => '児童市4001番地',
+                'adress' => '児童市4014番地6',
                 'allowance_type' => 1,
                 'is_submitted' => true,
                 'additional_document' => '養育費申告書、一部適用除外届',
@@ -217,8 +217,8 @@ class RecipientSeeder extends Seeder
                 'name' => '児扶　十五代',
                 'kana' => 'じふ　とこよ',
                 'sex' => 2,
-                'birth_date' => '1990/09/01',
-                'adress' => '児童市4001番地',
+                'birth_date' => '1967/05/15',
+                'adress' => '児童市4001番地15',
                 'allowance_type' => 1,
                 'is_submitted' => true,
                 'additional_document' => '一部適用除外届、監護養育申立書',
@@ -226,7 +226,34 @@ class RecipientSeeder extends Seeder
                 'multiple_recipient' => 1,
                 'note' => ''
             ],
-
+            [
+                'number' => 24543001,
+                'name' => '児扶　十六',
+                'kana' => 'じふ　じゅうむ',
+                'sex' => 1,
+                'birth_date' => '1988/09/06',
+                'adress' => '児童市1600番地',
+                'allowance_type' => 1,
+                'is_submitted' => true,
+                'additional_document' => '養育費申立書',
+                'is_public_pentioner' => false,
+                'multiple_recipient' => 1,
+                'note' => ''
+            ],
+            [
+                'number' => 24543009,
+                'name' => '児扶　十七子',
+                'kana' => 'じふ　じゅうななこ',
+                'sex' => 2,
+                'birth_date' => '1977/07/09',
+                'adress' => '児童市4107番地7',
+                'allowance_type' => 2,
+                'is_submitted' => false,
+                'additional_document' => '養育費申告書、一部適用除外届',
+                'is_public_pentioner' => false,
+                'multiple_recipient' => 1,
+                'note' => ''
+            ],
         ]);
     }
 }
