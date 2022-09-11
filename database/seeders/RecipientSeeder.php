@@ -296,6 +296,20 @@ class RecipientSeeder extends Seeder
                 'multiple_recipient' => 1,
                 'note' => ''
             ],
+            [
+                'number' => 24543021,
+                'name' => '船津　二一子',
+                'kana' => 'ふなつ　にいこ',
+                'sex' => 2,
+                'birth_date' => '1980/07/20',
+                'adress' => '児童市2107番地20',
+                'allowance_type' => 2,
+                'is_submitted' => false,
+                'additional_document' => '養育費申告書、一部適用除外',
+                'is_public_pentioner' => false,
+                'multiple_recipient' => 1,
+                'note' => ''
+            ],
 
         ]);
     }
