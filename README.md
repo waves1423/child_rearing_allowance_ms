@@ -37,7 +37,7 @@ Demo is here.
 - Composer 2.3.10
 
 ## Infrastracture
-- AWS (EC2, ALB, ACM, RDS, Route53, VPC, EIP, IAM)
+- AWS (EC2, ALB, RDS, CloudFront, ACM, Route53, VPC, EIP, IAM)
 - Laravel Sail 8.1
 
 # Architecture
