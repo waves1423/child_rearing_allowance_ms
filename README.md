@@ -10,11 +10,10 @@ Allowance recipients, their spouses, and support obligors can be registered, and
 https://child-allowance.com
 
 # Demonstration
-Demo is here.
 
 # Features
 - Multi-login
-    - Administrator and user
+    - Administrator(create, edit and delete) and user(create and edit)
 - Registration
     - Recipient, its spouse and support obligor
 - Search recipient
