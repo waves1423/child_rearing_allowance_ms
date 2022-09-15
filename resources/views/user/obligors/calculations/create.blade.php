@@ -23,25 +23,25 @@
                       <div class="p-2 mx-auto">
                         <div class="relative">
                           <label for="total" class="leading-7 text-sm text-gray-600">合計人数</label>
-                          <input type="number" id="total" name="total" value="{{ old('total') }}" required placeholder="人" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                          <input type="number" id="total" name="total" value="{{ old('total', 0) }}" required placeholder="人" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                         </div>
                       </div>
                       <div class="p-2 mx-auto">
                         <div class="relative">
                           <label for="elder" class="leading-7 text-sm text-gray-600">うち老人扶養親族</label>
-                          <input type="number" id="elder" name="elder" value="{{ old('elder') }}" required placeholder="人" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                          <input type="number" id="elder" name="elder" value="{{ old('elder', 0) }}" required placeholder="人" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                         </div>
                       </div>
                       <div class="p-2 mx-auto">
                         <div class="relative">
                           <label for="special" class="leading-7 text-sm text-gray-600">うち特定扶養親族</label>
-                          <input type="number" id="special" name="special" value="{{ old('special') }}" required placeholder="人" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                          <input type="number" id="special" name="special" value="{{ old('special', 0) }}" required placeholder="人" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                         </div>
                       </div>
                       <div class="p-2 mx-auto">
                         <div class="relative">
                           <label for="year_old_16to18" class="leading-7 text-sm text-gray-600">うち16歳以上19歳未満の扶養親族</label>
-                          <input type="number" id="year_old_16to18" name="year_old_16to18" value="{{ old('year_old_16to18') }}" required placeholder="人" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                          <input type="number" id="year_old_16to18" name="year_old_16to18" value="{{ old('year_old_16to18', 0) }}" required placeholder="人" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                         </div>
                       </div>
                       <div class="p-2 mx-auto">
@@ -109,13 +109,13 @@
                         <div class="p-2 mx-auto">
                           <div class="relative">
                             <label for="disabled" class="leading-7 text-sm text-gray-600">障がい者控除</label>
-                            <input type="number" id="disabled" name="disabled" value="{{ old('disabled') }}" required placeholder="人" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                            <input type="number" id="disabled" name="disabled" value="{{ old('disabled', 0) }}" required placeholder="人" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                           </div>
                         </div>
                         <div class="p-2 mx-auto">
                           <div class="relative">
                             <label for="specially_disabled" class="leading-7 text-sm text-gray-600">特別障がい者控除</label>
-                            <input type="number" id="specially_disabled" name="specially_disabled" value="{{ old('specially_disabled') }}" required placeholder="人" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                            <input type="number" id="specially_disabled" name="specially_disabled" value="{{ old('specially_disabled', 0) }}" required placeholder="人" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                           </div>
                         </div>
                         <div class="p-2 mx-auto">
@@ -133,13 +133,13 @@
                         <div class="p-2 mx-auto">
                           <div class="relative">
                             <label for="medical_expense" class="leading-7 text-sm text-gray-600">医療費控除</label>
-                            <input type="number" id="medical_expense" name="medical_expense" value="{{ old('medical_expense') }}" required placeholder="円" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                            <input type="number" id="medical_expense" name="medical_expense" value="{{ old('medical_expense', 0) }}" required placeholder="円" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                           </div>
                         </div>
                         <div class="p-2 mx-auto">
                           <div class="relative">
                             <label for="small_enterprise" class="leading-7 text-sm text-gray-600">小規模企業共済</label>
-                            <input type="number" id="small_enterprise" name="small_enterprise" value="{{ old('small_enterprise') }}" required placeholder="円" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+                            <input type="number" id="small_enterprise" name="small_enterprise" value="{{ old('small_enterprise', 0) }}" required placeholder="円" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                           </div>
                         </div>
                         <div class="p-2 mx-auto">
