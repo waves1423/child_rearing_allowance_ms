@@ -108,43 +108,43 @@
                       <div class="-m-2">
                         <div class="p-2 mx-auto">
                           <div class="relative">
-                            <label for="disabled" class="leading-7 text-sm text-gray-600">障がい者控除</label>
+                            <label for="disabled" class="leading-7 text-sm text-gray-600">障がい者控除（人）</label>
                             <input type="number" id="disabled" name="disabled" value="{{ old('disabled') }}" required placeholder="人" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                           </div>
                         </div>
                         <div class="p-2 mx-auto">
                           <div class="relative">
-                            <label for="specially_disabled" class="leading-7 text-sm text-gray-600">特別障がい者控除</label>
+                            <label for="specially_disabled" class="leading-7 text-sm text-gray-600">特別障がい者控除（人）</label>
                             <input type="number" id="specially_disabled" name="specially_disabled" value="{{ old('specially_disabled') }}" required placeholder="人" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                           </div>
                         </div>
                         <div class="p-2 mx-auto">
                           <div class="relative">
-                            <label for="singleparent_or_workingstudent" class="leading-7 text-sm text-gray-600">ひとり親または勤労学生控除</label>
+                            <label for="singleparent_or_workingstudent" class="leading-7 text-sm text-gray-600">ひとり親または勤労学生控除（人）</label>
                             <input type="number" id="singleparent_or_workingstudent" name="singleparent_or_workingstudent" value="{{ old('singleparent_or_workingstudent', 0) }}" required placeholder="人" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                           </div>
                         </div>
                         <div class="p-2 mx-auto">
                           <div class="relative">
-                            <label for="special_spouse" class="leading-7 text-sm text-gray-600">配偶者特別控除</label>
+                            <label for="special_spouse" class="leading-7 text-sm text-gray-600">配偶者特別控除（円）</label>
                             <input type="number" id="special_spouse" name="special_spouse" value="{{ old('special_spouse', 0) }}" required placeholder="円" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                           </div>
                         </div>
                         <div class="p-2 mx-auto">
                           <div class="relative">
-                            <label for="medical_expense" class="leading-7 text-sm text-gray-600">医療費控除</label>
+                            <label for="medical_expense" class="leading-7 text-sm text-gray-600">医療費控除（円）</label>
                             <input type="number" id="medical_expense" name="medical_expense" value="{{ old('medical_expense') }}" required placeholder="円" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                           </div>
                         </div>
                         <div class="p-2 mx-auto">
                           <div class="relative">
-                            <label for="small_enterprise" class="leading-7 text-sm text-gray-600">小規模企業共済</label>
+                            <label for="small_enterprise" class="leading-7 text-sm text-gray-600">小規模企業共済（円）</label>
                             <input type="number" id="small_enterprise" name="small_enterprise" value="{{ old('small_enterprise') }}" required placeholder="円" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                           </div>
                         </div>
                         <div class="p-2 mx-auto">
                           <div class="relative">
-                            <label for="other" class="leading-7 text-sm text-gray-600">その他控除</label>
+                            <label for="other" class="leading-7 text-sm text-gray-600">その他控除（円）</label>
                             <input type="number" id="other" name="other" value="{{ old('other', 0) }}" required placeholder="円" class="w-full bg-gray-100 bg-opacity-50 rounded focus:bg-white focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
                           </div>
                         </div>
