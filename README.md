@@ -27,6 +27,7 @@ https://child-allowance.com
 - HTML/CSS
 - JavaScript
 - TailwindCSS 3.1.0
+- Node.js 16.16.0
 - Alpine.js 3.4.2
 
 ## Back-end
