@@ -42,7 +42,7 @@ https://child-allowance.com
 
 # Architecture
 ## ERD
-![er](https://user-images.githubusercontent.com/101188604/184528045-b97b0ea5-8d81-465d-991d-13a44ad664d4.png)
+![er](https://user-images.githubusercontent.com/101188604/191504573-e86f2578-05a1-4b81-8f4d-665a75f47951.png)
 ## AWS
 ![aws](https://user-images.githubusercontent.com/101188604/188660011-a446ed8e-b77e-43d6-b9f9-8e7a292625fa.png)
 
