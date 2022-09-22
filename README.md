@@ -37,7 +37,7 @@ https://child-allowance.com
 - Composer 2.3.10
 
 ## Infrastracture
-- Production: AWS (EC2, ALB, RDS, CloudFront, ACM, Route53, VPC, EIP, IAM)
+- Production: AWS (EC2, ALB, RDS, CloudFront, ACM, Route53, VPC, IAM)
 - Developement: Laravel Sail 8.1
 
 # Architecture
