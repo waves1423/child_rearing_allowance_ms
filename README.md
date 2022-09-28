@@ -3,7 +3,7 @@
 You can manage information on recipients of child rearing allowance(児童扶養手当) and special child rearing allowance(特別児童扶養手当).  
 
 # Description
-Allowance recipients, their spouses, and support obligors can be registered, and income calculations can be performed.  
+Allowance recipients, their spouses, and support obligors(people who share livelihoods with recipients and are able to take care of children) can be registered, and income calculations can be performed.  
 ***This system is compatible with 100,000 yen income deduction in accordance with tax law revisions applicable from October 2021 onward.***  
 
 # URL
