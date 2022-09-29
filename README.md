@@ -14,13 +14,13 @@ https://child-allowance.com
 # Features
 - Multi-login
     - Administrator(create, edit and delete) and user(create and edit)
-- Registration
+- Recipients Registration
     - Recipient, its spouse and support obligor
 - Search recipient
     - Multiple keyword search for kana and kanji
     - Type of receiving allowance can be identified by icons
 - Income calculation
-    - Deductions based on type of income
+    - Based on the breakdown of income and deductions entered, income after deductions is automatically calculated.
 
 # Requirements
 ## Front-end
