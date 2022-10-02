@@ -179,4 +179,4 @@
         </form>
     </div>
     <x-income-deduction />
-</x-app-layout>  
+</x-app-layout>
