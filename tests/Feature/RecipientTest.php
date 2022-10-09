@@ -15,7 +15,9 @@ class RecipientTest extends TestCase
     {
         $response = $this->get('/recipients');
 
-        $response->assertStatus(200)->assertViewIs('user.recipients.index');
+        $response->assertStatus(200)
+            ->assertViewIs('user.recipients.index')
+            ->assertSee('児童扶養手当　受給者一覧');
     }
 
     /** @test */    
@@ -23,12 +25,19 @@ class RecipientTest extends TestCase
     {
         $response = $this->get('/special_recipients');
 
-        $response->assertStatus(200)->assertViewIs('user.special_recipients.index');
+        $response->assertStatus(200)
+            ->assertViewIs('user.special_recipients.index')
+            ->assertSee('特別児童扶養手当　受給者一覧');
     }
 
     /** @test */    
     public function 受給者情報詳細画面が表示される_ログインなし()
     {
+        $this->artisan('db:seed', ['--class' => 'RecipientSeeder']);
+        
+        $response = $this->get('/recipients/1');
 
+        $response->assertStatus(200)
+            ->assertSee('島原　一子');
     }
 }
