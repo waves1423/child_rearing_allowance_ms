@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class RecipientControllerTest extends TestCase
 {
@@ -63,8 +64,9 @@ class RecipientControllerTest extends TestCase
     public function 児童扶養手当受給者一覧画面が表示される()
     {
         $this->artisan('db:seed', ['--class' => 'UserSeeder']);
-        $user = User::factory(User::class)->create();
-        $this->User::actingAs($user);
+
+        $user = User::factory()->create();
+        $this->actingAs($user);
 
         $response = $this->get('/recipients');
 
