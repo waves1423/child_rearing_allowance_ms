@@ -21,7 +21,7 @@ class SpecialRecipientControllerTest extends TestCase
             ->assertSee('特別児童扶養手当　受給者一覧');
     }
 
-        //ユーザー用テスト（ログインあり）
+    //ユーザー用テスト（ログインあり）
     /** @test */
     public function 特別児童扶養手当受給者一覧画面が表示される()
     {
