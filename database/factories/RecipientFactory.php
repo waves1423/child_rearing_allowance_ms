@@ -17,12 +17,12 @@ class RecipientFactory extends Factory
     public function definition()
     {
         return [
-            'number' => 24543001,
-            'name' => '島原　一子',
-            'kana' => 'しまばら　かずこ',
+            'number' => 24543000,
+            'name' => '児扶　一子',
+            'kana' => 'じふ　かずこ',
             'sex' => 2,
-            'birth_date' => '1990/09/01',
-            'adress' => '児童市4001番地1',
+            'birth_date' => '1999/09/09',
+            'adress' => '児童市1001-1',
             'allowance_type' => 1,
             'is_submitted' => true,
             'additional_document' => '養育費申告書、一部適用除外届',

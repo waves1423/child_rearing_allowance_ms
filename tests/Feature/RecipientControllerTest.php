@@ -88,39 +88,6 @@ class RecipientControllerTest extends TestCase
             ->assertSee('児童扶養手当　受給者一覧');
     }
 
-    /** @test */    
-    public function 受給者情報詳細画面が表示される()
-    {
-        $response = $this->actingAs($this->user)
-            ->get('/recipients/1');
-
-        $response->assertStatus(200)
-            ->assertViewIs('user.recipients.show')
-            ->assertSee('受給者詳細：島原　一子');
-    }    
-
-    /** @test */
-    public function 受給者の基本情報編集画面が表示される()
-    {
-        $response = $this->actingAs($this->user)
-            ->get('/recipients/1/edit');
-
-        $response->assertStatus(200)
-            ->assertViewIs('user.recipients.edit')
-            ->assertSee('受給者情報編集：島原　一子');
-    }
-
-    /** @test */
-    public function 受給者の所得計算画面が表示される()
-    {
-        $response = $this->actingAs($this->user)
-            ->get('/recipients/1/calculations/create');
-
-        $response->assertStatus(200)
-            ->assertViewIs('user.recipients.calculations.create')
-            ->assertSee('所得計算：島原　一子');
-    }
-
     /** @test */
     public function 受給者新規登録画面が表示される()
     {
@@ -155,4 +122,62 @@ class RecipientControllerTest extends TestCase
         ]);
     }
 
+    /** @test */    
+    public function 受給者情報詳細画面が表示される()
+    {
+        $response = $this->actingAs($this->user)
+            ->get('/recipients/1');
+
+        $response->assertStatus(200)
+            ->assertViewIs('user.recipients.show')
+            ->assertSee('受給者詳細：島原　一子');
+    }    
+
+    /** @test */
+    public function 受給者の基本情報編集画面が表示される()
+    {
+        $response = $this->actingAs($this->user)
+            ->get('/recipients/1/edit');
+
+        $response->assertStatus(200)
+            ->assertViewIs('user.recipients.edit')
+            ->assertSee('受給者情報編集：島原　一子');
+    }
+
+    /** @test */
+    public function 受給者の基本情報を更新する()
+    {
+        $response = $this->actingAs($this->user)
+            ->put('/recipients/1', [
+                'number' => 24543001,
+                'name' => '島原　一子',
+                'kana' => 'しまばら　かずこ',
+                'sex' => 2,
+                'birth_date' => '1990/09/01',
+                'adress' => '児童市4001番地1',
+                'allowance_type' => 1,
+                'is_submitted' => false,
+                'additional_document' => '養育費申告書、別居監護申立書',
+                'is_public_pentioner' => false,
+                'multiple_recipient' => 1,
+                'note' => ''
+            ]);
+
+        $response->assertRedirect('/recipients/1');
+        $this->assertDatabaseHas('recipients', [
+            'is_submitted' => false,
+            'additional_document' => '養育費申告書、別居監護申立書',
+        ]);
+    }
+
+    /** @test */
+    public function 受給者の所得計算画面が表示される()
+    {
+        $response = $this->actingAs($this->user)
+            ->get('/recipients/1/calculations/create');
+
+        $response->assertStatus(200)
+            ->assertViewIs('user.recipients.calculations.create')
+            ->assertSee('所得計算：島原　一子');
+    }
 }
