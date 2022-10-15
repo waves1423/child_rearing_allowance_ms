@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\Recipient;
 use App\Models\User;
 
 class RecipientControllerTest extends TestCase
@@ -14,7 +15,12 @@ class RecipientControllerTest extends TestCase
     public function setUp() :void
     {
         parent::setUp();
+
         $this->user = User::factory()->create();
+        $this->recipient = Recipient::factory()->create();
+        $this->requestData = ([
+            
+        ]);
         $this->artisan('db:seed', ['--class' => 'RecipientSeeder']);
     }
 
@@ -114,4 +120,16 @@ class RecipientControllerTest extends TestCase
             ->assertViewIs('user.recipients.create')
             ->assertSee('受給者新規登録');
     }
+
+    /** @test */
+    public function 受給者新規登録ができる()
+    {
+        $response = $this->actingAs($this->user)
+            ->post('/recipients', $this->requestData);
+
+        $response->assertStatus(200)
+            ->assertViewIs('user.recipients.store')
+            ->assertSee('受給者新規登録');
+    }
+
 }
