@@ -71,6 +71,17 @@ class RecipientControllerTest extends TestCase
             ->assertSee('児童扶養手当　受給者一覧');
     }
 
+    /** @test */    
+    public function 受給者情報詳細画面が表示される()
+    {
+        $response = $this->actingAs($this->user)
+            ->get('/recipients/1');
+
+        $response->assertStatus(200)
+            ->assertViewIs('user.recipients.show')
+            ->assertSee('受給者詳細：島原　一子');
+    }    
+
     /** @test */
     public function 受給者の基本情報編集画面が表示される()
     {
@@ -91,5 +102,16 @@ class RecipientControllerTest extends TestCase
         $response->assertStatus(200)
             ->assertViewIs('user.recipients.calculations.create')
             ->assertSee('所得計算：島原　一子');
+    }
+
+    /** @test */
+    public function 受給者新規登録画面が表示される()
+    {
+        $response = $this->actingAs($this->user)
+            ->get('/recipients/create');
+
+        $response->assertStatus(200)
+            ->assertViewIs('user.recipients.create')
+            ->assertSee('受給者新規登録');
     }
 }
