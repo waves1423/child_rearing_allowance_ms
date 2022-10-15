@@ -15,13 +15,24 @@ class RecipientControllerTest extends TestCase
     public function setUp() :void
     {
         parent::setUp();
+        $this->artisan('db:seed', ['--class' => 'RecipientSeeder']);
 
         $this->user = User::factory()->create();
         $this->recipient = Recipient::factory()->create();
         $this->requestData = ([
-            
+            'number' => $this->recipient->number,
+            'name' => $this->recipient->name,
+            'kana' => $this->recipient->kana,
+            'sex' => $this->recipient->sex,
+            'birth_date' => $this->recipient->birth_date,
+            'adress' => $this->recipient->adress,
+            'allowance_type' => $this->recipient->allowance_type,
+            'is_submitted' => $this->recipient->is_submitted,
+            'additional_document' => $this->recipient->additional_document,
+            'is_public_pentioner' => $this->recipient->is_public_pentioner,
+            'multiple_recipient' => $this->recipient->multiple_recipient,
+            'note' => $this->recipient->note
         ]);
-        $this->artisan('db:seed', ['--class' => 'RecipientSeeder']);
     }
 
     //ゲスト用テスト（ログインなし）
@@ -122,14 +133,26 @@ class RecipientControllerTest extends TestCase
     }
 
     /** @test */
-    public function 受給者新規登録ができる()
+    public function 受給者を新規登録する()
     {
         $response = $this->actingAs($this->user)
             ->post('/recipients', $this->requestData);
 
-        $response->assertStatus(200)
-            ->assertViewIs('user.recipients.store')
-            ->assertSee('受給者新規登録');
+        $response->assertRedirect('/recipients');
+        $this->assertDatabaseHas('recipients', [
+            'number' => $this->recipient->number,
+            'name' => $this->recipient->name,
+            'kana' => $this->recipient->kana,
+            'sex' => $this->recipient->sex,
+            'birth_date' => $this->recipient->birth_date,
+            'adress' => $this->recipient->adress,
+            'allowance_type' => $this->recipient->allowance_type,
+            'is_submitted' => $this->recipient->is_submitted,
+            'additional_document' => $this->recipient->additional_document,
+            'is_public_pentioner' => $this->recipient->is_public_pentioner,
+            'multiple_recipient' => $this->recipient->multiple_recipient,
+            'note' => $this->recipient->note
+        ]);
     }
 
 }
