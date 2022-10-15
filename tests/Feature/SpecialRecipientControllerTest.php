@@ -11,6 +11,13 @@ class SpecialRecipientControllerTest extends TestCase
 {
     use DatabaseMigrations;
 
+    public function setUp() :void
+    {
+        parent::setUp();
+        $this->user = User::factory()->create();
+    }
+
+    //ゲスト用テスト（ログインなし）
     /** @test */    
     public function 特別児童扶養手当受給者一覧画面が表示される_ログインなし()
     {
@@ -25,12 +32,8 @@ class SpecialRecipientControllerTest extends TestCase
     /** @test */
     public function 特別児童扶養手当受給者一覧画面が表示される()
     {
-        $this->artisan('db:seed', ['--class' => 'UserSeeder']);
-
-        $user = User::factory()->create();
-        $this->actingAs($user);
-
-        $response = $this->get('/special_recipients');
+        $response = $this->actingAs($this->user)
+            ->get('/special_recipients');
 
         $response->assertStatus(200)
             ->assertViewIs('user.special_recipients.index')

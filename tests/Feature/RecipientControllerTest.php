@@ -11,6 +11,13 @@ class RecipientControllerTest extends TestCase
 {
     use DatabaseMigrations;
 
+    public function setUp() :void
+    {
+        parent::setUp();
+        $this->user = User::factory()->create();
+        $this->artisan('db:seed', ['--class' => 'RecipientSeeder']);
+    }
+
     //ゲスト用テスト（ログインなし）
     /** @test */
     public function 児童扶養手当受給者一覧画面が表示される_ログインなし()
@@ -25,8 +32,6 @@ class RecipientControllerTest extends TestCase
     /** @test */    
     public function 受給者情報詳細画面が表示される_ログインなし()
     {
-        $this->artisan('db:seed', ['--class' => 'RecipientSeeder']);
-        
         $response = $this->get('/recipients/1');
 
         $response->assertStatus(200)
@@ -37,8 +42,6 @@ class RecipientControllerTest extends TestCase
     /** @test */
     public function 受給者の基本情報編集画面が表示される_ログインなし()
     {
-        $this->artisan('db:seed', ['--class' => 'RecipientSeeder']);
-
         $response = $this->get('/recipients/1/edit');
 
         $response->assertStatus(200)
@@ -49,8 +52,6 @@ class RecipientControllerTest extends TestCase
     /** @test */
     public function 受給者の所得計算画面が表示される_ログインなし()
     {
-        $this->artisan('db:seed', ['--class' => 'RecipientSeeder']);
-
         $response = $this->get('/recipients/1/calculations/create');
 
         $response->assertStatus(200)
@@ -62,12 +63,8 @@ class RecipientControllerTest extends TestCase
     /** @test */
     public function 児童扶養手当受給者一覧画面が表示される()
     {
-        $this->artisan('db:seed', ['--class' => 'UserSeeder']);
-
-        $user = User::factory()->create();
-        $this->actingAs($user);
-
-        $response = $this->get('/recipients');
+        $response = $this->actingAs($this->user)
+            ->get('/recipients');
 
         $response->assertStatus(200)
             ->assertViewIs('user.recipients.index')
@@ -77,13 +74,8 @@ class RecipientControllerTest extends TestCase
     /** @test */
     public function 受給者の基本情報編集画面が表示される()
     {
-        $this->artisan('db:seed', ['--class' => 'RecipientSeeder']);
-        $this->artisan('db:seed', ['--class' => 'UserSeeder']);
-
-        $user = User::factory()->create();
-        $this->actingAs($user);
-
-        $response = $this->get('/recipients/1/edit');
+        $response = $this->actingAs($this->user)
+            ->get('/recipients/1/edit');
 
         $response->assertStatus(200)
             ->assertViewIs('user.recipients.edit')
@@ -93,16 +85,11 @@ class RecipientControllerTest extends TestCase
     /** @test */
     public function 受給者の所得計算画面が表示される()
     {
-        $this->artisan('db:seed', ['--class' => 'RecipientSeeder']);
-        $this->artisan('db:seed', ['--class' => 'UserSeeder']);
-
-        $user = User::factory()->create();
-        $this->actingAs($user);
-
-        $response = $this->get('/recipients/1/calculations/create');
+        $response = $this->actingAs($this->user)
+            ->get('/recipients/1/calculations/create');
 
         $response->assertStatus(200)
             ->assertViewIs('user.recipients.calculations.create')
             ->assertSee('所得計算：島原　一子');
-    }    
+    }
 }
