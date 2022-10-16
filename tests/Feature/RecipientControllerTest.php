@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\Admin;
 use App\Models\Recipient;
 use App\Models\User;
 
@@ -16,9 +17,11 @@ class RecipientControllerTest extends TestCase
     {
         parent::setUp();
         $this->artisan('db:seed', ['--class' => 'RecipientSeeder']);
-
+        
+        $this->admin = Admin::factory()->create();
         $this->user = User::factory()->create();
         $this->recipient = Recipient::factory()->create();
+
         $this->requestData = ([
             'number' => $this->recipient->number,
             'name' => $this->recipient->name,
@@ -180,4 +183,28 @@ class RecipientControllerTest extends TestCase
             ->assertViewIs('user.recipients.calculations.create')
             ->assertSee('所得計算：島原　一子');
     }
+
+    //管理者用テスト（ログインあり）
+    /** @test */
+    // public function 受給者を削除する()
+    // {
+    //     $response = $this->actingAs($this->admin)
+    //         ->delete('/recipients/1');
+
+    //     $response->assertRedirect('/recipients');
+    //     $this->assertDatabaseMissing('recipients', [
+    //         'number' => 24543001,
+    //         'name' => '島原　一子',
+    //         'kana' => 'しまばら　かずこ',
+    //         'sex' => 2,
+    //         'birth_date' => '1990/09/01',
+    //         'adress' => '児童市4001番地1',
+    //         'allowance_type' => 1,
+    //         'is_submitted' => false,
+    //         'additional_document' => '養育費申告書、別居監護申立書',
+    //         'is_public_pentioner' => false,
+    //         'multiple_recipient' => 1,
+    //         'note' => ''
+    //     ]);
+    // }
 }
