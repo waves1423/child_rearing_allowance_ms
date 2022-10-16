@@ -48,6 +48,23 @@ class RecipientControllerTest extends TestCase
             ->assertViewIs('user.recipients.index')
             ->assertSee('児童扶養手当　受給者一覧');
     }
+    /** @test */
+    public function 受給者新規登録画面が表示される_ログインなし()
+    {
+        $response = $this->get('/recipients/create');
+
+        $response->assertStatus(200)
+            ->assertViewIs('user.recipients.create')
+            ->assertSee('受給者新規登録');
+    }
+
+    /** @test */
+    public function 受給者を新規登録しようとしたときログイン画面に遷移する_ログインなし()
+    {
+        $response = $this->post('/recipients', $this->requestData);
+
+        $response->assertRedirect('/login');
+    }
 
     /** @test */    
     public function 受給者情報詳細画面が表示される_ログインなし()
@@ -67,6 +84,27 @@ class RecipientControllerTest extends TestCase
         $response->assertStatus(200)
             ->assertViewIs('user.recipients.edit')
             ->assertSee('受給者情報編集：島原　一子');
+    }
+
+    /** @test */
+    public function 受給者の基本情報を更新しようとしたときログイン画面に遷移する_ログインなし()
+    {
+        $response = $this->put('/recipients/1', [
+                'number' => 24543001,
+                'name' => '島原　一子',
+                'kana' => 'しまばら　かずこ',
+                'sex' => 2,
+                'birth_date' => '1990/09/01',
+                'adress' => '児童市4001番地1',
+                'allowance_type' => 1,
+                'is_submitted' => false,
+                'additional_document' => '養育費申告書、別居監護申立書',
+                'is_public_pentioner' => false,
+                'multiple_recipient' => 1,
+                'note' => ''
+            ]);
+
+        $response->assertRedirect('/login');
     }
 
     /** @test */
@@ -183,28 +221,4 @@ class RecipientControllerTest extends TestCase
             ->assertViewIs('user.recipients.calculations.create')
             ->assertSee('所得計算：島原　一子');
     }
-
-    //管理者用テスト（ログインあり）
-    /** @test */
-    // public function 受給者を削除する()
-    // {
-    //     $response = $this->actingAs($this->admin)
-    //         ->delete('/recipients/1');
-
-    //     $response->assertRedirect('/recipients');
-    //     $this->assertDatabaseMissing('recipients', [
-    //         'number' => 24543001,
-    //         'name' => '島原　一子',
-    //         'kana' => 'しまばら　かずこ',
-    //         'sex' => 2,
-    //         'birth_date' => '1990/09/01',
-    //         'adress' => '児童市4001番地1',
-    //         'allowance_type' => 1,
-    //         'is_submitted' => false,
-    //         'additional_document' => '養育費申告書、別居監護申立書',
-    //         'is_public_pentioner' => false,
-    //         'multiple_recipient' => 1,
-    //         'note' => ''
-    //     ]);
-    // }
 }
