@@ -18,12 +18,12 @@ class SpouseSeeder extends Seeder
         DB::table('spouses')->insert([
             [
                 'recipient_id' => 1,
-                'name' => '紀北　一夫',
+                'name' => '島原　一男',
                 'family_relationship' => '夫',
             ],
             [
                 'recipient_id' => 5,
-                'name' => '紀北　五夫',
+                'name' => '船津　五夫',
                 'family_relationship' => '夫',
             ],
         ]);

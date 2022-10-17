@@ -18,22 +18,22 @@ class ObligorSeeder extends Seeder
         DB::table('obligors')->insert([
             [
                 'recipient_id' => 1,
-                'name' => '紀北　一男',
+                'name' => '島原　和男',
                 'family_relationship' => '父'
             ],
             [
                 'recipient_id' => 3,
-                'name' => '紀北　三男',
+                'name' => '三野瀬　光雄',
                 'family_relationship' => '父'
             ],
             [
                 'recipient_id' => 4,
-                'name' => '紀北　四男',
-                'family_relationship' => '父'
+                'name' => '長島　四江',
+                'family_relationship' => '母'
             ],
             [
-                'recipient_id' => 5,
-                'name' => '紀北　五男',
+                'recipient_id' => 6,
+                'name' => '長島　六郎',
                 'family_relationship' => '父'
             ],
 
