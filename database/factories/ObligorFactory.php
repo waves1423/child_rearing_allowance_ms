@@ -17,7 +17,9 @@ class ObligorFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'recipient_id' => 1,
+            'name' => '児扶　和男',
+            'family_relationship' => '父'
         ];
     }
 }

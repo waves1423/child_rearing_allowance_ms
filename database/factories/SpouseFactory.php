@@ -17,7 +17,9 @@ class SpouseFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'recipient_id' => 1,
+            'name' => '児扶　一夫',
+            'family_relationship' => '夫'
         ];
     }
 }
