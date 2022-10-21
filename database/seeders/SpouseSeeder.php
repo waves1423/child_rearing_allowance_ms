@@ -26,6 +26,11 @@ class SpouseSeeder extends Seeder
                 'name' => '船津　五夫',
                 'family_relationship' => '夫'
             ],
+            [
+                'recipient_id' => 6,
+                'name' => '長島　六夫',
+                'family_relationship' => '夫'
+            ]
         ]);
     }
 }
