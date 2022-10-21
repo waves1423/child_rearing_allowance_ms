@@ -89,20 +89,21 @@ class RecipientControllerTest extends TestCase
     /** @test */
     public function 受給者の基本情報を更新しようとしたときログイン画面に遷移する_ログインなし()
     {
-        $response = $this->put('/recipients/1', [
-                'number' => 24543001,
-                'name' => '島原　一子',
-                'kana' => 'しまばら　かずこ',
-                'sex' => 2,
-                'birth_date' => '1990/09/01',
-                'adress' => '児童市4001番地1',
-                'allowance_type' => 1,
-                'is_submitted' => false,
-                'additional_document' => '養育費申告書、別居監護申立書',
-                'is_public_pentioner' => false,
-                'multiple_recipient' => 1,
-                'note' => ''
-            ]);
+        $response = $this->put('/recipients/1',
+        [
+            'number' => 24543001,
+            'name' => '島原　一子',
+            'kana' => 'しまばら　かずこ',
+            'sex' => 2,
+            'birth_date' => '1990/09/01',
+            'adress' => '児童市4001番地1',
+            'allowance_type' => 1,
+            'is_submitted' => false,
+            'additional_document' => '養育費申告書、別居監護申立書',
+            'is_public_pentioner' => false,
+            'multiple_recipient' => 1,
+            'note' => ''
+        ]);
 
         $response->assertRedirect('/login');
     }
