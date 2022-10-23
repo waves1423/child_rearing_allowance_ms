@@ -69,4 +69,14 @@ class ObliogrControllerTest extends TestCase
 
         $response->assertRedirect('/login');
     }
+
+    /** @test */
+    public function 扶養義務者の所得計算画面が表示される_ログインなし()
+    {
+        $response = $this->get('/recipients/1/obligors/1/calculations/create');
+
+        $response->assertStatus(200)
+            ->assertViewIs('user.obligors.calculations.create')
+            ->assertSee('所得計算：島原　和男');
+    }
 }
