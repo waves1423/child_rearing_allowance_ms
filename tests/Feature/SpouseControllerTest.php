@@ -69,4 +69,14 @@ class SpouseControllerTest extends TestCase
 
         $response->assertRedirect('/login');
     }
+
+    /** @test */
+    public function 配偶者の所得計算画面が表示される_ログインなし()
+    {
+        $response = $this->get('/recipients/1/spouses/1/calculations/create');
+
+        $response->assertStatus(200)
+            ->assertViewIs('user.spouses.calculations.create')
+            ->assertSee('所得計算：島原　一夫');
+    }
 }
