@@ -40,7 +40,7 @@ class SpouseControllerTest extends TestCase
     }
 
     /** @test */
-    public function 配偶者情報編集画面が表示される()
+    public function 配偶者情報編集画面が表示される_ログインなし()
     {
         $response = $this->get('recipients/1/spouses/1/edit');
 
@@ -63,7 +63,7 @@ class SpouseControllerTest extends TestCase
     }
 
     /** @test */
-    public function 配偶者を新規登録しようとしたときログイン画面に繊維する_ログインなし()
+    public function 配偶者を新規登録しようとしたときログイン画面に遷移する_ログインなし()
     {
         $response = $this->post('/recipients/2/spouses', $this->requestData);
 
@@ -78,5 +78,28 @@ class SpouseControllerTest extends TestCase
         $response->assertStatus(200)
             ->assertViewIs('user.spouses.calculations.create')
             ->assertSee('所得計算：島原　一夫');
+    }
+
+    //ユーザー用テスト（ログインあり）
+    /** @test */
+    public function 受給者情報詳細画面に配偶者情報が表示される()
+    {
+        $response = $this->actingAs($this->user)
+            ->get('/recipients/1');
+
+        $response->assertStatus(200)
+            ->assertViewIs('user.recipients.show')
+            ->assertSee('島原　一夫');
+    }
+    
+    /** @test */
+    public function 配偶者情報編集画面が表示される()
+    {
+        $response = $this->actingAs($this->user)
+            ->get('recipients/1/spouses/1/edit');
+
+        $response->assertStatus(200)
+            ->assertViewIs('user.spouses.edit')
+            ->assertSee('配偶者情報編集：島原　一夫');
     }
 }
