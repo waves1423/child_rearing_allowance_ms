@@ -90,20 +90,20 @@ class RecipientControllerTest extends TestCase
     public function 受給者の基本情報を更新しようとしたときログイン画面に遷移する_ログインなし()
     {
         $response = $this->put('/recipients/1',
-        [
-            'number' => 24543001,
-            'name' => '島原　一子',
-            'kana' => 'しまばら　かずこ',
-            'sex' => 2,
-            'birth_date' => '1990/09/01',
-            'adress' => '児童市4001番地1',
-            'allowance_type' => 1,
-            'is_submitted' => false,
-            'additional_document' => '養育費申告書、別居監護申立書',
-            'is_public_pentioner' => false,
-            'multiple_recipient' => 1,
-            'note' => ''
-        ]);
+            [
+                'number' => 24543001,
+                'name' => '島原　一子',
+                'kana' => 'しまばら　かずこ',
+                'sex' => 2,
+                'birth_date' => '1990/09/01',
+                'adress' => '児童市4001番地1',
+                'allowance_type' => 1,
+                'is_submitted' => false,
+                'additional_document' => '養育費申告書、別居監護申立書',
+                'is_public_pentioner' => false,
+                'multiple_recipient' => 1,
+                'note' => ''
+            ]);
 
         $response->assertRedirect('/login');
     }
@@ -148,20 +148,21 @@ class RecipientControllerTest extends TestCase
             ->post('/recipients', $this->requestData);
 
         $response->assertRedirect('/recipients');
-        $this->assertDatabaseHas('recipients', [
-            'number' => $this->recipient->number,
-            'name' => $this->recipient->name,
-            'kana' => $this->recipient->kana,
-            'sex' => $this->recipient->sex,
-            'birth_date' => $this->recipient->birth_date,
-            'adress' => $this->recipient->adress,
-            'allowance_type' => $this->recipient->allowance_type,
-            'is_submitted' => $this->recipient->is_submitted,
-            'additional_document' => $this->recipient->additional_document,
-            'is_public_pentioner' => $this->recipient->is_public_pentioner,
-            'multiple_recipient' => $this->recipient->multiple_recipient,
-            'note' => $this->recipient->note
-        ]);
+        $this->assertDatabaseHas('recipients',
+            [
+                'number' => $this->recipient->number,
+                'name' => $this->recipient->name,
+                'kana' => $this->recipient->kana,
+                'sex' => $this->recipient->sex,
+                'birth_date' => $this->recipient->birth_date,
+                'adress' => $this->recipient->adress,
+                'allowance_type' => $this->recipient->allowance_type,
+                'is_submitted' => $this->recipient->is_submitted,
+                'additional_document' => $this->recipient->additional_document,
+                'is_public_pentioner' => $this->recipient->is_public_pentioner,
+                'multiple_recipient' => $this->recipient->multiple_recipient,
+                'note' => $this->recipient->note
+            ]);
     }
 
     /** @test */    
@@ -190,26 +191,28 @@ class RecipientControllerTest extends TestCase
     public function 受給者の基本情報を更新する()
     {
         $response = $this->actingAs($this->user)
-            ->put('/recipients/1', [
-                'number' => 24543001,
-                'name' => '島原　一子',
-                'kana' => 'しまばら　かずこ',
-                'sex' => 2,
-                'birth_date' => '1990/09/01',
-                'adress' => '児童市4001番地1',
-                'allowance_type' => 1,
-                'is_submitted' => false,
-                'additional_document' => '養育費申告書、別居監護申立書',
-                'is_public_pentioner' => false,
-                'multiple_recipient' => 1,
-                'note' => ''
-            ]);
+            ->put('/recipients/1',
+                [
+                    'number' => 24543001,
+                    'name' => '島原　一子',
+                    'kana' => 'しまばら　かずこ',
+                    'sex' => 2,
+                    'birth_date' => '1990/09/01',
+                    'adress' => '児童市4001番地1',
+                    'allowance_type' => 1,
+                    'is_submitted' => false,
+                    'additional_document' => '養育費申告書、別居監護申立書',
+                    'is_public_pentioner' => false,
+                    'multiple_recipient' => 1,
+                    'note' => ''
+                ]);
 
         $response->assertRedirect('/recipients/1');
-        $this->assertDatabaseHas('recipients', [
-            'is_submitted' => false,
-            'additional_document' => '養育費申告書、別居監護申立書',
-        ]);
+        $this->assertDatabaseHas('recipients',
+            [
+                'is_submitted' => false,
+                'additional_document' => '養育費申告書、別居監護申立書',
+            ]);
     }
 
     /** @test */

@@ -53,11 +53,11 @@ class ObliogrControllerTest extends TestCase
     public function 扶養義務者情報を更新しようとしたときログイン画面に遷移する_ログインなし()
     {
         $response = $this->put('recipients/1/obligors/1',
-        [
-            'recipient_id' => 1,
-            'name' => '島原　一雄',
-            'family_relationship' => '父'
-        ]);
+            [
+                'recipient_id' => 1,
+                'name' => '島原　一雄',
+                'family_relationship' => '父'
+            ]);
 
         $response->assertRedirect('/login');
     }
