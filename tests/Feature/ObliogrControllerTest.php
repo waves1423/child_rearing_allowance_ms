@@ -40,7 +40,7 @@ class ObliogrControllerTest extends TestCase
     }
 
     /** @test */
-    public function 扶養義務者情報編集画面が表示される()
+    public function 扶養義務者情報編集画面が表示される_ログインなし()
     {
         $response = $this->get('recipients/1/obligors/1/edit');
 
@@ -63,7 +63,7 @@ class ObliogrControllerTest extends TestCase
     }
 
     /** @test */
-    public function 扶養義務者を新規登録しようとしたときログイン画面に繊維する_ログインなし()
+    public function 扶養義務者を新規登録しようとしたときログイン画面に遷移する_ログインなし()
     {
         $response = $this->post('/recipients/2/obligors', $this->requestData);
 
@@ -78,5 +78,28 @@ class ObliogrControllerTest extends TestCase
         $response->assertStatus(200)
             ->assertViewIs('user.obligors.calculations.create')
             ->assertSee('所得計算：島原　和男');
+    }
+
+    //ユーザー用テスト（ログインあり）
+    /** @test */
+    public function 受給者情報詳細画面に扶養義務者情報が表示される()
+    {
+        $response = $this->actingAs($this->user)
+            ->get('/recipients/1');
+
+        $response->assertStatus(200)
+            ->assertViewIs('user.recipients.show')
+            ->assertSee('島原　和男');
+    }
+    
+    /** @test */
+    public function 扶養義務者情報編集画面が表示される()
+    {
+        $response = $this->actingAs($this->user)
+            ->get('recipients/1/obligors/1/edit');
+
+        $response->assertStatus(200)
+            ->assertViewIs('user.obligors.edit')
+            ->assertSee('扶養義務者情報編集：島原　和男');
     }
 }
