@@ -21,11 +21,13 @@ class SpouseControllerTest extends TestCase
         $this->user = User::factory()->create();
         $this->spouse = Spouse::factory()->create();
 
-        $this->requestData = ([
-            'recipient_id' => $this->spouse->recipient_id,
-            'name' => $this->spouse->name,
-            'family_relationship' => $this->spouse->family_relationship
-        ]);
+        $this->requestData = (
+            [
+                'recipient_id' => $this->spouse->recipient_id,
+                'name' => $this->spouse->name,
+                'family_relationship' => $this->spouse->family_relationship
+            ]
+        );
     }
 
     //ゲスト用テスト（ログインなし）
@@ -57,7 +59,8 @@ class SpouseControllerTest extends TestCase
                 'recipient_id' => 1,
                 'name' => '島原　一雄',
                 'family_relationship' => '夫'
-            ]);
+            ]
+        );
 
         $response->assertRedirect('/login');
     }
@@ -112,13 +115,15 @@ class SpouseControllerTest extends TestCase
                     'recipient_id' => 1,
                     'name' => '島原　一雄',
                     'family_relationship' => '夫'
-                ]);
+                ]
+            );
 
         $response->assertRedirect('/recipients/1');
         $this->assertDatabaseHas('spouses',
             [
                 'name' => '島原　一雄'
-            ]);
+            ]
+        );
     }
 
 }

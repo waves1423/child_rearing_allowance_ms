@@ -21,11 +21,13 @@ class ObliogrControllerTest extends TestCase
         $this->user = User::factory()->create();
         $this->obligor = Obligor::factory()->create();
 
-        $this->requestData = ([
-            'recipient_id' => $this->obligor->recipient_id,
-            'name' => $this->obligor->name,
-            'family_relationship' => $this->obligor->family_relationship
-        ]);
+        $this->requestData = (
+            [
+                'recipient_id' => $this->obligor->recipient_id,
+                'name' => $this->obligor->name,
+                'family_relationship' => $this->obligor->family_relationship
+            ]
+        );
     }
 
     //ゲスト用テスト（ログインなし）
@@ -57,7 +59,8 @@ class ObliogrControllerTest extends TestCase
                 'recipient_id' => 1,
                 'name' => '島原　一雄',
                 'family_relationship' => '父'
-            ]);
+            ]
+        );
 
         $response->assertRedirect('/login');
     }
@@ -102,4 +105,25 @@ class ObliogrControllerTest extends TestCase
             ->assertViewIs('user.obligors.edit')
             ->assertSee('扶養義務者情報編集：島原　和男');
     }
+
+    /** @test */
+    public function 扶養義務者情報を更新する()
+    {
+        $response = $this->actingAs($this->user)
+            ->put('recipients/1/obligors/1',
+                [
+                    'recipient_id' => 1,
+                    'name' => '島原　一雄',
+                    'family_relationship' => '父'
+                ]
+            );
+
+        $response->assertRedirect('/recipients/1');
+        $this->assertDatabaseHas('obligors',
+            [
+                'name' => '島原　一雄'
+            ]
+        );
+    }
+
 }

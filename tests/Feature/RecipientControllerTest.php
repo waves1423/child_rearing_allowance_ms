@@ -22,20 +22,22 @@ class RecipientControllerTest extends TestCase
         $this->user = User::factory()->create();
         $this->recipient = Recipient::factory()->create();
 
-        $this->requestData = ([
-            'number' => $this->recipient->number,
-            'name' => $this->recipient->name,
-            'kana' => $this->recipient->kana,
-            'sex' => $this->recipient->sex,
-            'birth_date' => $this->recipient->birth_date,
-            'adress' => $this->recipient->adress,
-            'allowance_type' => $this->recipient->allowance_type,
-            'is_submitted' => $this->recipient->is_submitted,
-            'additional_document' => $this->recipient->additional_document,
-            'is_public_pentioner' => $this->recipient->is_public_pentioner,
-            'multiple_recipient' => $this->recipient->multiple_recipient,
-            'note' => $this->recipient->note
-        ]);
+        $this->requestData = (
+            [
+                'number' => $this->recipient->number,
+                'name' => $this->recipient->name,
+                'kana' => $this->recipient->kana,
+                'sex' => $this->recipient->sex,
+                'birth_date' => $this->recipient->birth_date,
+                'adress' => $this->recipient->adress,
+                'allowance_type' => $this->recipient->allowance_type,
+                'is_submitted' => $this->recipient->is_submitted,
+                'additional_document' => $this->recipient->additional_document,
+                'is_public_pentioner' => $this->recipient->is_public_pentioner,
+                'multiple_recipient' => $this->recipient->multiple_recipient,
+                'note' => $this->recipient->note
+            ]
+        );
     }
 
     //ゲスト用テスト（ログインなし）
@@ -103,7 +105,8 @@ class RecipientControllerTest extends TestCase
                 'is_public_pentioner' => false,
                 'multiple_recipient' => 1,
                 'note' => ''
-            ]);
+            ]
+        );
 
         $response->assertRedirect('/login');
     }
@@ -162,7 +165,8 @@ class RecipientControllerTest extends TestCase
                 'is_public_pentioner' => $this->recipient->is_public_pentioner,
                 'multiple_recipient' => $this->recipient->multiple_recipient,
                 'note' => $this->recipient->note
-            ]);
+            ]
+        );
     }
 
     /** @test */    
@@ -205,14 +209,16 @@ class RecipientControllerTest extends TestCase
                     'is_public_pentioner' => false,
                     'multiple_recipient' => 1,
                     'note' => ''
-                ]);
+                ]
+            );
 
         $response->assertRedirect('/recipients/1');
         $this->assertDatabaseHas('recipients',
             [
                 'is_submitted' => false,
                 'additional_document' => '養育費申告書、別居監護申立書',
-            ]);
+            ]
+        );
     }
 
     /** @test */
