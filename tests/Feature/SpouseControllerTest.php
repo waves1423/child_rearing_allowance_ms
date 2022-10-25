@@ -53,11 +53,11 @@ class SpouseControllerTest extends TestCase
     public function 配偶者情報を更新しようとしたときログイン画面に遷移する_ログインなし()
     {
         $response = $this->put('recipients/1/spouses/1',
-        [
-            'recipient_id' => 1,
-            'name' => '島原　一雄',
-            'family_relationship' => '夫'
-        ]);
+            [
+                'recipient_id' => 1,
+                'name' => '島原　一雄',
+                'family_relationship' => '夫'
+            ]);
 
         $response->assertRedirect('/login');
     }
@@ -102,4 +102,23 @@ class SpouseControllerTest extends TestCase
             ->assertViewIs('user.spouses.edit')
             ->assertSee('配偶者情報編集：島原　一夫');
     }
+
+    /** @test */
+    public function 配偶者情報を更新する()
+    {
+        $response = $this->actingAs($this->user)
+            ->put('recipients/1/spouses/1',
+                [
+                    'recipient_id' => 1,
+                    'name' => '島原　一雄',
+                    'family_relationship' => '夫'
+                ]);
+
+        $response->assertRedirect('/recipients/1');
+        $this->assertDatabaseHas('spouses',
+            [
+                'name' => '島原　一雄'
+            ]);
+    }
+
 }
