@@ -10,6 +10,7 @@ Allowance recipients, their spouses, and support obligors(people who share livel
 https://child-allowance.com
 
 # Demonstration
+![demo_child-allowance](https://user-images.githubusercontent.com/101188604/197839983-bb949764-f4b0-495a-b3ec-f70c720eb600.gif)
 
 # Features
 - Multi-login
