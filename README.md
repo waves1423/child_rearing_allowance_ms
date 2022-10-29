@@ -16,12 +16,12 @@ https://child-allowance.com
 - Multi-login
     - Administrator(create, edit and delete) and user(create and edit)
 - Recipients Registration
-    - Recipient, its spouse and support obligor
+    - Recipient, its spouse and support obligor(highest earning cohabiting relative)
 - Search recipient
     - Multiple keyword search for kana and kanji
     - Type of receiving allowance can be identified by icons
 - Income calculation
-    - Based on the breakdown of income and deductions entered, income after deductions is automatically calculated.
+    - Based on types of income and deductions entered, income after deductions is automatically calculated.
 
 # Requirements
 ## Front-end
@@ -29,7 +29,6 @@ https://child-allowance.com
 - JavaScript
 - TailwindCSS 3.1.0
 - Node.js 16.16.0
-- Alpine.js 3.4.2
 
 ## Back-end
 - PHP 8.1.8
