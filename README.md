@@ -16,7 +16,7 @@ https://child-allowance.com
 - Multi-login
     - Administrator(create, edit and delete) and user(create and edit)
 - Recipients Registration
-    - Recipient, its spouse and support obligor(relative living together with highest income)
+    - Recipient, its spouse and support obligor(highest earning cohabiting relative)
 - Search recipient
     - Multiple keyword search for kana and kanji
     - Type of receiving allowance can be identified by icons
