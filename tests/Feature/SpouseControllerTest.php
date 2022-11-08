@@ -126,4 +126,14 @@ class SpouseControllerTest extends TestCase
         );
     }
 
+    /** @test */
+    public function 配偶者が登録されていない場合は新規登録ボタンが表示される()
+    {
+        $response = $this->actingAs($this->user)
+            ->get('/recipients/2');
+
+        $response->assertStatus(200)
+            ->assertViewIs('user.recipients.show')
+            ->assertSee('配偶者新規登録');
+    }
 }
