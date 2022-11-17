@@ -136,4 +136,31 @@ class SpouseControllerTest extends TestCase
             ->assertViewIs('user.recipients.show')
             ->assertSee('配偶者新規登録');
     }
+
+    /** @test */
+    public function 配偶者新規登録画面が表示される()
+    {
+        $response = $this->actingAs($this->user)
+            ->get('/recipients/2/spouses/create');
+
+        $response->assertStatus(200)
+            ->assertViewIs('user.spouses.create')
+            ->assertSee('配偶者新規登録');
+    }
+
+    /** @test */
+    public function 配偶者を新規登録する()
+    {
+        $response = $this->actingAs($this->user)
+            ->post('/recipients/2', $this->requestData);
+
+        $response->assertRedirect('/recipients/2');
+        $this->assertDatabaseHas('spouses',
+            [
+                'recipient_id' => $this->spouse->recipient_id,
+                'name' => $this->spouse->name,
+                'family_relationship' => $this->spouse->family_relationship
+            ]
+        );
+    }
 }
