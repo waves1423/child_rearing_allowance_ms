@@ -24,7 +24,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [RecipientController::class, 'index']);
 
 Route::get('/functions', [FunctionController::class, 'index'])
-->name('functions');
+->name('functions.index');
+
+Route::get('/functions/downloadCsv', [FunctionController::class, 'downloadCsv'])
+->name('functions.downloadCsv');
 
 Route::resource('recipients', RecipientController::class)
 ->except(['destroy']);
