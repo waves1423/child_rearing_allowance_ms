@@ -152,7 +152,7 @@ class SpouseControllerTest extends TestCase
     public function 配偶者を新規登録する()
     {
         $response = $this->actingAs($this->user)
-            ->post('/recipients/2', $this->requestData);
+            ->post('/recipients/2/spouses/create', $this->requestData);
 
         $response->assertRedirect('/recipients/2');
         $this->assertDatabaseHas('spouses',
