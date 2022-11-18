@@ -92,7 +92,7 @@ class Recipient extends Model
     public function storeRecipient($request)
     {
         try{
-            DB::transaction(function () use($request) {
+            DB::transaction(function() use($request) {
                 return $this->create($request->validated());
             }, 2);
         }catch(Throwable $e){
@@ -105,12 +105,69 @@ class Recipient extends Model
     public function updateRecipient($request, $id)
     {
         try{
-            DB::transaction(function () use($request, $id) {
+            DB::transaction(function() use($request, $id) {
                 return $this->findOrFail($id)->fill($request->validated())->save();
             }, 2);
         }catch(Throwable $e){
             Log::error($e);
             throw $e;
         }
+    }
+
+    //全受給者情報をCSV形式で取得
+    public function downloadCsv()
+    {
+        $recipients = $this->all();
+
+        $headers = [
+            "Content-type" => "text/csv",
+            "Content-Disposition" => "attachment; filename=file.csv"
+        ];
+
+        $callback = function() use($recipients) {
+            $handle = fopen('php://output', 'w');
+            
+            $columns = [
+                'id',
+                'number',
+                'name',
+                'kana',
+                'sex',
+                'birth_date',
+                'adress',
+                'allowance_type',
+                'is_submitted',
+                'additional_document',
+                'is_public_pentioner',
+                'note'
+            ];
+
+            mb_convert_variables('SJIS-win', 'UTF-8', $columns);
+
+            fputcsv($handle, $columns);
+
+            foreach($recipients as $recipient) {
+                $csv = [
+                    $recipient->id,
+                    $recipient->number,
+                    $recipient->name,
+                    $recipient->kana,
+                    $recipient->sex,
+                    $recipient->birth_date,
+                    $recipient->adress,
+                    $recipient->allowance_type,
+                    $recipient->is_submitted,
+                    $recipient->additional_document,
+                    $recipient->is_public_pentioner,
+                    $recipient->note
+                ];
+
+                mb_convert_variables('SJIS-win', 'UTF-8', $csv);
+
+                fputcsv($handle, $csv);
+            }
+        };
+
+        return response()->stream($callback, 200, $headers);
     }
 }
