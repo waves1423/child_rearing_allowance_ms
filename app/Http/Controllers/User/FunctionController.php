@@ -9,7 +9,7 @@ class FunctionController extends Controller
 {
     public function index()
     {
-        //
+        return view('user.functions.index');
     }
 
     public function downloadCsv()

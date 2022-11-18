@@ -23,7 +23,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [RecipientController::class, 'index']);
 
-Route::get('/functions', [FunctionController::class, 'index']);
+Route::get('/functions', [FunctionController::class, 'index'])
+->name('functions');
 
 Route::resource('recipients', RecipientController::class)
 ->except(['destroy']);
