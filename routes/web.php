@@ -6,6 +6,7 @@ use App\Http\Controllers\User\ObligorController;
 use App\Http\Controllers\User\Calculation\RecipientCalculationController;
 use App\Http\Controllers\User\Calculation\SpouseCalculationController;
 use App\Http\Controllers\User\Calculation\ObligorCalculationController;
+use App\Http\Controllers\User\FunctionController;
 use App\Http\Controllers\User\SpecialRecipientController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [RecipientController::class, 'index']);
+
+Route::get('/functions', [FunctionController::class, 'index']);
 
 Route::resource('recipients', RecipientController::class)
 ->except(['destroy']);
