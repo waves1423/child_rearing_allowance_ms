@@ -11,6 +11,7 @@ class FunctionController extends Controller
     {
         $this->recipient = $recipient;
     }
+
     public function index()
     {
         return view('user.functions.index');
@@ -18,6 +19,6 @@ class FunctionController extends Controller
 
     public function downloadCsv()
     {
-        //
+        $this->recipient->downloadCsv();
     }
 }
