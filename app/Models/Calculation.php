@@ -51,7 +51,8 @@ class Calculation extends Model
     {
         return $this->hasOne(Deduction::class);
     }
-
+    
+    //所得情報新規登録(受給者)
     public function storeRecipientCalculation($request, $id)
     {
         try{
@@ -68,6 +69,7 @@ class Calculation extends Model
         }
     }
 
+    //所得情報新規登録(配偶者)
     public function storeSpouseCalculation($request, $id)
     {
         try{
@@ -84,6 +86,7 @@ class Calculation extends Model
         }
     }
 
+    //所得情報新規登録(扶養義務者)
     public function storeObligorCalculation($request, $id)
     {
         try{
@@ -100,6 +103,7 @@ class Calculation extends Model
         }
     }
 
+    //所得テーブルに紐づく情報（扶養親族、所得内訳、控除内訳）新規登録
     public function storeCalculationInfomation($calculation, $request)
     {
         Dependent::create([
@@ -131,6 +135,7 @@ class Calculation extends Model
         ]);
     }
 
+    //所得合計から控除合計を引き、支給判定用の所得を算出
     public function getTotalIncome($request)
     {
         $total_income =
@@ -145,14 +150,16 @@ class Calculation extends Model
         +$request->medical_expense
         +$request->small_enterprise
         +$request->other
-        +80000;
-        
+        +80000; //基礎控除80,000円
+    
         $total_deducted_income = $total_income - $total_deduction;
+        //マイナスの場合は0円とする
         $total_deducted_income < 0 ? $total_deducted_income = 0 : '';
 
         return $total_deducted_income;
     }
 
+    //所得情報更新(受給者)
     public function updateRecipientCalculation($request, $id)
     {
         try{
@@ -166,6 +173,7 @@ class Calculation extends Model
         }
     }
 
+    //所得情報更新(配偶者)
     public function updateSpouseCalculation($request, $id)
     {
         try{
@@ -179,6 +187,7 @@ class Calculation extends Model
         }
     }
 
+    //所得情報更新(扶養義務者)
     public function updateObligorCalculation($request, $id)
     {
         try{
@@ -192,6 +201,7 @@ class Calculation extends Model
         }
     }
 
+    //所得情報更新(共通)
     public function updateCalculationInfomation($request, $calculation)
     {
         $this->findOrFail($calculation->id)

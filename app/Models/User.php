@@ -52,6 +52,7 @@ class User extends Authenticatable
         ->paginate(25);
     }
 
+    //ユーザー新規登録
     public function storeUser($request)
     {
         try{
@@ -68,6 +69,7 @@ class User extends Authenticatable
         }
     }
 
+    //ユーザー情報更新
     public function updateUser($request, $id)
     {
         try{
