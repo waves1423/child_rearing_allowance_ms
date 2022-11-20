@@ -29,6 +29,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/functions', [FunctionController::class, 'index'])
+->name('functions.index');
+
+Route::get('/functions/downloadCsv', [FunctionController::class, 'downloadCsv'])
+->name('functions.downloadCsv');
+
 Route::resource('users', UserController::class)
 ->middleware('auth:admin')
 ->except(['show']);
