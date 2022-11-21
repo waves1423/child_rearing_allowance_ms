@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\ObligorController;
 use App\Http\Controllers\Admin\Calculation\RecipientCalculationController;
 use App\Http\Controllers\Admin\Calculation\SpouseCalculationController;
 use App\Http\Controllers\Admin\Calculation\ObligorCalculationController;
+use App\Http\Controllers\Admin\FunctionController;
 use App\Http\Controllers\Admin\SpecialRecipientController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,9 +31,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/functions', [FunctionController::class, 'index'])
+->middleware('auth:admin')
 ->name('functions.index');
 
 Route::get('/functions/downloadCsv', [FunctionController::class, 'downloadCsv'])
+->middleware('auth:admin')
 ->name('functions.downloadCsv');
 
 Route::resource('users', UserController::class)
