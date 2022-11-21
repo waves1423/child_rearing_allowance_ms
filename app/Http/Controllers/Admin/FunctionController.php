@@ -14,7 +14,7 @@ class FunctionController extends Controller
 
     public function index()
     {
-        return view('user.functions.index');
+        return view('admin.functions.index');
     }
 
     public function downloadCsv()
