@@ -26,6 +26,7 @@ return new class extends Migration
             $table->boolean('is_submitted')->nullable();
             $table->string('additional_document')->nullable();
             $table->boolean('is_public_pentioner');
+            $table->integer('multiple_recipient');
             $table->text('note')->nullable();
             $table->timestamps();
         });
