@@ -139,6 +139,7 @@ class Recipient extends Model
                 'is_submitted',
                 'additional_document',
                 'is_public_pentioner',
+                'multiple_recipient',
                 'note'
             ];
 
@@ -159,6 +160,7 @@ class Recipient extends Model
                     $recipient->is_submitted,
                     $recipient->additional_document,
                     $recipient->is_public_pentioner,
+                    $recipient->multiple_recipient,
                     $recipient->note
                 ];
 
