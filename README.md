@@ -22,6 +22,7 @@ https://child-allowance.com
     - Type of receiving allowance can be identified by icons
 - Income calculation
     - Based on types of income and deductions entered, income after deductions is automatically calculated.
+- CSV download
 
 # Requirements
 ## Front-end
