@@ -21,4 +21,9 @@ class FunctionController extends Controller
     {
         return $this->recipient->downloadCsv();
     }
+
+    public function uploadCsv()
+    {
+        return $this->uploadCsv();
+    }
 }
