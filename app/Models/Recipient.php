@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Throwable;
+use Goodby\CSV\Import\Standard\LexerConfig;
+use Goodby\CSV\Import\Standard\Lexer;
+use Goodby\CSV\Import\Standard\Interpreter;
 
 class Recipient extends Model
 {
@@ -171,5 +174,11 @@ class Recipient extends Model
         };
 
         return response()->stream($callback, 200, $headers);
+    }
+
+    //受給者情報をCSV形式でアップロード
+    public function uploadCsv()
+    {
+
     }
 }
