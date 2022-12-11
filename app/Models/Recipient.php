@@ -10,6 +10,7 @@ use Throwable;
 use Goodby\CSV\Import\Standard\LexerConfig;
 use Goodby\CSV\Import\Standard\Lexer;
 use Goodby\CSV\Import\Standard\Interpreter;
+use GuzzleHttp\Psr7\Request;
 
 class Recipient extends Model
 {
@@ -177,8 +178,8 @@ class Recipient extends Model
     }
 
     //受給者情報をCSV形式でアップロード
-    public function uploadCsv()
+    public function uploadCsv(Request $request)
     {
-
+        //
     }
 }
