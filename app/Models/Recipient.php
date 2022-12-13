@@ -7,10 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Throwable;
-use Goodby\CSV\Import\Standard\LexerConfig;
-use Goodby\CSV\Import\Standard\Lexer;
-use Goodby\CSV\Import\Standard\Interpreter;
-use GuzzleHttp\Psr7\Request;
 
 class Recipient extends Model
 {
@@ -178,7 +174,7 @@ class Recipient extends Model
     }
 
     //受給者情報をCSV形式でアップロード
-    public function uploadCsv(Request $request)
+    public function uploadCsv()
     {
         //
     }
