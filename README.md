@@ -7,7 +7,8 @@ Allowance recipients, their spouses, and support obligors(people who share livel
 ***This system is compatible with 100,000 yen income deduction in accordance with tax law revisions applicable from October 2021 onward.***  
 
 # URL
-https://child-allowance.com
+~~https://child-allowance.com~~  
+URL is currently unavailable.
 
 # Demonstration
 ![demo_2x](https://user-images.githubusercontent.com/101188604/198323232-709a573f-486a-4673-aa16-4443f6ed7942.gif)
