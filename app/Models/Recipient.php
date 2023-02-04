@@ -172,10 +172,4 @@ class Recipient extends Model
 
         return response()->stream($callback, 200, $headers);
     }
-
-    //受給者情報をCSV形式でアップロード
-    public function uploadCsv()
-    {
-        //
-    }
 }

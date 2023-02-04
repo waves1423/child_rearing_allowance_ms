@@ -21,18 +21,6 @@
                             </div>
                         </div>
                     </section>
-                    <section class="text-gray-600 body-font">
-                        <div class="container md:px-5 mx-auto">
-                            <div class="flex justify-between mb-2">
-                                <form method="GET" action="{{ route('admin.functions.uploadCsv') }}">
-                                    <div class="py-2">
-                                        <a class="w-64 m-2 pr-6 border-gray-600 text-lg font-semibold">・受給者情報CSVアップロード</a>
-                                        <button type="submit" class="text-white bg-blue-500 border-0 py-2 px-4 m-1 focus:outline-none hover:bg-blue-600 rounded text-lg">アップロード</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </section>
                 </div>
             </div>
         </div>

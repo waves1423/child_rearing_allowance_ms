@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Recipient;
-use Illuminate\Http\Request;
 
 class FunctionController extends Controller
 {
@@ -21,10 +20,5 @@ class FunctionController extends Controller
     public function downloadCsv()
     {
         return $this->recipient->downloadCsv();
-    }
-
-    public function uploadCsv(Request $request)
-    {
-        return $this->uploadCsv($request);
     }
 }
