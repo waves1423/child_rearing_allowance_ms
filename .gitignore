@@ -19,3 +19,4 @@ aws.drawio
 aws.png
 package-lock.json
 package.json
+.DS_Store
